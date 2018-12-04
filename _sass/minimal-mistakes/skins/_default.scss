@@ -3,3 +3,58 @@
    ========================================================================== */
 
 // Intentionally left blank
+
+
+// Header Background-color : gray
+$navbar-col:  rgb(61, 61, 61);
+$top-border-bottom-color: mix(#000, $navbar-col, 20%) !default;
+
+.masthead{
+    background-color: $navbar-col;
+}
+
+#site-nav{
+    background-color: rgb(61, 61, 61);
+}
+
+.greedy-nav{
+    background-color: rgb(100, 100, 100);
+    font-weight: 500;
+}
+
+// Title Color
+#site-nav a{
+    color:white;
+    font-weight: 1000;
+}
+// navigation tab colors
+.site-title{
+    color:white;
+}
+
+
+#masthead__nav-links{
+    color:white;
+
+}
+
+
+// $primary-color:rgb(251, 0, 255);
+// $border-color: mix(#fff, rgb(61,61,61), 0%) !default;
+
+// $text-color: #535353 !default;
+
+// .pagination--pager {
+//   color: rgba(92, 92, 92, 0);
+//   background-color: primary-color;
+//   border-color: transparent;
+
+//   &:visited {
+//     color: $text-color;
+//   }
+// }
+
+
+a, u{
+    text-decoration: none;
+}
