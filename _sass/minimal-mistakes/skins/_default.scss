@@ -14,18 +14,17 @@ $top-border-bottom-color: mix(#000, $navbar-col, 20%) !default;
 }
 
 #site-nav{
-    background-color: rgb(61, 61, 61);
+    background-color: $navbar-col;
 }
 
 .greedy-nav{
-    background-color: rgb(100, 100, 100);
+    background-color: $navbar-col;
     font-weight: 500;
 }
 
 // Title Color
 #site-nav a{
     color:white;
-    font-weight: 1000;
 }
 // navigation tab colors
 .site-title{

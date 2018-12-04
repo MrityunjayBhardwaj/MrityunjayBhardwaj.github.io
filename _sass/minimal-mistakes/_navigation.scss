@@ -252,8 +252,8 @@
     top: 100%;
     right: 0;
     margin-top: 15px;
-    padding: 5px;
-    border: 1px solid $border-color;
+    padding: 1px;
+    border: 0px solid $border-color;
     border-radius: $border-radius;
     background: $navbar-col;
     -webkit-box-shadow: 0 2px 4px 0 rgba(#000, 0.16),
@@ -270,8 +270,9 @@
       font-size: $type-size-5;
 
       &:hover {
-        color: $masthead-link-color-hover;
-        background: $navicon-link-color-hover;
+        // text-decoration: underline;
+        // text-decoration-color:$primary-color;
+        background: $primary-color;
       }
     }
 
@@ -303,7 +304,6 @@
 
     li {
       display: block;
-      border-bottom: 1px solid $border-color;
 
       &:last-child {
         border-bottom: none;
