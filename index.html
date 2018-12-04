@@ -1,14 +1,46 @@
 ---
-layout: home 
+layout: splash 
 author_profile: false 
+title: "Something..."
 header:
-    image: "/assets/imgs/cd-art.jpg"
+  overlay_color: "#000"
+  overlay_filter: "0.5"
+  overlay_image: "/assets/imgs/cd-art.jpg"
+  actions:
+    - label: "Download"
+      url: "https://github.com/mmistakes/minimal-mistakes/"
+  caption: "create by: mrityunjay"
+intro: 
+  - excerpt: 'Nullam suscipit et nam, tellus velit pellentesque at malesuada, enim eaque. Quis nulla, netus tempor in diam gravida tincidunt, *proin faucibus* voluptate felis id sollicitudin. Centered with `type="center"`'
+
+excerpt: "I love <i>**learning**</i> new things"
+feature_row:
+  - url: ""
+    image_path: /assets/imgs/form_mm/unsplash-gallery-image-1-th.jpg
+    alt: "placeholder image 1"
+    title: "Research 1"
+  - url: "http://localhost:4000/blog/"
+    image_path: /assets/imgs/form_mm/unsplash-gallery-image-2-th.jpg
+    alt: "placeholder image 2"
+    title: "Research 2"
+  - url: /assets/imgs/form_mm/unsplash-gallery-image-3.jpg
+    image_path: /assets/imgs/form_mm/unsplash-gallery-image-3-th.jpg
+    alt: "placeholder image 3"
+    title: "Image 3 title caption"
+
+footer:
 ---
+
 
 
 <!-- {% for post in site.posts %}
     <li><a href="{{post.url}}">{{post.title}}</a></li>
 {% endfor %} -->
+<hr>
 
 
-this is really Cool
+{% include feature_row id="intro" type="center" %}
+
+<h2>Latest Posts</h2>
+{% include feature_row width="30%" %}
+

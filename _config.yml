@@ -80,7 +80,7 @@ naver_site_verification  :
 
 # Social Sharing
 twitter:
-  username               :
+  username               : mrityunjay_99
 facebook:
   username               :
   app_id                 :
@@ -216,8 +216,8 @@ sass:
 
 # Outputting
 permalink: /:categories/:title/
-paginate: 5 # amount of posts to show
-paginate_path: /page:num/
+paginate: 4 # amount of posts to show
+paginate_path: /blog/page:num/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
@@ -269,6 +269,11 @@ tag_archive:
 #     category: /categories/:name/
 #     tag: /tags/:name/
 
+# collections:
+#   blogposts:
+#     output: true
+#     permalink: /:collections/path/
+
 
 # HTML Compression
 # - http://jch.penibelst.de/
@@ -280,6 +285,14 @@ compress_html:
 
 # Defaults
 defaults:
+  # _blogposts 
+  # - scope:
+  #     path: ""
+  #     type: blogposts 
+  #   values:
+  #     layout: single
+  #     author_profile: false
+  #     share: true
   # Global
   # - scope:
   #     path: ""
@@ -306,3 +319,5 @@ defaults:
     values:
       layout: single
       author_profile: true 
+
+
