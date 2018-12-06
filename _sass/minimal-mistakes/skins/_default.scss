@@ -8,7 +8,7 @@
 // Header Background-color : gray
 $navbar-col:  rgb(61, 61, 61);
 $top-border-bottom-color: mix(#000, $navbar-col, 20%) !default;
-
+    
 .masthead{
     background-color: $navbar-col;
 }
@@ -43,17 +43,22 @@ $top-border-bottom-color: mix(#000, $navbar-col, 20%) !default;
 
 // $text-color: #535353 !default;
 
-// .pagination--pager {
-//   color: rgba(92, 92, 92, 0);
-//   background-color: primary-color;
-//   border-color: transparent;
+// for buttons:
+.pagination--pager {
+  color: $primary-color; 
+  background-color: rgb(231, 231, 231);
+  border-color: transparent;
 
-//   &:visited {
-//     color: $text-color;
-//   }
-// }
+  &:visited {
+    color: $text-color;
+  }
+}
 
 
 a, u{
     text-decoration: none;
+}
+
+a:hover{
+    // background-color: red;
 }
