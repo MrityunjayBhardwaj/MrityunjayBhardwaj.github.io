@@ -34,14 +34,15 @@
 </script>
 {% endif %}
 
+  <!-- src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js" -->
 {% if page.p5js %}
 <script type="text/javascript" async
-  {% comment %} src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> {% endcomment %}
   src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"
+  src="{{site.baseurl}}/assets/js/plugins/p5.min.js">
 </script>
 
 <script type="text/javascript" async
-src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.6/addons/p5.dom.js"
+src="http://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.6/addons/p5.dom.js">
 </script>
 
 {% endif %}
