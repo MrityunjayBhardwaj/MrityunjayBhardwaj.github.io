@@ -113,15 +113,20 @@ function mousePressed(){
 
 function mouseDragged(){
 
+    if(mouseX < width && mouseY < height && mouseX > 0 && mouseY > 0){
+
     if (!origin_selected){
 
+        
         mhp.update_rot();
         mhp.update_margin();
 
     }
     else{
         mhp.pos = {x:mouseX,y:mouseY};
+
     }
+        }
 
 
 }
