@@ -39,7 +39,7 @@ function draw(){
     // team blue
     push();
     for(let i=0;i<ptsArray.length;i++){
-        fill(100,30,220)
+        fill(51, 153, 255)
         let cpt = ptsArray[i];
         let m = ( - mhp.rotation);
         let c1 = mhp.pos.y - Math.cos(mhp.rotation)*mhp.margin;
@@ -60,7 +60,7 @@ function draw(){
     // team red 
     push();
     for(let i=0;i<ptsArray2.length;i++){
-        fill(290,70,060)
+        fill(255, 153, 51)
         let cpt = ptsArray2[i];
         let m = ( - mhp.rotation);
         let c1 = mhp.pos.y - Math.cos(mhp.rotation)*mhp.margin;
@@ -258,44 +258,25 @@ function hplane(poz){
 
     }
     this.display = function(){
-        // decoration
-        // p.strokeWeight(2);
-        // p.push();
-        // p.translate(this.pos.x,this.pos.y);
-        // p.rotate(this.rotation);
-        // p.line(-this.len/2,0,this.len/2,0);
-        // p.pop();
-        
         strokeWeight(2);
-        // Dashed line
-        // ctx.beginPath();
-        // ctx.setLineDash([5, 15]);
-        // ctx.moveTo(0, 50);
-        // ctx.lineTo(300, 50);
-        // ctx.stroke();
-
-        // // Solid line
-        // ctx.beginPath();
-        // ctx.setLineDash([]);
-        // ctx.moveTo(0, 100);
-        // ctx.lineTo(300, 100);
-        // ctx.stroke(); 
 
         let dist = this.margin;
         let tlen = 20;
-        fill(0);
         push();
         translate(this.pos.x,this.pos.y);
         rotate(this.rotation);
 
-        ellipse(0,0,this.orad,this.orad);
 
+
+        fill(0);
         stroke(180);
         line(-this.len/2,-dist,this.len/2,-dist);
 
         strokeWeight(5);
         stroke(20);
         line(-this.len/2,0,this.len/2,0);
+        stroke(251, 29, 255);
+        fill(251, 29, 255);
         line(0,0,0,-dist);
         
         push(); 
@@ -306,7 +287,13 @@ function hplane(poz){
         strokeWeight(2);
         stroke(180);
         line(-this.len/2,+dist,this.len/2,+dist);
+
+        
+        stroke(251, 29, 255);
+        fill(251, 29, 255);
+        ellipse(0,0,this.orad,this.orad);
         pop();
+
 
     }
 }

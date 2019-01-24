@@ -18,11 +18,12 @@ In this tutorial we are going to be going deep inside Support Vector Machines...
 -   multi-variable calculus(legrange multipliers,duality,quadratic progarmming,optimization)
 
 if you are unfimilier with those concepts or just need to brush up some of them,  Imperial Collage London has a great course on coursera,which you might find useful:
-<a href="https://www.coursera.org/specializations/mathematics-machine-learning" target="_blank">https://www.coursera.org/specializations/mathematics-machine-learning</a>
+<a href="https://www.coursera.org/specializations/mathematics-machine-learning" target="_blank"><u>https://www.coursera.org/specializations/mathematics-machine-learning</u></a>
 
 ok,I hope that you are confident enough with those prerequisites;we can now go ahead and start learning about SVMs
 
 so as you might know SVM stands for support vector machines.... its probabily the most successful hyperplane based classifier...what it means is that you are classifing 2 classes by constructing a hyperplane which seperate both of them as clearly as possible.
+
 
 now what i want you to do is to construct a decision boundry which seprate 2 of the given classes as clearly as possible,using this Live-Figure(L-Fig 1.1)below...so,go-ahead,play with it! and see, if you could figure our the best possible decision boundary for this dataset;keep in mind that it doesnt have to be 100% perfect because in real life we dont generally have a perfectly seprable data.
 
@@ -40,13 +41,73 @@ Ok, so what you just did in couple of seconds, is exactly what we are trying to 
 we have 2 classes 1 "orange" other is "blue",for conveinience sake: let "blue" = -1 & "orange" = +1
 and we need to construct the best decsion boundary, as you might have observed while playing with (l-fig 1.1) above, constructing a good classifier is hard because you have a lot of freedom i.e, you can rotate the decision boundary in any angle so the search space is kinda infinit
 
-now in order to find the best decision boundry i want a line that is farthest from each of the classes(you might have observed it)...so, when we extend the line in-both the direction we get 2 line which are parallel to each other and the distance(in l-fig 1.1 the distance is represented by pink arrow) from decision boundry is also equal.(and those extended dotted-lines are called "margin"), SO, in order to get the best boundary we have to *maximize* the distance of those margin because that is the only way we can be sure that are (db) is farthest from both the classes and hence we found our best margin and inturn our decision boundary.
+now in order to find the best decision boundry i want a line that is farthest from each of the classes(you might have observed it)...so, when we extend the line in-both the direction we get 2 line which are parallel to each other and the distance (in l-fig 1.1 the distance is represented by pink arrow) from decision boundry is also equal.(and those extended dotted-lines are called "margin"), SO, in order to get the best boundary we have to *maximize* the distance of those margin because that is the only way we can be sure that are (db) is farthest from both the classes and hence we found our best margin and inturn our decision boundary.
 
-now, all we have to do is to compute those margin and for that we first need to take a look at some of the useful mathematical tools:
+now, all we have to do is to compute those margin and for that we first need to take a look at some of the useful mathematical tools: <button class="btn--primary " onclick="myFunction()">Click Me</button>
+ 
+
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+} 
+</script>
+
+<a href="#" class="btn btn--inverse">Link Text</a>
+
+$$\require{cancel}$$
+
+
+
 
 **Projection onto a hyperplane**
 
-$$ \Theta^Tx_1 + \cancel{\Theta_0} = \Theta^Tx_2 + \cancel{\Theta_0} = 0$$
+we know that if a point is on the hyperplane/decision boundary then its neither in class -1 nor +1. we can exploit this property to conclude that the $$ \Theta $$ is orthogonal to decision boundry
+
+$$ \Theta^Tx_1 + \cancel{\Theta_0} = \Theta^Tx_2 + \cancel {\Theta_0} = 0 $$
+
+
+$$ {\Theta^Tx_1 - \Theta^Tx_2 = 0} {2} $$
+
+$$ \Theta^T(x_1 -x_2) = 0 $$
+
+$$ {\Theta \bot (x_1-x_2)} \tag{1}$$
+
+also,
+
+$$ 
+\begin{align}
+
+\Theta^Tx_0 + \Theta_0 &= 0 \\
+ \Theta_0 & = -\Theta^Tx_0 
+\end{align}
+$$
+
+
+$$
+\left\{
+\begin{array}{ll}
+a_1x+b_1y+c_1z &=d_1+e_1 \\ 
+a_2x+b_2y &=d_2 \\ 
+a_3x+b_3y+c_3z &=d_3 
+\end{array} 
+\right.
+$$
+
+$$
+\begin{alignat}{5}
+  \max \quad        & z = &   x_1  & + & 12 x_2  &   &       &         && \\
+  \mbox{s.t.} \quad &     & 13 x_1 & + & x_2     & + & 12x_3 & \geq 5  && \tag{constraint 1} \\
+                    &     & x_1    &   &         & + & x_3   & \leq 16 &                   &\tag{2} \\
+                    &     & 15 x_1 & + & 201 x_2 &   &       & =    14 && \tag{constraint 3} \\
+                    &     & \rlap{x_i \ge 0, i = 1, 2, 3}
+\end{alignat}
+$$
 
 We need to find the distance from hyperplane to an arbitry point and for that we first need to construct a right angled triangle onto hyperplane
 
@@ -90,7 +151,133 @@ so, it means that we have to change $$\Theta$$ in such a way that the minimum di
 
 this also measn that the minimum distance must be 1 and as we know in 6 we have to minimize this function as well, so, we combine both the expression and get our final objective function:
 
-$$ \min { { y_i (\Theta^Tx_i + \Theta_0)}\over     ||\Theta||}   = min({1\over {|| \Theta || } })$$
+$$ \max { { y_i (\Theta^Tx_i + \Theta_0)}\over     ||\Theta||}   = max({1\over {|| \Theta || } })$$
 
+we can re-write this as:
+
+$$ \min \quad{1 \over 2}||\Theta||^2\\
+\text{s.t.}\quad y_i(\Theta^Tx_i + \Theta_0) \geq 1$$
+
+but instead of finding the solution of this optimization function we are going to be optimizing the dual of this objective function the reason will be apperant when we will talk about the non-linear SVM
+
+so just like in any dual optimization scenario we need to form a legrangian of this optimization function
+
+$$ L(\Theta,\Theta_0,\alpha) = 1/2 ||\Theta||^2 - \sum_{i=1}^n\alpha [y_i(\Theta^Tx_i + \Theta_0)-1]$$ 
+$$ where,\quad\quad \alpha\geq 0$$
+
+so, if i take the derivative of $$ L  w.r.t \Theta $$:-
+
+$$
+\begin{align}
+{ {\partial L}\over {\partial \Theta} } &=
+{ {\partial }\over {\partial \Theta} }
+\left (
+ 1/2 ||\Theta||^2 - \sum_{i=1}^n\alpha_i[y_i(\Theta^Tx_i + \Theta_0)-1]
+ \right ) \\
+{ {\partial L}\over {\partial \Theta} } &=
+\Theta - \sum_{i=1}^{n}{\alpha_iy_ix_i}=0 \tag{2}
+\end{align}
+$$
+
+using (2) we can imply that
+$$
+\Theta = \sum_{i=1}^{n}{\alpha_i y_i x_i} \tag{3}
+$$
+
+now, we need to find the derivative w.r.t our second primal variable i.e, $$ \Theta_0$$ i.e,
+
+$$
+\begin{align}
+{ {\partial L}\over {\partial \Theta_0} } &=
+{ {\partial }\over {\partial \Theta_0} }
+\left (
+ 1/2 ||\Theta||^2 - \sum_{i=1}^n\alpha_i[y_i(\Theta^Tx_i + \Theta_0)-1]
+ \right )  = 0\\
+{ {\partial L}\over {\partial \Theta_0} } &=
+0 - \sum_{i=1}^{n}{\alpha_i y_i} = 0\\ 
+{ {\partial L}\over {\partial \Theta_0} } &=
+\sum_{i=1}^{n}{\alpha_i y_i} = 0 \tag{4}
+\end{align} 
+$$
+
+i.e,
+$$
+\sum_{i=1}^{n}{\alpha_i y_i} = 0 \tag{4}
+$$
+
+now using (3) and (4) i can re-write legrangian using only the dual-variable:
+
+<!--
+L(\alpha_i) &= {1 \over 2}|| \sum_{i=1}^{n}{\alpha_i y_i x_i} ||^2 - \sum_{i=1}^{n}(\alpha_iy_i)*\sum_{i=1}^{n}(\Theta^Tx_i + \Theta_0) - \sum_{i=1}^{n}\alpha_i \\
+ L(\alpha_i) &= {1 \over 2}|| \sum_{i=1}^{n}{\alpha_i y_i x_i} ||^2 - 0 - \sum_{i=1}^{n}\alpha_i \tag{using (4)\\
+
+L(\alpha_i) &= {1 \over 2}|| \sum_{i=1}^{n}{\alpha_i y_i x_i} ||^2 + \sum_{i=1}^{n}\alpha_i \tag{using  -->
+
+So,
+
+$$
+\begin{align}
+L(\alpha_i) &={ {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } }  - \sum_{i=1}^{n}[\alpha_iy_i(\Theta^Tx_i + \Theta_0) - \alpha_i] } \\
+&= {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - \Theta^T\sum_{i=1}^{n}(\alpha_iy_i x_i) - \Theta_0\sum_{i=1}^{n}(\alpha_i y_i ) + \sum_{i=1}^{n}\alpha_i \\
+&= {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - \Theta^T\sum_{i=1}^{n}(\alpha_iy_i x_i) - 0 - \sum_{i=1}^{n}\alpha_i \tag{see, (4)}\\
+&= -{1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - {\sum_{i=1}^{n}\alpha_i}\\ 
+&={ \left( {\left(\sum_{i=1}^{n}{\alpha_i y_i x_i} \right) }^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } \right) } - {\sum_{i=1}^{n}\alpha_i}\\ 
+&={ \left( {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } \right) } - {\sum_{i=1}^{n}\alpha_i}\\ 
+\end{align}
+$$
+
+so this is my final legrangian which only depend on the dual variables..
+
+$$
+L(\alpha_i)={ {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } } - {\sum_{i=1}^{n}\alpha_i}\\ 
+$$
+
+so our final objective function will become:
+
+$$
+\max_{\alpha_i} \quad L(\alpha_i)={ {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } } - {\sum_{i=1}^{n}\alpha_i}\\
+s.t. \quad \left \{ { {\alpha \geq 0};
+{ {\sum_{i=1}^n} {\alpha_i y_i} = 0}  }\right.
+$$
+
+why $$ \max{\alpha_i} $$ you may ask... because as discussed earlier we are optimizing the dual of our initial objective function which means that when we are maximizing the dual we are essentially, minimizing the primal function and vice-versa.
+
+so essentially if we can solve this optimization function we can find our \alpha and if we can find our alphas we can find our \Theta using(4) which is our unknown parameter of our decison-boundary... so essential we can get our decision-boundary by solving this optimization problem
+
+
+for a point to be the most optimal it need to satisfy some of the conditions these conditions are known as K.K.T condition:
+
+1, stationarity condition:
+at x_star the derivative should be 0
+
+2) primal feasiblity: primal constraints should'nt be violated. in our case its gidi >= 0
+3) Dual feasibility: dual constraints shold'nt be violated .. in our case its $$ \alpha \geq 0 $$
+4) Complementary slackness condition: at optimial point dual variable * primal constraints should be equal to 0
+
+so, what that complementary slackness really means??
+
+$$ \alpha_i[y_i(\Theta^Tx_i + \Theta_0)]=0 $$
+
+$$ if \alpha > 0 \\ then, yi(\Theta^Tx_i+\Theta_0) = 1$$
+
+then this perticular point is on the margin and these points that are on the margin are called support vectors, in other words,
+
+support vectors are those points whose alphas are equals to 0
+
+but what if the alpha is not equals to zero then y_i > 1 which means this point is not on the margin in other words,
+
+any points whose alpha is close to 0 is not on the margin, hence, they are not our support vectors!!
+
+so by combining everything that we've learned so far, we get the martrix of alphas and it is going to be a sparse matrix and in that matrix we need to take out those alphas which are close to 1 and those points are going to be our support vectors
+
+so because only the points that are on the margin have alpha > 0 which means when we optimize our expression (5) only the points that are on the margin is going to affect the decision of the construction of our hyperplane..
+
+
+
+
+so as you can see (6) is a quadratic programming problem so either we can solve using qp solvers or we can use another method called SMO.. we are going for SMO because our goal is to understand the online svm later in this series and SMO plays a big role in constructing them.
+
+**Sequential Minimal Optimizer**
+So,SMO stands for Sequential Minimal Optimization,it is an iterative algorithm which is going to help us find the \alphas
 
 
