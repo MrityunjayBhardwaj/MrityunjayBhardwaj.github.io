@@ -3,7 +3,7 @@ layout: single
 title : Understanding Research paper :- lasvm-nc part-0
 tags  : [ML,AI,SVM,non-convex,online-learning,research-paper]
 title-seprator: "|"
-categories: blog MachineLearning
+categories: blog Artificial Intelligence MachineLearning
 permalink: /:categories/:title.html
 mathjax: true
 author-bio: false

@@ -3,14 +3,14 @@ layout: single
 title : SVM with SMO
 tags  : [ML,AI,SVM,non-convex,online-learning,research-paper]
 title-seprator: "|"
-categories: blog MachineLearning
+categories: blog  Artificial Intelligence MachineLearning
 permalink: /:categories/:title.html
 mathjax: true
 author-bio: false
 author_profile: false
 p5js: true   
 header: 
-    teaser: /assets/imgs/posts_imgs/lasvm-nc/kernel_trick_svm.png
+    teaser: /assets/imgs/posts_imgs/svm-with-smo/teaser/svm_db.png
 ---
 
 In this tutorial we are going to be going deep inside Support Vector Machines...before moving forward i first would like to address few pre-requisites:-
@@ -162,7 +162,7 @@ but instead of finding the solution of this optimization function we are going t
 
 so just like in any dual optimization scenario we need to form a legrangian of this optimization function
 
-$$ L(\Theta,\Theta_0,\alpha) = 1/2 ||\Theta||^2 - \sum_{i=1}^n\alpha [y_i(\Theta^Tx_i + \Theta_0)-1]$$ 
+$$ L(\Theta,\Theta_0,\alpha) = {1 \over 2} ||\Theta||^2 - \sum_{i=1}^n\alpha [y_i(\Theta^Tx_i + \Theta_0)-1]$$ 
 $$ where,\quad\quad \alpha\geq 0$$
 
 so, if i take the derivative of $$ L  w.r.t \Theta $$:-
@@ -172,7 +172,7 @@ $$
 { {\partial L}\over {\partial \Theta} } &=
 { {\partial }\over {\partial \Theta} }
 \left (
- 1/2 ||\Theta||^2 - \sum_{i=1}^n\alpha_i[y_i(\Theta^Tx_i + \Theta_0)-1]
+ {1 \over 2} ||\Theta||^2 - \sum_{i=1}^n\alpha_i[y_i(\Theta^Tx_i + \Theta_0)-1]
  \right ) \\
 { {\partial L}\over {\partial \Theta} } &=
 \Theta - \sum_{i=1}^{n}{\alpha_iy_ix_i}=0 \tag{2}
@@ -191,7 +191,7 @@ $$
 { {\partial L}\over {\partial \Theta_0} } &=
 { {\partial }\over {\partial \Theta_0} }
 \left (
- 1/2 ||\Theta||^2 - \sum_{i=1}^n\alpha_i[y_i(\Theta^Tx_i + \Theta_0)-1]
+ {1 \over 2} ||\Theta||^2 - \sum_{i=1}^n\alpha_i[y_i(\Theta^Tx_i + \Theta_0)-1]
  \right )  = 0\\
 { {\partial L}\over {\partial \Theta_0} } &=
 0 - \sum_{i=1}^{n}{\alpha_i y_i} = 0\\ 
@@ -219,10 +219,10 @@ $$
 \begin{align}
 L(\alpha_i) &={ {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } }  - \sum_{i=1}^{n}[\alpha_iy_i(\Theta^Tx_i + \Theta_0) - \alpha_i] } \\
 &= {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - \Theta^T\sum_{i=1}^{n}(\alpha_iy_i x_i) - \Theta_0\sum_{i=1}^{n}(\alpha_i y_i ) + \sum_{i=1}^{n}\alpha_i \\
-&= {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - \Theta^T\sum_{i=1}^{n}(\alpha_iy_i x_i) - 0 - \sum_{i=1}^{n}\alpha_i \tag{see, (4)}\\
-&= -{1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - {\sum_{i=1}^{n}\alpha_i}\\ 
-&={ \left( {\left(\sum_{i=1}^{n}{\alpha_i y_i x_i} \right) }^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } \right) } - {\sum_{i=1}^{n}\alpha_i}\\ 
-&={ \left( {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } \right) } - {\sum_{i=1}^{n}\alpha_i}\\ 
+&= {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - \Theta^T\sum_{i=1}^{n}(\alpha_iy_i x_i) + \sum_{i=1}^{n}\alpha_i \tag{see, (4)}\\
+&= -{1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } + {\sum_{i=1}^{n}\alpha_i}\\ 
+&={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ \left( {\left(\sum_{i=1}^{n}{\alpha_i y_i x_i} \right) }^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } \right) } \\ 
+&={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ \left( {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } \right) } \\ 
 \end{align}
 $$
 
@@ -274,10 +274,90 @@ so because only the points that are on the margin have alpha > 0 which means whe
 
 
 
-
+<p style="background-color: gray; padding: 20px "><font color="white">
 so as you can see (6) is a quadratic programming problem so either we can solve using qp solvers or we can use another method called SMO.. we are going for SMO because our goal is to understand the online svm later in this series and SMO plays a big role in constructing them.
+</font>
+</p>
 
-**Sequential Minimal Optimizer**
-So,SMO stands for Sequential Minimal Optimization,it is an iterative algorithm which is going to help us find the \alphas
+# Sequential Minimal Optimizer
+
+So,SMO stands for Sequential Minimal Optimization,it is an iterative algorithm which is going to help us calclate our $$ \alpha_s $$ by breaking down our quadratic progamming problem into smaller more tracktable sub-problems,the advantage of this technique is that, through smo we are able to avoide having to numerically optimize our QP problem entirely, which makes this method more efficient and faster to use. 
+
+The way it works is by takes 2 \alpha_s saperatly and optimize them together, find the optimal values and then finally updating our expression to reflect these new values.
+
+
+
+In order to compute these new values for these 2 multiplyers, we have to compute in such a way that the new values must be on the line, because of our linear constraints $$ \sum_{i=1}^n   { {\alpha_i} {y_i} }$$.
+
+
+<br>
+
+{: .text-center}
+<img src="{{site.url}}{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/smo_constraint_1.jpg">
+
+<i style="font-size:15px">image source: fig. 1.1 (box constraint)</i>
+{: .text-center}
+
+ which means that the search-space is a box of length C (see fig. 1.1)..but when we combine our box costraint with our linear equality constraint gives us a more strict constraint beacuse it makes the choice of alphas to follow the diagonal line  i.e,
+
+ $$ U \leq \alpha_2^{(new)} \leq V,\\  $$
+
+  where, U and V are depend on the values of y(s) and are clipped accordingly in order to keep the alphas from violating the constraints.
+
+if $$ y_1 \neq y_2$$
+
+
+$$
+\left \{
+\begin{array}{ll}
+U &=\max\{0, { \alpha_2^{(old)}}-{\alpha_1^{(old)}}\},\\
+V &= \min\{C,{ C - { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}
+\end{array}
+\right.
+$$
+
+if $$y_1 = y_2$$
+
+$$
+\left \{
+\begin{array}{ll}
+U &=\max\{0,{ { \alpha_1^{(old)}}-{\alpha_2^{(old)}} - C } \},\\
+V &= \min\{C,{ { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}
+\end{array}
+\right.
+$$
+
+<br>
+<br>
+{: .text-center}
+<img src="{{site.url}}{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/smo_constraint_2.jpg">
+<i style="font-size:15px">image source: fig. 1.1 (box constraint)</i>
+{: .text-center}
+
+which is good because our search space is reduced even further and the reason why we choose 2 multipliers is beacuse this is the minimum number of multipliers which can satisfy both the constraints, if we have only one multiplyer to optimize, it will satify the box constraint but not linear equality constraint.
+
+now that we have specified our constraints we can now move on and understand the full algorithm, so smo consist of 2 parts, first choose the best multiplyers to optimize, based on certain heuristics, and then by holding everything accept \alpha_1 and \alpha_2 we are going to optimize our objective function w.r.t these 2 alphas, while satifying all the constraints...
+
+so by doing that we made our complex QP problem into a simple quadratic equation which we easily fit its minimum...
+
+$$   \min \quad ax^2 + bx+c$$
+
+and if we encounter a minimum point that violates our constraint we will just going to clip it! using U and V...
+
+\image showing the clipping
+
+Atlast, we came to an end! what a great journey... now you know what svm is, how it was derived and how it really works internally/mathematically and you also know how to optimize our dual objective function and then find out the parameters of our decision-boundary, in the next article we are going to be implementing everything we've learned so far!!.. but for now congratulate yourself, you now know one of the prominiment algorithm of Machine Learning!!
+
+have a great day!
+
+References:-
+
+<a href="https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/"><u>
+https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/</u></a>
+
+
+
+
+
 
 
