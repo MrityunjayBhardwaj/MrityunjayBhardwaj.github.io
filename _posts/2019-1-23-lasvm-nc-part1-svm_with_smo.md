@@ -9,6 +9,7 @@ mathjax: true
 author-bio: false
 author_profile: false
 p5js: true   
+comments: true
 header: 
     teaser: /assets/imgs/posts_imgs/svm-with-smo/teaser/svm_db.png
 ---
