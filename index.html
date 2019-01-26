@@ -6,34 +6,32 @@ header:
   overlay_color: "rgb(61, 61, 61)"
   #overlay_filter: "0.5"
   #overlay_image: "/assets/imgs/landing-page-header-img/MainPageLayout.png"
-  caption: "create by: mrityunjay"
-  actions:
-    - label: "Download"
-      url: "https://github.com/mmistakes/minimal-mistakes/"
 intro: 
   - excerpt: 'Nullam suscipit et nam, tellus velit pellentesque at malesuada, enim eaque. Quis nulla, netus tempor in diam gravida tincidunt, *proin faucibus* voluptate felis id sollicitudin. Centered with `type="center"`'
 
 excerpt: "I love <i>**learning**</i> new stuffs"
 feature_row:
-  - url: ""
-    image_path: /assets/imgs/form_mm/unsplash-gallery-image-1-th.jpg
+  - url: "/blog/artificial-intelligence/classical_ai.html"
+    image_path: /assets/imgs/posts_imgs/classical_ai/teaser/botvshuman.jpeg
     alt: "placeholder image 1"
-    title: "Research 1"
-  - url: "/blog"
-    image_path: /assets/imgs/form_mm/unsplash-gallery-image-2-th.jpg
+    title: "Classical AI"
+
+  - url: "/blog/artificial-intelligence/machinelearning/rnns.html"
+    image_path: /assets/imgs/posts_imgs/rnn_with_math/teaser/RNNunfolded.png
     alt: "placeholder image 2"
-    title: "Research 2"
-  - url: /assets/imgs/form_mm/unsplash-gallery-image-3.jpg
-    image_path: /assets/imgs/form_mm/unsplash-gallery-image-3-th.jpg
+    title: "Understanding Recurrent Neural Nets"
+
+  - url: "/blog/artificial-intelligence/machinelearning/lasvm-nc-part0-intro.html"
+    image_path: /assets/imgs/posts_imgs/lasvm-nc/teaser/kernel_trick_svm.png
     alt: "placeholder image 3"
-    title: "Image 3 title caption"
+    title: "Understanding Research Paper: LASVM-NC"
 
 feature_row2:
-  - image_path: /assets/imgs/form_mm/unsplash-gallery-image-2-th.jpg
+  - image_path: /assets/imgs/posts_imgs/svm-with-smo/teaser/jog_anim.gif
     alt: "placeholder image 2"
     title: "Reprocussive Generation of Convoy's Game of Life"
     excerpt: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque, dolores sed repellendus molestiae tempora vel iusto similique? Libero nam sapiente at architecto, necessitatibus, numquam assumenda veritatis, corporis enim ex rem!"
-    url: "#test-link"
+    url: "/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html"
     btn_label: "Read More"
     btn_class: "btn--primary"
 
@@ -42,7 +40,7 @@ feature_row3:
     alt: "placeholder image 3"
     title: "About"
     excerpt: "This is my Story <br> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque, dolores sed repellendus molestiae tempora vel iusto similique? Libero nam sapiente at architecto, necessitatibus, numquam assumenda veritatis, corporis enim ex rem!"
-    url: "#"
+    url: "/about/"
     btn_label: "Read More"
     btn_class: "btn--primary"
 
@@ -93,7 +91,6 @@ feature_row3:
 
 
 
-
 <div id="latest_post_container">
 
 <div class="feature__wrapper">
@@ -103,18 +100,21 @@ feature_row3:
         
         <!-- side Image -->
           <div class="archive__item-teaser">
-            <img src="/assets/imgs/form_mm/unsplash-gallery-image-2-th.jpg" alt="placeholder image 2" style="width: 800px;height: 500px;">
+            <img src="/assets/imgs/posts_imgs/svm-with-smo/teaser/svm_for_front_page.jpg" alt="placeholder image 2">
             
           </div>
 
         <div class="archive__item-body">
           
-            <a href="#" >
-              <h1 class="archive__item-title" style="font-size: xx-large;font-weight: bold;text-decoration-line: underline;/*! text-align: left; */text-emphasis-color: blue;/*! padng: 0% 0%; */">Reprocussive Generation of Convoy's Game of Life</h1>
+            <a href="/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html" >
+              <h1 class="archive__item-title" style="font-size: xx-large;font-weight: bold;text-decoration-line: underline;/*! text-align: left; */text-emphasis-color: blue;/*! padng: 0% 0%; */">Support Vector Machine with SMO</h1>
             </a>
             <br>
             <div class="archive__item-excerpt" style="padding: 0% 0% 0% 10%">
-              <p style="text-align: left;font-size:x-large;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Neque, dolores sed repellendus molestiae tempora vel iusto similique? Libero nam sapiente at architecto, necessitatibus, numquam assumenda veritatis, corporis enim ex rem!</p>
+              <p style="text-align: left;font-size:x-large;"></p>
+so as you might know SVM stands for support vector machines.... its probabily the most successful hyperplane based classifier...what it means is that you are classifing 2 classes by constructing a hyperplane which seperate both of them as clearly as possible.
+
+
 
             </div>
           
@@ -134,6 +134,10 @@ feature_row3:
 {% include feature_row id="feature_row"%}
 </div>
 
+<div style="text-align: center">
+<a href="/blog/" style="position:0% 10%;border-style:solid;border-radius:4px; padding:15px 30px; " ><b>Visit Blog</b></a>
+</div>
+<br>
 <!-- <h2>Portfolio:</h2>
 <div id="portfolio_container" style="height: 300px"></div> -->
 

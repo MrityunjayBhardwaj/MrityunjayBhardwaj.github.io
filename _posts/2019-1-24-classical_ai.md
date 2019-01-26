@@ -3,7 +3,7 @@ layout: single
 title : Classical AI in JavaScript
 tags  : [AI,classical-AI,A*,]
 title-seprator: "|"
-categories: blog Artificial Intelligence
+categories: blog Artificial-Intelligence
 permalink: /:categories/:title.html
 mathjax: true
 author-bio: false

@@ -3,7 +3,7 @@ layout: single
 title : SVM with SMO
 tags  : [ML,AI,SVM,non-convex,online-learning,research-paper]
 title-seprator: "|"
-categories: blog  Artificial Intelligence MachineLearning
+categories: blog  Artificial-Intelligence MachineLearning
 permalink: /:categories/:title.html
 mathjax: true
 author-bio: false
@@ -353,7 +353,7 @@ have a great day!
 
 References:-
 
-<a href="https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/"><u>
+<a href="https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/" style="color:#3399ff"><u>
 https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/</u></a>
 
 
