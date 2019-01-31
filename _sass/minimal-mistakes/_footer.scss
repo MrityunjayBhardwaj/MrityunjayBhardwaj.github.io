@@ -57,6 +57,20 @@
   font-size: $type-size-7;
 }
 
+.page__footer-nav {
+  font-family: $global-font-family;
+  font-size: $type-size-7;
+  color: whitesmoke;
+  position: absolute;
+  right:10%;
+
+}
+#navlinks a:hover{
+  text-decoration:underline;
+  text-decoration-color: $primary-color;
+  color: $primary-color;
+}
+
 .page__footer-follow {
   ul {
     margin: 0;
