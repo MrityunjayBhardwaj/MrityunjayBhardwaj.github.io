@@ -47,7 +47,10 @@ In order to solidify what we are trying to achieve ...lets play a little game, i
 
 Ok, so what you just did in couple of seconds, is exactly what we are trying to accomplish using pure mathematical techniques... excited now? let's get started shall we.
 
-now, as you might have observed,in order to solve this problem, we want a decision boundry which does'nt touch any data point i.e, which is farthest from both the classes... i.e, we can imagine that there is a **margin** which represent that **distance** b/w decision-boundry and a data points and we need to **maximize** it in-order to seprate both the classes as clearly as possible..this becomes more prominent when we look at the generalization error(which is what we are always trying to minimize in any ML scenario)... you can observe this in L-fig 1.2 , by placing your hyperplane near to any one of the classes and then generate new samples from that same distribution and see how it perform,as compare to the scenario where, if we place the hyperplane farthest from both the classes.... 
+now, as you might have observed,in order to solve this problem, we want a decision boundry which does'nt touch any data point i.e, which is farthest from both the classes... we can imagine that there is a **margin** which represent that **distance** b/w decision-boundry and data points and we need to **maximize** it in-order to seprate both the classes..this becomes more prominent when we look at the 
+<a href="https://en.wikipedia.org/wiki/Generalization_error" style="color:#3399ff"><i>generalization error</i>
+</a>
+(which is what we are always trying to minimize in any ML scenario)... you can observe this in L-fig 1.2 , by placing your hyperplane near to any one of the classes and then generate new samples from that same distribution and see how it perform,as compare to the scenario where, if we place the hyperplane farthest from both the classes.... 
 
 >**Note**: Click <button class="btn--primary " onclick="onclickreset()">reload</button> to generate new samples.
 {: .notice--info}
@@ -61,8 +64,8 @@ now, as you might have observed,in order to solve this problem, we want a decisi
 <i style="font-size:15px">fit the classifier</i>
 {: .text-center}
 
-as you might have observed the margin is essentially just perpendicular to a line that sits on top of the nearest point of both the classes and
-now, all we have to do is to compute those margin and for that we need to do some math... don't worry its all going to be simple: <button class="btn--primary " onclick="myFunction()">Click Me</button>
+as you might have observed the margin is essentially just a line that sits on top of the nearest point of both the classes and
+now, all we have to do is to compute this margin and for that we need to do some math... don't worry its all going to be simple: <button class="btn--primary " onclick="myFunction()">Click Me</button>
  
 <!-- click here and lets get into it! -->
 
@@ -87,10 +90,13 @@ $$\require{cancel}$$
 Some Notation to be aware of:
 
 $$ \Theta $$   = slope of hyperplane
+
 $$ \Theta_0 $$ = intercept of the hyperplane
+
 $$ x $$        = our data points
 
-As we know that, if a point is **on the hyperplane** then its neither in class -1 nor +1. we can exploit this property to conclude that the $$ \Theta $$ is orthogonal to decision boundry and we can derive it as follows :-
+
+As we know that, if a point is **on the hyperplane** then its neither in class -1(orange class ) nor +1(blue class) we can exploit this property to conclude that the $$ \Theta $$ is orthogonal to decision boundry and we can derive it as follows :-
 
 let $$ x_1 $$  and $$ x_2  $$ can be any 2 arbitry points that are on the hyperplane so,
 
@@ -102,9 +108,7 @@ $$ \Theta^T(x_1 -x_2) = 0 $$
 
 $$ {\Theta \bot (x_1-x_2)} \tag{1}$$
 
-also, we observe that:
-
-for any point $$ x_0 $$ :-
+also, we observe that, for any point $$ x_0 $$ which is on the hyperplane :-
 
 $$ 
 \begin{align}
@@ -135,7 +139,10 @@ $$
 \end{alignat}
 $$ -->
 
-i am not going to go over projections but if you are a bit rusty about it then, i recommend you to watch this great lecture by legendry prof. gilbert strang <a href="https://www.youtube.com/watch?v=Y_Ac6KiQ1t0"><i style="color:#3399ff">projection onto subspace</i></a> or you can check its <a href="https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/least-squares-determinants-and-eigenvalues/projections-onto-subspaces/MIT18_06SCF11_Ses2.2sum.pdf"> <i style="color:#3399ff"> notes </i></a> as well
+i am not going to go over projections but if you are a bit rusty about it then, i recommend you to watch this great lecture by legendry prof. gilbert strang
+ <a href="https://www.youtube.com/watch?v=Y_Ac6KiQ1t0" style="color:#3399ff"><i>projection onto subspace</i></a> 
+ or you can check its
+<a href="https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/least-squares-determinants-and-eigenvalues/projections-onto-subspaces/MIT18_06SCF11_Ses2.2sum.pdf" style="color:#3399ff"> <i> notes </i></a> as well
 
 
 <img src="{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/proj.jpg">
@@ -193,9 +200,9 @@ we can re-write this as:
 $$ \max \quad{1 \over 2}||\Theta||^2\tag{7}\\
 \text{s.t.}\quad y_i(\Theta^Tx_i + \Theta_0) \geq 1 $$
 
-but instead of finding the solution of this optimization function we are going to be optimizing the dual of this objective function the reason will be apperant when we will talk about the non-linear SVM
+but instead of finding the solution of this optimization function we are going to be optimizing the **dual of this objective function** the reason will be apperant when we will talk about the non-linear SVM
 
-so just like in any dual optimization scenario we need to form a legrangian of the objective function and here let $$ \alpha $$ be our legrange multiplier
+so just like in any dual optimization scenario we need to form a **legrangian** of the objective function and here let $$ \alpha $$ be our **legrange multiplier**
 
 $$ L(\Theta,\Theta_0,\alpha) = {1 \over 2} ||\Theta||^2 - \sum_{i=1}^n\alpha [y_i(\Theta^Tx_i + \Theta_0)-1]$$ 
 $$ where,\quad\quad \alpha\geq 0 \tag{8}$$
@@ -253,7 +260,7 @@ $$
 \begin{align}
 L(\alpha_i) &={ {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } }  - \sum_{i=1}^{n}[\alpha_iy_i(\Theta^Tx_i + \Theta_0) - \alpha_i] } \\
 &= {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - \Theta^T\sum_{i=1}^{n}(\alpha_iy_i x_i) - \Theta_0\sum_{i=1}^{n}(\alpha_i y_i ) + \sum_{i=1}^{n}\alpha_i \\
-&= {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - \Theta^T\sum_{i=1}^{n}(\alpha_iy_i x_i) + \sum_{i=1}^{n}\alpha_i \tag{see, (4)}\\
+&= {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - \Theta^T\sum_{i=1}^{n}(\alpha_iy_i x_i) + \sum_{i=1}^{n}\alpha_i \tag{using, (10)}\\
 &= -{1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } + {\sum_{i=1}^{n}\alpha_i}\\ 
 &={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ \left( {\left(\sum_{i=1}^{n}{\alpha_i y_i x_i} \right) }^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } \right) } \\ 
 &={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ \left( {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } \right) } \\ 
@@ -276,46 +283,107 @@ $$
 
 why $$ \max{\alpha_i} $$ you may ask... because as discussed earlier we are optimizing the dual of our initial objective function which means that when we are maximizing the dual we are essentially, minimizing the primal function and vice-versa.
 
-so essentially, if we can solve this optimization function we can find our $$ \alpha $$ and if we can find our alphas we can find our $$ \Theta $$ using(11) which is our unknown parameter of our decison-boundary... so essential we can get our decision-boundary by solving this optimization problem
+so essentially, if we can solve this optimization function we can find our $$ \alpha $$ and if we can find our alphas we can find our $$ \Theta $$ using(10) which is our unknown parameter of our decison-boundary... so essential we can get our decision-boundary by solving this optimization problem
 
 
-for a point to be the most optimal, it need to satisfy some of the conditions these conditions are known as K.K.T condition:
+for a point to be the most optimal, it need to satisfy some of the conditions, these conditions are known as <a href="https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions" style="color:#3399ff">K.K.T condition</a>:
 
-1, stationarity condition:
+1), stationarity condition:
 at x_star the derivative should be 0
 
-1) primal feasiblity: primal constraints should'nt be violated. in our case its gidi >= 0
-2) Dual feasibility: dual constraints shold'nt be violated .. in our case its $$ \alpha \geq 0 $$
-3) Complementary slackness condition: at optimial point dual variable * primal constraints should be equal to 0
+2) primal feasiblity: primal constraints should'nt be violated. in our case its gidi >= 0
 
-so, what complementary slackness really means??
+3) Dual feasibility: dual constraints shold'nt be violated .. in our case its $$ \alpha \geq 0 $$
 
-$$ \alpha_i[y_i(\Theta^Tx_i + \Theta_0)]=0 $$
+4) Complementary slackness condition: at optimial point dual variable * primal constraints should be equal to 0
 
-$$ if \alpha > 0 \\ then, yi(\Theta^Tx_i+\Theta_0) = 1$$
+uptill now, we have covered 3 kkt conditions but now, we are going to be looking at the 4th one, that is  complementary slackness condition.
 
-then this perticular point is on the margin and these points that are on the margin are called support vectors, in other words,
+$$ \alpha_i*d_i = 0 \\ \alpha_i[y_i(\Theta^Tx_i + \Theta_0)]=0 \tag{13}$$
 
-support vectors are those points whose alphas are equals to 0
-
-but what if the alpha is not equals to zero then y_i > 1 which means this point is not on the margin in other words,
-
-any points whose alpha is close to 0 is not on the margin, hence, they are not our support vectors!!
-
-so by combining everything that we've learned so far, we get the martrix of alphas and it is going to be a sparse matrix and in that matrix we need to take out those alphas which are close to 1 and those points are going to be our support vectors
-
-so because only the points that are on the margin have alpha > 0 which means when we optimize our expression (5) only the points that are on the margin is going to affect the decision of the construction of our hyperplane..
+this means that if one of the term is greater then 0 then one of them has to be zero in order to satisfy (13)
+which means that, there are only 2 possible scenarios i.e,
 
 
+$$ if \quad \quad \alpha > 0$$
 
-<!-- <p style="background-color: gray; padding: 20px "><font color="white"> -->
-so as you can see (6) is a quadratic programming problem so either we can solve using qp solvers or we can use another method called SMO.. we are going for SMO because our goal is to understand the online svm later in this series and SMO plays a big role in constructing them. <button>Continue</button>
-<!-- </font> -->
-<!-- </p> -->
+$$
+\begin{align}
+then,\quad y_i(\Theta^Tx_i+\Theta_0) -1 &= 0 \\
+y_i(\Theta^Tx_i+\Theta_0) &= 1
+\end{align}
+$$
+
+which means that,this perticular point is on the margin and _these points that are on the margin are called **support vectors**_, in other words,
+
+>support vectors are those points whose $$ \alpha $$ are greater then 0
+
+but what if the $$ \alpha $$ is equals to 0? then $$ y_i[\Theta^Tx_i+\Theta_0] > 1 $$ which means that, this point is not on the margin in other words,
+
+>any points whose alpha is close to 0 is not on the margin, are not our support vectors
+
+so by combining everything that we've learned so far,when we solve our optimization problem w.r.t $$ \alpha $$, we get the sparse matrix(full of zeros) martrix of alphas  and in that matrix we need to take out those alphas which are close to 1 and those points are going to be our support vectors.
+
+because only the points that are on the margin have alpha > 0 which means when we calculate the parameters of our hyperplane using (10) only the points that are on the margin is going to affect the decision...
+
+
+now that we know what support vectors are and we have derived our final optimization problem the only thing left for us to do is to actually solve our formulation, as you might have noticed, our problem is quadratic in nature, so eiter we can use prebuild QPSolvers to solve (12) or we can use a better and more faster approch by using an algorithm called SMO, we are going with the latter one,which will also help us to construct ground for our next article, so lets get started... 
 
 # Sequential Minimal Optimizer
 
-So,SMO stands for Sequential Minimal Optimization,it is an iterative algorithm which is going to help us calclate our $$ \alpha_s $$ by breaking down our quadratic progamming problem into smaller more tracktable sub-problems,the advantage of this technique is that, through smo we are able to avoide having to numerically optimize our QP problem entirely, which makes this method more efficient and faster to use. 
+So,SMO stands for Sequential Minimal Optimization,it is an iterative algorithm which is going to help us calculate our $$ \alpha_s $$ by breaking down our quadratic progamming problem into smaller more tracktable sub-problems,the advantage of this technique is that, through smo we are able to avoide having to numerically optimize our QP problem entirely, which makes this method more efficient and faster to use. 
+
+in smo, we optimize 2 alphas samultaniously by taking the rest of the alphas as constant, which makes our optimization problem, just a simple quadratic expression, which is great because optimizing this expression is much simpler and faster then optimizing (12)... this is the reason why smo is the primery choice for solving svm... but before moving forward we need to understand how there constraint behave and why we choose 2 alphas why not 3 or 1??
+
+let's take a look at our first constraint $$ \alpha \geq 0 $$ and in there we know that there is a lower bound "0" but there is no upper bound yet, anyhow we can assume that there has to be a constant (let it be C) from which alpha is smaller i.e, 
+
+$$ 0 \leq \alpha \leq C \tag{14}$$
+
+so because we are optimizing 2 alphas together (let them be  $$ \alpha_1 $$ and $$ \alpha_2 $$) our constraint in expression (14) will become a box constraint which means that our alpha must reside inside this box in order to satisfy this constraint. which will look something like in fig 1.4:
+
+|||||||||||||||||| Fig 1.4 |||||||||||||||||||
+
+there is second constaint which we have to satisfy, which is also known as linear constraint:
+
+$$ \sum_{i=0}^{n} { {\alpha_i} {y_i} } = 0 \tag{15}$$
+
+<!-- 
+as the name suggest, if we were to visualize this constaint this will construct a line... which both the alphas must follow, now if we were to combine both the constraint, our final constraint viz. will look like this. -->
+
+<!-- |||||||||||||||||| Fig 1.5 ||||||||||||||||||| -->
+
+and as discussed earlier, in smo we optimize our expression(12) by samultaniously optimizing 2 alphas and freeze the rest them, mathematically:-
+
+which suggest that because all the alphas accept 1 and 2 are frozen our r.h.s is just a constant value let it be $$ \rho $$ 
+
+$$ $$
+
+which, if we were to visualize, it construct a line, that is the reason why its also known as linear constraint (see, fig 1.5)....which also means that for $$ alpha_2 $$ in order to satify both the constraint there has to be an upper and lower bound for it , let those bounds be $$ L $$ and $$ H $$
+
+<hr>
+<hr>
+now, as discussed earlier we optimze our expression (12) by freezing all the alphas accept 2 of them, but instead of optimizing 2 alphas if we were to optimize w.r.t only single alpha ($$ \alpha_1 $$) by freezing  $$ \alpha_2,\alpha_3 .....\alpha_n $$ which makes our second constraint something like this,
+
+$$
+\begin{align} \\
+\sum_{i=0}^{n} { {\alpha_i} {y_i} } &= 0 \\
+ { { { {\alpha_1} {y_i} } + { \sum_{i=0}^{n} { {\alpha_i} {y_i} } } &= 0 \\
+ { { { {\alpha_1} {y_i} }  &= - { \sum_{i=0}^{n} { {\alpha_i} {y_i} } } \\
+ \text{ multiplying both side by } y_1 \text{we get,} \\
+ { { { {\alpha_1}  }  &= -{y_1} { \sum_{i=0}^{n} { {\alpha_i} {y_i} } }  \\
+\end{align}
+$$
+
+which clearly suggest that, $$ alpha_1 $$ is a function of all the alphas and because we have fixed all of them then its just a constant value which means we cannot change our $$ alpha_1 $$ without violating our linear constraint, that is the reason why we the minimal number of alphas requireds for us to optimize our expression(12) has to be atleast 2.
+
+Now that we have understood about the constraints while jointly optimizing our alphas , let's now take a look at how it comes together and optimize our expression (12) using smo algorithm,
+
+
+
+
+
+but we have to address some edge cases, suppose if our alpha is greater then C or
+
 
 The way it works is by takes 2 \alpha_s saperatly and optimize them together, find the optimal values and then finally updating our expression to reflect these new values.
 
