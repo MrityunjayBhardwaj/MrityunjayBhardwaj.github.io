@@ -361,7 +361,7 @@ $$ $$
 which, if we were to visualize, it construct a line, that is the reason why its also known as linear constraint (see, fig 1.5)....which also means that for $$ alpha_2 $$ in order to satify both the constraint there has to be an upper and lower bound for it , let those bounds be $$ L $$ and $$ H $$
 
 <hr>
-<hr>
+
 now, as discussed earlier we optimze our expression (12) by freezing all the alphas accept 2 of them, but instead of optimizing 2 alphas if we were to optimize w.r.t only single alpha ($$ \alpha_1 $$) by freezing  $$ \alpha_2,\alpha_3 .....\alpha_n $$ which makes our second constraint something like this,
 
 $$
