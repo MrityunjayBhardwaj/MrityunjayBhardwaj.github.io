@@ -15,7 +15,7 @@ header:
 ---
 
 <!-- if you are unfimilier with those concepts or just need to brush up some of them,  Imperial Collage London has a great course on coursera,which you might find useful:
-<a href="https://www.coursera.org/specializations/mathematics-machine-learning" target="_blank"><u>https://www.coursera.org/specializations/mathematics-machine-learning</u></a> -->
+<a target="_blank" href="https://www.coursera.org/specializations/mathematics-machine-learning" target="_blank"><u>https://www.coursera.org/specializations/mathematics-machine-learning</u></a> -->
 
  In this tutorial, we are going to take a deep dive inside support vector machines, we are going to talk about what svm is and how it works internally/mathematically by deconstructing every single part that leads to it's final formulation and then, we are going to take a look at how to solve that formulation using an algorithm called SMO.... by the end of this article, you should have a solid understand of one of the most important Algorithm in Machine Learning.
  
@@ -36,7 +36,7 @@ In order to solidify what we are trying to achieve ...lets play a little game, i
 <script src="{{site.baseurl}}/assets/js/dependency/p5/p5.min.js"></script>
 <script src="{{site.baseurl}}/assets/js/dependency/p5/addons/p5.dom.min.js"></script>
 
-<script src="{{site.baseurl}}/assets/js/my_js/fit_hype.js"></script>
+<script src="{{site.baseurl}}/assets/js/my_js/svm-with-smo/fit_hype.js"></script>
 
 <i style="font-size:15px">L-fig 1.1</i><br>
 <i style="font-size:15px">fit the classifier by moving the gizmo(black arrow) of your hyperplane, make sure to have as less missclassification points(denoted by "X") as possible..good luck!!</i>
@@ -48,7 +48,7 @@ In order to solidify what we are trying to achieve ...lets play a little game, i
 Ok, so what you just did in couple of seconds, is exactly what we are trying to accomplish using pure mathematical techniques... excited now? let's get started shall we.
 
 now, as you might have observed,in order to solve this problem, we want a decision boundry which does'nt touch any data point i.e, which is farthest from both the classes... we can imagine that there is a **margin** which represent that **distance** b/w decision-boundry and data points and we need to **maximize** it in-order to seprate both the classes..this becomes more prominent when we look at the 
-<a href="https://en.wikipedia.org/wiki/Generalization_error" style="color:#3399ff"><i>generalization error</i>
+<a target="_blank" href="https://en.wikipedia.org/wiki/Generalization_error" style="color:#3399ff"><i>generalization error</i>
 </a>
 (which is what we are always trying to minimize in any ML scenario)... you can observe this in L-fig 1.2 , by placing your hyperplane near to any one of the classes and then generate new samples from that same distribution and see how it perform,as compare to the scenario where, if we place the hyperplane farthest from both the classes.... 
 
@@ -59,7 +59,7 @@ now, as you might have observed,in order to solve this problem, we want a decisi
 <div id="fit_hyperplane_yourself_1" style="width: inherit"></div>
 
 
-<script src="{{site.baseurl}}/assets/js/my_js/fit_hype_2.js"></script>
+<script src="{{site.baseurl}}/assets/js/my_js/svm-with-smo/fit_hype_2.js"></script>
 <i style="font-size:15px">L-fig 1.2</i>
 <i style="font-size:15px">fit the classifier</i>
 {: .text-center}
@@ -80,7 +80,7 @@ function myFunction() {
 } 
 </script>
 
-<a href="#" class="btn btn--inverse">Link Text</a>
+<a target="_blank" href="#" class="btn btn--inverse">Link Text</a>
 
 
 mathematically, we need to find the points that are nearest to our decision boundry and for that, we first need to calculate the perpendicular distance b/w hyperplane and any arbitary point(i.e, our margin)...we can do that by projecting the point onto the hyperplane and then calculate the distance...
@@ -140,9 +140,9 @@ $$
 $$ -->
 
 i am not going to go over projections but if you are a bit rusty about it then, i recommend you to watch this great lecture by legendry prof. gilbert strang
- <a href="https://www.youtube.com/watch?v=Y_Ac6KiQ1t0" style="color:#3399ff"><i>projection onto subspace</i></a> 
+ <a target="_blank" href="https://www.youtube.com/watch?v=Y_Ac6KiQ1t0" style="color:#3399ff"><i>projection onto subspace</i></a> 
  or you can check its
-<a href="https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/least-squares-determinants-and-eigenvalues/projections-onto-subspaces/MIT18_06SCF11_Ses2.2sum.pdf" style="color:#3399ff"> <i> notes </i></a> as well
+<a target="_blank" href="https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/least-squares-determinants-and-eigenvalues/projections-onto-subspaces/MIT18_06SCF11_Ses2.2sum.pdf" style="color:#3399ff"> <i> notes </i></a> as well
 
 
 <img src="{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/proj.jpg">
@@ -244,6 +244,7 @@ $$
 $$
 
 i.e,
+
 $$
 \sum_{i=1}^{n}{\alpha_i y_i} = 0 \tag{11}
 $$
@@ -286,7 +287,7 @@ why $$ \max{\alpha_i} $$ you may ask... because as discussed earlier we are opti
 so essentially, if we can solve this optimization function we can find our $$ \alpha $$ and if we can find our alphas we can find our $$ \Theta $$ using(10) which is our unknown parameter of our decison-boundary... so essential we can get our decision-boundary by solving this optimization problem
 
 
-for a point to be the most optimal, it need to satisfy some of the conditions, these conditions are known as <a href="https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions" style="color:#3399ff">K.K.T condition</a>:
+for a point to be the most optimal, it need to satisfy some of the conditions, these conditions are known as <a target="_blank" href="https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions" style="color:#3399ff">K.K.T condition</a>:
 
 1), stationarity condition:
 at x_star the derivative should be 0
@@ -331,19 +332,25 @@ now that we know what support vectors are and we have derived our final optimiza
 
 # Sequential Minimal Optimizer
 
-So,SMO stands for Sequential Minimal Optimization,it is an iterative algorithm which is going to help us calculate our $$ \alpha_s $$ by breaking down our quadratic progamming problem into smaller more tracktable sub-problems,the advantage of this technique is that, through smo we are able to avoide having to numerically optimize our QP problem entirely, which makes this method more efficient and faster to use. 
+So,SMO stands for Sequential Minimal Optimization,it is an iterative algorithm which is going to help us calculate our $$ \alpha_s $$ by breaking down our quadratic progamming problem into smaller more tracktable sub-problems. the advantage of this technique is that, through smo we are able to avoide having to numerically optimize our QP problem entirely, which makes this method more efficient and faster to use. 
 
-in smo, we optimize 2 alphas samultaniously by taking the rest of the alphas as constant, which makes our optimization problem, just a simple quadratic expression, which is great because optimizing this expression is much simpler and faster then optimizing (12)... this is the reason why smo is the primery choice for solving svm... but before moving forward we need to understand how there constraint behave and why we choose 2 alphas why not 3 or 1??
+in smo, we optimize 2 alphas samultaniously by taking the rest as a constant, which makes our optimization problem, just a simple quadratic expression, which is great because optimizing this expression is much simpler and faster then optimizing (12)... this is the reason why smo is the primery choice for solving svm... but before moving forward we need to understand how there constraint behave and why we choose 2 alphas instead of 1??
 
-let's take a look at our first constraint $$ \alpha \geq 0 $$ and in there we know that there is a lower bound "0" but there is no upper bound yet, anyhow we can assume that there has to be a constant (let it be C) from which alpha is smaller i.e, 
+let's take a look at our first constraint $$ \alpha \geq 0 $$,  we know that in this constraint, there is a lower bound "0" and we can assume that there is an upperbound (let it be "C"),which makes our constraint as follows: 
 
 $$ 0 \leq \alpha \leq C \tag{14}$$
 
-so because we are optimizing 2 alphas together (let them be  $$ \alpha_1 $$ and $$ \alpha_2 $$) our constraint in expression (14) will become a box constraint which means that our alpha must reside inside this box in order to satisfy this constraint. which will look something like in fig 1.4:
+so, because we are optimizing 2 alphas together (let them be  $$ \alpha_1 $$ and $$ \alpha_2 $$) our constraint in expression (14) will become a box constraint which means that our alpha must reside inside this box of size C x C . which will look something like in fig 1.4:
 
-|||||||||||||||||| Fig 1.4 |||||||||||||||||||
 
-there is second constaint which we have to satisfy, which is also known as linear constraint:
+{: .text-center}
+<img src="{{site.url}}{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/smo_constraint_1.jpg">
+
+<i style="font-size:15px">fig. 1.4 (box constraint)</i>
+{: .text-center}
+
+
+there is a another constaint which we have to keep in mind, which is:
 
 $$ \sum_{i=0}^{n} { {\alpha_i} {y_i} } = 0 \tag{15}$$
 
@@ -352,32 +359,140 @@ as the name suggest, if we were to visualize this constaint this will construct 
 
 <!-- |||||||||||||||||| Fig 1.5 ||||||||||||||||||| -->
 
-and as discussed earlier, in smo we optimize our expression(12) by samultaniously optimizing 2 alphas and freeze the rest them, mathematically:-
-
-which suggest that because all the alphas accept 1 and 2 are frozen our r.h.s is just a constant value let it be $$ \rho $$ 
-
-$$ $$
-
-which, if we were to visualize, it construct a line, that is the reason why its also known as linear constraint (see, fig 1.5)....which also means that for $$ alpha_2 $$ in order to satify both the constraint there has to be an upper and lower bound for it , let those bounds be $$ L $$ and $$ H $$
-
-<hr>
-
-now, as discussed earlier we optimze our expression (12) by freezing all the alphas accept 2 of them, but instead of optimizing 2 alphas if we were to optimize w.r.t only single alpha ($$ \alpha_1 $$) by freezing  $$ \alpha_2,\alpha_3 .....\alpha_n $$ which makes our second constraint something like this,
+and as discussed earlier, in smo we optimize our expression(12) by samultaniously optimizing 2 alphas and freeze the rest them, which modifies our constraint something like this:-
 
 $$
-\begin{align} \\
-\sum_{i=0}^{n} { {\alpha_i} {y_i} } &= 0 \\
- { { { {\alpha_1} {y_i} } + { \sum_{i=0}^{n} { {\alpha_i} {y_i} } } &= 0 \\
- { { { {\alpha_1} {y_i} }  &= - { \sum_{i=0}^{n} { {\alpha_i} {y_i} } } \\
- \text{ multiplying both side by } y_1 \text{we get,} \\
- { { { {\alpha_1}  }  &= -{y_1} { \sum_{i=0}^{n} { {\alpha_i} {y_i} } }  \\
+\begin{align}
+\sum_{i=1}^{n} { {\alpha_i} {y_i} } &= 0 \\
+ { {\alpha_1} {y_1} } + { {\alpha_2} {y_2} } + { \sum_{i=2}^{n} { {\alpha_i} {y_i} } } &= 0 \\
+{ {\alpha_1} {y_1} } + { {\alpha_2} {y_2} } &= -{ \sum_{i=2}^{n} { {\alpha_i} {y_i} } } 
 \end{align}
 $$
 
-which clearly suggest that, $$ alpha_1 $$ is a function of all the alphas and because we have fixed all of them then its just a constant value which means we cannot change our $$ alpha_1 $$ without violating our linear constraint, that is the reason why we the minimal number of alphas requireds for us to optimize our expression(12) has to be atleast 2.
+which suggest that because all the alphas accept 1 and 2 are frozen, our r.h.s is just a constant value let it be $$ \rho $$ 
 
-Now that we have understood about the constraints while jointly optimizing our alphas , let's now take a look at how it comes together and optimize our expression (12) using smo algorithm,
+$$
+{ {\alpha_1} {y_1} } + { {\alpha_2} {y_2} } = \rho \tag{16}
+$$
 
+which, if we were to visualize, it construct a line, that is the reason why its also known as linear constraint (see, fig 1.5)....which also means that for $$ \alpha_2 $$ in order to satify both the constraints, there has to be an upper and lower bound for it , let those bounds be $$ H $$ and $$ L $$ in our case $$ L = 0 $$ which is not always the case, so the next thing left for us to do is to calcuate our $$ H $$ and $$ L $$ for our $$ \alpha_2 $:-
+
+ $$ H \leq \alpha_2^{(new)} \leq L,\\  $$
+
+  where, H and L are depend on the values of y(s) and are clipped accordingly in order to keep the alphas from violating the constraints.
+
+if $$ y_1 \neq y_2$$
+
+
+$$
+\left \{
+\begin{array}{ll}
+H &=\max\{0, { \alpha_2^{(old)}}-{\alpha_1^{(old)}}\},\\
+L &= \min\{C,{ C - { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}\tag{17}
+\end{array}
+\right.
+$$
+
+if $$y_1 = y_2$$
+
+$$
+\left \{
+\begin{array}{ll}
+H &=\max\{0,{ { \alpha_1^{(old)}}-{\alpha_2^{(old)}} - C } \},\\
+L &= \min\{C,{ { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}\tag{18}
+\end{array}
+\right.
+$$
+
+{: .text-center}
+<img src="{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/bounds_for_alpha2.png">
+<i style="font-size:15px">fig 1.5 (bounds in $$ \alpha_2$$ </i>
+{: .text-center}
+
+using equation (16) we can also write $$ \alpha_1 $$ as a function of $$ \alpha_2 $$
+
+$$
+\begin{align}
+{ {\alpha_1} {y_1} } + { {\alpha_2} {y_2} } &= \rho \\
+{ {\alpha_1} {y_1} }  &= \rho - { {\alpha_2} {y_2} } \\
+\text{Multiplying both sides by } y_1 \text{we get:} \\
+{ {\alpha_1} { (y_1) }^2 }  &= y_1{ (\rho - { {\alpha_2} {y_2} } ) } \\
+{ {\alpha_1} { (y_1) }^2 }  &= y_1{ (\rho - { {\alpha_2} {y_2} } ) } \\
+\end{align}
+$$
+
+because, $$ y_i \in \{-1,+1 \},$$ our expression will become,
+
+$$
+{\alpha_1} = y_1{ (\rho - { {\alpha_2} {y_2} } ) } \tag{19}
+$$
+
+now, before moving any further lets look at a case where,instead of taking 2 alphas at a time, we take only one,which makes our second constraint something like this,
+
+$$
+\begin{align} 
+\sum_{i=0}^{n} { {\alpha_i} {y_i} } &= 0 \\
+ { { {\alpha_1} {y_i} } + { \sum_{i=1}^{n} { {\alpha_i} {y_i} } } } &= 0 \\
+ { {\alpha_1} {y_i} }  &= - { \sum_{i=0}^{n} { {\alpha_i} {y_i} } } \\ \text{ multiplying both side by } y_1 \text{we get,}\quad \quad \\
+ { {\alpha_1}  }  &= -{y_1} { \sum_{i=0}^{n} { {\alpha_i} {y_i} } }  \\
+\end{align}
+$$
+
+which clearly suggest that, $$ \alpha_1 $$ is a function of all the alphas and because we have fixed all of them then its just a constant value which means we cannot change our $$ \alpha_1 $$ without violating our linear constraint, that is the reason why the minimal number of alphas we can use has to be atleast 2.
+
+Now that we have understood about the constraints , let's now take a look at how it all comes together and optimize our expression (12) using smo algorithm....
+
+smo algorithm has 2 parts, 1 is to choose the alphas based on a certain heuristics, and second is to optimize our objective function w.r.t these alphas.... although, you can choose the alphas randomly, but using heurisitics will help us to choose only the most promising one i.e, which can gives us the most improvement in our optimization, in this article we are not going to worry about the first one because it more of an implementation concern (which we will address in part 2)... for now, we suppose that we have already choose those alphas and all that left for us to do is to optimize our objective (12) w.r.t them....
+
+
+ using equation (19) we can conclude that our final objective function will look something like this:-
+
+$$ W(\alpha_1,\alpha_2,.....,\alpha_n) = W((\rho -\alpha_2y_2)y_1,\alpha_2,.....,\alpha_n)\tag{20}$$
+
+and as discussed earlier, in smo we hold all the alphas, accept 2 of them, which convert our entire expression into a simple quadratic function in the form of $$ a(\alpha_2)^2 + b(\alpha_1) +c $$ for some appropriate $$a,$$ $$b$$ and$$ c $$ which we can easily maximize by putting 0 on the r.h.s and taking its second derivative ignoring the box constraints...gives us $$ \eta $$ which is less then zero and maximum along the  directions of the linear constraint.
+
+$$ \eta = 2 K(x_1,x_2) - K(x_1,x_1) - K(x_2,x_2)$$
+
+where, K is our kernel function.
+
+now that we know our derivative, we can now use this to calculate the new values for our alphas using this formula:
+
+$$ \alpha_2^{(new)} = { \alpha_2^{ (new) } } - { {y_2(E_1 - E_2) } \over { \eta } } \tag{21}$$
+
+where, $$ E_i = f^{old}(x_i) - y_i $$ is the error on the ith training eample... but what if our optimal point is outside our box constraint??... if that the case then we can just clip our $$ \alpha_2 $$ to its bounds....  
+
+
+$$
+\alpha_2 = \left \{
+\begin{align}
+H,&\quad \text{if }\alpha_2 \geq H \\
+\alpha_2,&\quad \text{if } L < \alpha_2 < H \\
+L,&\quad \text{if }\alpha_2 \leq L \tag{22}\\
+\end{align}
+\right.
+$$
+
+now we know our new $$ \alpha_2 $$, we can find our $$ \alpha_1 $$ using equation (19):
+
+$$ \alpha_1^{(new)} = \alpha_1^{(old)} + s{ ( \alpha_2^{(old)} - \alpha_2^{(new)} ) } \tag{23}$$
+
+where, $$ s = y_1y_2 $$
+
+and just like that, we are going to heuristically take 2 alphas and update them untill all the alphas stops changing within certian iteration. and after finding the value of all the alphas we are just going to be using equation (12) to calculate our hyperplane and thats it!
+
+Now its a great time to summerise what we have just did, we first looked at what we are try to achieve using L-fig 1.1 and 1.2.. then we introduce the concept of margin and we clearify that we have to maximize it in order to find our best hyperplane, then we moved on and formulate this idea and came up with the objective function, but we realized that it would be more benificial to optimize its dual counterpart which introduces our final optimization function(12)... althought, we could use a black-box QPSolvers to solve our function but we instead go with SMO and layed out the entire algorithm and found the way to maximize our objective function using 2 alphas at a time, we disussed why we choose 2 alphas instead of one and then we take a look at our constraints and how is it going to change if we freeze all of the alphas accept 2 of them... which leads us to the final values of our alphas, which we can calcuate and update untill it converges, in the end we take a look at how are we going to be using these alphas to calculate our decision-boundary.
+
+I hope that you enjoyed and learned something new... if there is any thing that you did'nt like please let me know, i am just a beginner in this stuff so i hope you could help me by critiquing it ( please be brutal)..
+
+
+
+
+
+
+
+
+
+<!-- 
 
 
 
@@ -394,17 +509,12 @@ In order to compute these new values for these 2 multiplyers, we have to compute
 
 <br>
 
-{: .text-center}
-<img src="{{site.url}}{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/smo_constraint_1.jpg">
-
-<i style="font-size:15px">image source: fig. 1.1 (box constraint)</i>
-{: .text-center}
 
  which means that the search-space is a box of length C (see fig. 1.1)..but when we combine our box costraint with our linear equality constraint gives us a more strict constraint beacuse it makes the choice of alphas to follow the diagonal line  i.e,
 
- $$ U \leq \alpha_2^{(new)} \leq V,\\  $$
+ $$ U \leq \alpha_2^{(new)} \leq L,\\  $$
 
-  where, U and V are depend on the values of y(s) and are clipped accordingly in order to keep the alphas from violating the constraints.
+  where, U and L are depend on the values of y(s) and are clipped accordingly in order to keep the alphas from violating the constraints.
 
 if $$ y_1 \neq y_2$$
 
@@ -413,7 +523,7 @@ $$
 \left \{
 \begin{array}{ll}
 U &=\max\{0, { \alpha_2^{(old)}}-{\alpha_1^{(old)}}\},\\
-V &= \min\{C,{ C - { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}
+L &= \min\{C,{ C - { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}
 \end{array}
 \right.
 $$
@@ -424,7 +534,7 @@ $$
 \left \{
 \begin{array}{ll}
 U &=\max\{0,{ { \alpha_1^{(old)}}-{\alpha_2^{(old)}} - C } \},\\
-V &= \min\{C,{ { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}
+L &= \min\{C,{ { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}
 \end{array}
 \right.
 $$
@@ -444,22 +554,22 @@ so by doing that we made our complex QP problem into a simple quadratic equation
 
 $$   \min \quad ax^2 + bx+c$$
 
-and if we encounter a minimum point that violates our constraint we will just going to clip it! using U and V...
+and if we encounter a minimum point that violates our constraint we will just going to clip it! using U and L...
 
-\image showing the clipping
+\image showing the clipping 
 
-Atlast, we came to an end! what a great journey... now you know what svm is, how it was derived and how it really works internally/mathematically and you also know how to optimize our dual objective function and then find out the parameters of our decision-boundary, in the next article we are going to be implementing everything we've learned so far!!.. but for now congratulate yourself, you now know one of the prominiment algorithm of Machine Learning!!
+ -->
+
+
 
 have a great day!
 
-References:-
+**References**:-
 
-<a href="https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/" style="color:#3399ff"><u>
-https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/</u></a>
+<a target="_blank" href="https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/" style="color:#3399ff">
+https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/
+</a>
 
-
-
-
-
-
-
+<a target="_blank" href="https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/" style="color:#3399ff">
+https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/smo-book.pdf
+<a>

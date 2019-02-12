@@ -1,16 +1,17 @@
-let mhp_2 = 0;// my hyperplane
+let mhp_2  = 0;// my hyperplane
+let margin = 30;
 
 let origin_selected_2 = 0;
 const canvasDiv_2 = document.getElementById("fit_hyperplane_yourself_1");
-const pwidth_2 = canvasDiv_2.offsetWidth;
+const pwidth_2    = canvasDiv_2.offsetWidth;
 
-let ptsArray_2 = [];
+let ptsArray_2  = [];
 let ptsArray2_2 = [];
 
-let accuracy_2 = 0;
+let accuracy_2   = 0;
 let accuracy_arr = [0];
 
-let resample_count= 0;
+let resample_count = 0;
 
 let thisp;
 
@@ -25,8 +26,8 @@ function btn(p,x,y,ico) {
 
 }
 function onclickreset(){
-    let npt = ptsArray.length;
-    ptsArray_2 = [];
+    let npt     = ptsArray.length;
+    ptsArray_2  = [];
     ptsArray2_2 = [];
 
     rnd_pts(thisp,
@@ -44,6 +45,7 @@ function onclickreset(){
     accuracy_2 =  (1-classifyArray(thisp,mhp_2.rotation,mhp_2.pos.y,ptsArray2_2) + classifyArray(thisp,mhp_2.rotation,mhp_2.pos.y,ptsArray_2,1))/2;
     accuracy_arr.push(0);
 }
+
 function resample(p,npt,accuracy_arr){
 
     ptsArray_2 = []
@@ -63,7 +65,7 @@ function resample(p,npt,accuracy_arr){
     // rsc++;
     accuracy_arr.push(0);
     p.textSize(20);
-    accuracy_2 =  (1-classifyArray(p,mhp_2.rotation,mhp_2.pos.y,ptsArray2_2) + classifyArray(p,mhp_2.rotation,mhp_2.pos.y,ptsArray_2,1))/2;
+    accuracy_2 = (1-classifyArray(p,mhp_2.rotation,mhp_2.pos.y,ptsArray2_2) + classifyArray(p,mhp_2.rotation,mhp_2.pos.y,ptsArray_2,1))/2;
     p.text("accuracy: "+accuracy_2.toFixed(5)*100+"%", 10, 20);
 
 }
@@ -81,7 +83,7 @@ var sketch2 = function(p){
         canvas.parent("#fit_hyperplane_yourself_1");
 
         // init hyperplane
-        mhp_2 = new hplane(p,{x:p.width/2,y:p.height*.9},0);
+        mhp_2 = new hplane(p,{x:p.width/2,y:p.height*.5},0);
 
         console.log("sdkfjldkf")
         rnd_pts(p,
@@ -169,6 +171,19 @@ var sketch2 = function(p){
             // origin_selected_2 = 1;
             mhp_2.orad = 20;
         }else {mhp_2.orad = 10;}
+
+        let margin = 30;
+        p.push();
+
+        p.translate(p.width/2,p.height/2);
+        p.rotate(mhp_2.rotation);
+        
+        p.line(-p.width,margin,p.width,margin);
+        p.line(-p.width,-margin,p.width,-margin);
+        
+
+
+        p.pop();
 
     }
 
