@@ -11,7 +11,7 @@ author_profile: false
 p5js: true   
 comments: true
 header: 
-    teaser: /assets/imgs/posts_imgs/svm-with-smo/teaser/svm_db.png
+    teaser: /assets/imgs/posts_imgs/svm-with-smo-part-3/teaser/code_cc.jpeg
 ---
 
 In this tutorial we are going to be appliying what we have learned in part 1 of this series by implementing our own smo algorithm in Python or JavaScript.. if you have'nt checked out the first part yet,i suggest you to do so. but if you just need a referesher on svm then in the next paragraph we are going to take a brief look at it.

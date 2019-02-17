@@ -83,8 +83,10 @@
       border: 1px solid mix(#000, $border-color, 25%);
       border-radius: 0;
 
+    // for blog navigation bar
       &:hover {
-        color: $link-color-hover;
+        color: white;
+        background-color: #757575;
       }
 
       &.current,
@@ -187,6 +189,7 @@
     text-decoration: none;
 
     &:hover {
+
       color: $masthead-link-color-hover;
     }
 
@@ -273,7 +276,7 @@
       &:hover {
         // text-decoration: underline;
         // text-decoration-color:$primary-color;
-        background: $primary-color;
+        // background: $primary-color;
       }
     }
 

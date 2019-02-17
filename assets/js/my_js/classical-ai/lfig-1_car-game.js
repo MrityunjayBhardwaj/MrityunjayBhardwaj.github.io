@@ -24,6 +24,8 @@ var sketch1 = function(p){
         console.log("inside setup")
         redcar = new car(tilemap_alpha);
 
+        p.noLoop();
+
     }
     p.draw = function(){
         p.background(100);
@@ -73,7 +75,7 @@ var sketch1 = function(p){
 
 function menu(p){
 
-    p.fill(80,150)
+    p.fill(80,120)
     p.rect(0,0,p.width,p.height) 
 
     p.fill(250,255);
@@ -99,7 +101,7 @@ function car(map){
         let mapindex = (tpos.x*map_dim.w + tpos.y);
 
         let tmapval =   Math.abs( this.map.get(tpos.x,tpos.y)[1]);
-        console.log(tpos,tmapval);
+        // console.log(tpos,tmapval);
 
         if (tmapval){
             if( tmapval < 255)
@@ -160,13 +162,8 @@ function car(map){
         p.rotate(this.rotation);
 
         p.fill(100,200,100);
-        // p.rect(2,2,5,5);
-
-
-
         // for image
         p.image(img,-img.width*.025,-img.height*.025,img.width*.05,img.height*.05);
-
 
         p.pop();
 
