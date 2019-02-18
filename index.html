@@ -12,7 +12,7 @@ intro:
 excerpt: "I love <i>**learning**</i> new stuffs"
 feature_row:
   - url: "/blog/artificial-intelligence/classical_ai.html"
-    image_path: /assets/imgs/posts_imgs/classical-ai/teaser/botvshuman.jpeg
+    image_path: /assets/imgs/posts_imgs/svm-with-smo-part-3/teaser/code_cc.jpeg
     alt: "placeholder image 1"
     title: "Classical AI"
 
@@ -51,14 +51,26 @@ feature_row3:
 {% endfor %} -->
 
 <style>
+  :root{
+    --primary-color: rgba(255, 29, 168, 0.918) ;
+  }
   #feature_row_container{
     padding: 1% 5%;
     
   }
 
+  #feature_row_container a:hover{
+
+    color: var(--primary-color);
+  }
+
   #main_about{
     padding: 05% 05%;
-    background-color:gray;
+    background-color:rgb(94, 94, 94);
+    border-radius:5px;
+
+
+    color:white;
   }
 
   #latest_post_container{
@@ -75,10 +87,33 @@ feature_row3:
     border-top: 1px solid #555555;
   }
 
- 
-  .page__hero{
+  #visit_blog_btn{
+    position:0% 10%;
+    border-style:solid;
+    border-radius:4px;
+    padding:15px 30px; 
 
-  };
+
+  }
+  #visit_blog_btn:hover{
+    color: white;
+    background-color:gray;
+    border-color:gray;
+  }
+
+
+.page__content a:not(.btn):not(#goog-wm-sb):hover{
+  text-decoration: none;
+  text-decoration-color:white;
+}
+  #visit_blog{
+    text-decoration:none;
+  }
+
+  #main-post h1:hover{
+    color: var(--primary-color);
+  }
+  
 </style>
 
   
@@ -106,24 +141,21 @@ feature_row3:
 
         <div class="archive__item-body">
           
-            <a href="/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html" >
-              <h1 class="archive__item-title" style="font-size: xx-large;font-weight: bold;text-decoration-line: underline;/*! text-align: left; */text-emphasis-color: blue;/*! padng: 0% 0%; */">Support Vector Machine with SMO</h1>
+            <a id="main-post" href="/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html" >
+            <h1 style="font-size: xx-large;font-weight: bold;text-decoration-line: underline;/*! text-align: left; */text-emphasis-color: blue;/*! padng: 0% 0%; */">
+              Support Vector Machine with SMO
+            </h1>
             </a>
+
             <br>
+
             <div class="archive__item-excerpt" style="padding: 0% 0% 0% 10%">
               <p style="text-align: left;font-size:x-large;"></p>
 so as you might know SVM stands for support vector machines.... its probabily the most successful hyperplane based classifier...what it means is that you are classifing 2 classes by constructing a hyperplane which seperate both of them as clearly as possible.
-
-
-
             </div>
-          
-          
-            <!-- <p><a href="/#test-link" class="btn btn--primary">Read More</a></p> -->
         </div>
       </div>
     </div>
-  
 
 </div>
 
@@ -131,13 +163,15 @@ so as you might know SVM stands for support vector machines.... its probabily th
 
 
 <div id="feature_row_container">
-{% include feature_row id="feature_row"%}
+  {% include feature_row id="feature_row"%}
 </div>
 
 <div style="text-align: center">
-<a href="/blog/" style="position:0% 10%;border-style:solid;border-radius:4px; padding:15px 30px; " ><b>Visit Blog</b></a>
+  <a href="/blog/" id="visit_blog_btn"  ><b>Visit Blog</b></a>
 </div>
+
 <br>
+
 <!-- <h2>Portfolio:</h2>
 <div id="portfolio_container" style="height: 300px"></div> -->
 
@@ -146,6 +180,6 @@ so as you might know SVM stands for support vector machines.... its probabily th
 > -->
 <hr>
 
-<div id="main_about">
+<div id="main_about" >
 {% include feature_row id="feature_row3" type="left" %}
 </div>

@@ -1,4 +1,6 @@
 ---
-layout: single
+layout: portfolio
 permalink: /portfolio/
 ---
+
+

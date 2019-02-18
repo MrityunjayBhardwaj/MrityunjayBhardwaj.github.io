@@ -77,7 +77,7 @@ now first lets take a look at uninformed search because most of the time in real
 In DFS we usually take a look...
 
 {: .text-center}
-<img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/dfs_viz_ss.png"/>
+style="color:#3399ff" <img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/dfs_viz_ss.png"/>
 
 <i><a target="blank_" href="{{site.baseurl}}/assets/js/my_js/classical-ai/page/DFS_Viz/index.html">full-screen</a></i>
 {: .text-center}
