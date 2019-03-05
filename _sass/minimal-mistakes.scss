@@ -43,7 +43,12 @@
 @import "minimal-mistakes/print";
 
 
-#post_link{
+#post-link{
     color:#3399ff;
     target: _blank;
+    font-style:italic;
+}
+
+#imp_text{
+    text-decoration: underline
 }

@@ -3,3 +3,8 @@
 <!-- insert favicons. use https://realfavicongenerator.net/ -->
 
 <!-- end custom head snippets -->
+
+{% if page.p5js %}
+<script src="{{site.baseurl}}/assets/js/dependency/p5/p5.min.js"></script>
+<script src="{{site.baseurl}}/assets/js/dependency/p5/addons/p5.dom.min.js"></script>
+{% endif %}

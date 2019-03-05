@@ -10,9 +10,9 @@ const thispwidth    = thisdiv.offsetWidth;
 var sketch1 = function(p){
     let redcar;
     p.preload = function(){
-        tilemap       = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/tilemap.png",function(){console.log("yey!")},function(){console.log("no!")})
-        tilemap_alpha = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/tilemap_collision.png")
-        car_img       = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/c1.png")
+        tilemap       = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/Tile_map.png",function(){console.log("yey!")},function(){console.log("no!")})
+        tilemap_alpha = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/Tile_map_collision.png")
+        car_img       = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/c2.png")
         // p.setup();
     }
     p.setup = function(){
@@ -24,7 +24,7 @@ var sketch1 = function(p){
         console.log("inside setup")
         redcar = new car(tilemap_alpha);
 
-        p.noLoop();
+        // p.noLoop();
 
     }
     p.draw = function(){
@@ -68,8 +68,11 @@ var sketch1 = function(p){
     }
 
     p.mouseClicked = function(){
-        redcar.pos        = {x:70,y:70};
-        redcar.reach_dest = false;
+
+        if( redcar.reach_dest){
+            redcar.pos        = {x:70,y:70};
+            redcar.reach_dest = false;
+        }
     }
 }
 
@@ -87,7 +90,7 @@ function menu(p){
 
 function car(map){
 
-    this.pos        = {x:70,y:70};
+    this.pos        = {x:75,y:70};
     this.rotation   = 0;
     this.stepsize   = 1;
     this.map        = map;
@@ -163,7 +166,10 @@ function car(map){
 
         p.fill(100,200,100);
         // for image
-        p.image(img,-img.width*.025,-img.height*.025,img.width*.05,img.height*.05);
+        let img_fac = 0.7;
+        let img_pos_fac   = 0.050*img_fac;
+        let img_scale_fac = 0.1*img_fac;
+        p.image(img,-img.width*img_pos_fac,-img.height*img_pos_fac,img.width*img_scale_fac,img.height*img_scale_fac);
 
         p.pop();
 
