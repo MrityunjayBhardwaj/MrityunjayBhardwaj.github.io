@@ -13,7 +13,8 @@ function initStack(p){
 
     for(let i=0;i<=boxcount;i++){
 
-        p.text(boxcount-i+")",7,rectdim[1]*i-(rectdim[1]/2));
+        if(boxcount-i < stack.length)
+            p.text(boxcount-i+")",7,rectdim[1]*i-(rectdim[1]/2));
         // p.fill(255);
         let currStackNode = stack[boxcount-i];
 
@@ -53,8 +54,8 @@ function initStack(p){
         }
          }
 
-        let txt = currStackNode || "Empty" ;
-        txt = (txt != "Empty")?txt.id+" "   : txt;
+        let txt = currStackNode || " " ;
+        txt = (txt != " ")?txt.id+" "   : txt;
 
 
         p.noStroke();
@@ -71,7 +72,6 @@ function initStack(p){
         p.fill(0)
         p.stroke(0);
         p.text(txt,rectdim[0]/2,(rectdim[1])*(i+0)-(rectdim[1]/2));
-        p.fill(255);
 
     }
 }

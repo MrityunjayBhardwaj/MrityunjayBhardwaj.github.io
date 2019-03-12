@@ -19,7 +19,7 @@ var sketch2 = function(p){
         // p.noLoop();
     };
     p.draw = function(){
-        p.background(180);
+        p.background(280);
 
 
         for(let i=0;i<NodeArray.length;i++){

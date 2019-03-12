@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>newton's_method</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css">
+    <script src="main.js"></script>
+</head>
+<body>
+   <script>
+
+// x^3 + x + 1
+// 3x*2 + 1
+
+function newton_method(fn,d_dx,x){
+    return (x - (fn(x)/d_dx(x)));
+}
+
+function x_cube_derivative(x){
+    return 3*(x**2) - 1;
+}
+
+function x_cube(x){
+    return x**3 - x + 1;
+}
+
+
+let curr_x = -1;
+let itr = 10;
+
+console.log("currx: "+curr_x);
+
+for(let i=0;i<=itr;i++){
+    curr_x = newton_method(x_cube,x_cube_derivative,curr_x);
+    console.log("iteration: "+i+" x: "+curr_x);
+}
+
+
+   </script> 
+</body>
+</html>
+
+<!-- 
+// x^3 + x + 1
+// 3x*2 + 1
+
+function newton_method(d_dx,fn,x){
+    return x - (fn(x)/d_dx(x));
+}
+
+function x_cube_derivative(x){
+    return 3*(x**2) + 1;
+}
+
+function x_cube(x){
+    return x^3 + x + 1;
+}
+
+newton_method(x_cube,x_cube_derivative,-1);
+
+let curr_x = -1;
+let itr = 3;
+
+for(let i=0;i<itr;i++){
+    curr_x = newton_method(x_cube,x_cube_derivative,curr_x);
+}
+
+console.log("iteration: "+itr+" x: "+curr_x); -->

@@ -130,9 +130,11 @@ for javascript implimentation, click <a id="post-link" target="_blank" href="htt
 
 for dfs demo in graph
 {: .text-center}
-style="color:#3399ff" <img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/dfs_viz_ss.png"/>
+<img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/dfs_viz.gif"/>
+{: .text-center}
 
-<i><a target="blank_" href="{{site.baseurl}}/assets/js/my_js/classical-ai/page/DFS_Viz/index.html">full-screen</a></i>
+{: .text-center}
+<i><a target="blank_" href="{{site.baseurl}}/assets/js/my_js/classical-ai/page/DFS_Viz/index.html">Explore</a></i>
 {: .text-center}
 
 **Breadth First Search**
@@ -198,8 +200,9 @@ $$f(x) = h(x) + g(x)$$
 
 and it turns out this evaluation function indeed gives us the estimated cost of the cheapest solution through a perticular node "$$n$$".
 
+  
 
-<!-- 
+<!--
 As discussed earlier, in informed search algorithms we feed the information about our goal and environment into these algorithms. and the most common way to do that is known as best-first search, inwhich we prioritise nodes that we closer to our goal state by using something called a evaluation function.
 
 Evaluation function:

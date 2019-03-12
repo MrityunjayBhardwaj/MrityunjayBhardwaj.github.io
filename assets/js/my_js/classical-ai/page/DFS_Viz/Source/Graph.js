@@ -2,22 +2,47 @@
  * TODO:
  * Make Everything Using Set Time Out and Async Calls
  */
+var slider,output,diag_ctrl;
 
  
-const GRID_DIM  = [10,10];
+const GRID_DIM  = [12,12];
 const canvasDim = {x:400,y:400};
 const GraphCanvasDim={x:800,y:800};
 // const MasterFrameRate = 01;
-const MasterSpeed = 100;
+
+var MasterSpeed = 14;
+let dropbtn_elm;
 
 // main Control:-
-const timeDueration = 50;
-const MasterFrameRate = 30;
+var timeDueration = 110*(1/MasterSpeed);
+var MasterFrameRate = 180*(1/MasterSpeed);
+
+var start_index = 13;
+var end_index   = 124;
+
+let goalnode;
+var allow_diagonals;
 
 var ProgramEnded = 0;
 
 var NodeArray = [];
 var boxSize = [canvasDim.x/GRID_DIM[0],canvasDim.y/GRID_DIM[1]];
+
+let sstatus;
+let tile_map;
+
+let customMap,lstorage;
+/* Open */
+function openNav() {
+    document.getElementById("myNav").style.width = "100%";
+    ProgramEnded = 1;
+}
+
+/* Close */
+function closeNav() {
+    document.getElementById("myNav").style.width = "0%";
+    ProgramEnded = 0;
+} 
 
 function pos2ind(x,y,width){
     return y*width + x;
@@ -26,7 +51,7 @@ function pos2ind(x,y,width){
 function arrow(p,x1,x2,offset){
 
     let fac =0.95;
-    fac = 1-(((40/2)+05)/p.dist(x1.x,x1.y,x2.x,x2.y));
+    fac = 1-(((30/2)+05)/p.dist(x1.x,x1.y,x2.x,x2.y));
 
     // lerp .9
     let c = Math.abs(x2.x-x1.x)*fac;
@@ -45,7 +70,7 @@ function arrow(p,x1,x2,offset){
     var angle = p.atan2(x1.y - x2.y, x1.x - x2.x); //gets the angle of the line
     p.translate(x2.x, x2.y); //translates to the destination vertex
     p.rotate(angle-p.HALF_PI); //rotates the arrow point
-    p.triangle(-offset*0.4, offset/3, offset*0.4, offset/3, 0, -offset/6); //draws the arrow point as a triangle
+    p.triangle(-offset*0.3, offset/5, offset*0.3, offset/5, 0, -offset/6); //draws the arrow point as a triangle
     p.pop();
 }
 
@@ -61,13 +86,25 @@ function genNeigh(x,y,gdim){
       |     g f e
 
      */
-    neighs.push( [x-1,y-1] )    //a
+
+    if(allow_diagonals)
+        neighs.push( [x-1,y-1] )    //a
+
     neighs.push( [x,y-1  ] )    //b
-    neighs.push( [x+1,y-1] )    //c
+
+    if(allow_diagonals)
+        neighs.push( [x+1,y-1] )    //c
+
     neighs.push( [x+1,y  ] )    //d
-    neighs.push( [x+1,y+1] )    //e
+
+    if(allow_diagonals)
+        neighs.push( [x+1,y+1] )    //e
+
     neighs.push( [x,y+1  ] )    //f
-    neighs.push( [x-1,y+1] )    //g
+
+    if(allow_diagonals)
+        neighs.push( [x-1,y+1] )    //g
+
     neighs.push( [x-1,y  ] )    //h
 
     let n =[];
@@ -118,14 +155,14 @@ var Node = function(id,value,neigh,CanvasPos,bsize){
     },
     this.updateMap = function(){
 
-        if (this.Status == "isVisited")// then make it red
-            this.color = [255,0,0];// red
-        if (this.Status == "inStack")
-            this.color = [250,250,0];// yellow
-        if (this.Status =="isCurrent")
-            this.color = [0,255,0];// green
-        if (this.Status =="isPath" || this.Status == "isGoal")
-            this.color =[0,0,255]; // blue
+        // if (this.Status == "isVisited")// then make it red
+        //     this.color = [255,29,168];// red
+        // if (this.Status == "inStack")
+        //     this.color = [250,250,0];// yellow
+        // if (this.Status =="isCurrent")
+        //     this.color = [0,255,0];// green
+        // if (this.Status =="isPath" || this.Status == "isGoal")
+        //     this.color =[0,0,255]; // blue
 
     },
     this.updateGraph = function(Pos){
@@ -133,35 +170,49 @@ var Node = function(id,value,neigh,CanvasPos,bsize){
     },
     this.drawMap = function(p,color=this.color){
 
+        p.stroke(75);
         if (this.Status == "isVisited")// then make it red
-            this.color = [255,0,0];// red
+            this.color = [255,29,168];// red
         if (this.Status == "inStack")
-            this.color = [250,250,0];// yellow
+            this.color = [250,250,40];// yellow
         if (this.Status =="isCurrent")
-            this.color = [0,255,0];// green
-        if (this.Status =="isPath" || this.Status == "isGoal")
-            this.color =[0,0,255]; // blue
+            // this.color = [0,255,0];// green
+            // this.color = [255,255,255]
+            this.color =[140,0,255]; // blue
+        if (this.Status =="isWall"){
+            this.color = [100,100,100]; // black
 
+        }
+        if (this.Status =="isPath" || this.Status == "isGoal")
+            this.color = [255,0,0];// green
+        if (this.Status =="isStart")
+            this.color = [0,300,0]; // black
 
         p.fill(this.color[0],this.color[1],this.color[2]);
+        // p.noStroke();
         p.rect(this.canvaspos.x, this.canvaspos.y, this.boxSize[0],this.boxSize[1]);
         p.stroke(0)
         p.fill(0)
-        p.text(this.id,this.canvaspos.x*1.0+this.boxSize[0]*.2,this.canvaspos.y*1.0+this.boxSize[1]/2)
+        // p.text(this.id,this.canvaspos.x*1.0+this.boxSize[0]*.2,this.canvaspos.y*1.0+this.boxSize[1]/2)
         p.fill(255);
 
         // this.color=[255,255,255];
     },
 
     this.drawGraph = function(p,drawpath=1){
-         if (this.Status == "isVisited")// then make it red
-            this.color = [255,0,0];// red
+
+        if (this.Status == "isVisited")// then make it red
+            this.color = [255,29,168];// red
         if (this.Status == "inStack")
-            this.color = [250,250,0];// yellow
+            this.color = [250,250,40];// yellow
         if (this.Status =="isCurrent")
-            this.color = [0,255,0];// green
+            // this.color = [0,255,0];// green
+            // this.color = [255,255,255]
+            this.color =[140,0,255]; // blue
+        if (this.Status =="isWall")
+            this.color = [100,100,100]; // black
         if (this.Status =="isPath" || this.Status == "isGoal")
-            this.color =[0,0,255]; // blue
+            this.color = [255,0,0];// red 
 
         
         for (let i=0;drawpath&&i<this.neighbours.length;i++){
@@ -180,7 +231,7 @@ var Node = function(id,value,neigh,CanvasPos,bsize){
                 p.stroke(0,255,0);
             }
             
-
+            p.strokeWeight(3);
             p.line(this.GraphCanvasPos.x,this.GraphCanvasPos.y
                 ,currNeigh.GraphCanvasPos.x,currNeigh.GraphCanvasPos.y);
 
@@ -190,13 +241,16 @@ var Node = function(id,value,neigh,CanvasPos,bsize){
 
             arrow(p,this.GraphCanvasPos,currNeigh.GraphCanvasPos,300/(GRID_DIM[0]));
         }
+        p.strokeWeight(2);
         p.fill(this.color[0],this.color[1],this.color[2]);
         // p.noStroke();
         p.ellipse(this.GraphCanvasPos.x,this.GraphCanvasPos.y,400/(GRID_DIM[0]),400/(GRID_DIM[0]));
 
         p.stroke(0)
+        p.strokeWeight(1);
         p.fill(0)
-        p.text(this.id,this.GraphCanvasPos.x-10,this.GraphCanvasPos.y+10)
+        p.textSize(12);
+        p.text(this.id,this.GraphCanvasPos.x-11,this.GraphCanvasPos.y+5)
         p.fill(255);
 
     }
@@ -229,9 +283,8 @@ function main(){
             }
         } 
 
-    }
-
-main();
+}
+// main();
 
 
 
@@ -247,7 +300,6 @@ main();
 
 var stack = [];
 let dfs_cnode;
-let goalnode = NodeArray[Math.floor(Math.random()*(GRID_DIM[0]*GRID_DIM[1]))];
 
 var frameCount = 0;
 var fcthreshold = Math.floor(07/MasterSpeed);
@@ -256,7 +308,6 @@ var fcthreshold = Math.floor(07/MasterSpeed);
 // goalnode = NodeArray[pos2ind(5,4,GRID_DIM[0])];
 
 // goalnode.color = [0,0,255];
-goalnode.Status = "isGoal"
 
 function genPath(cnode){
 
@@ -308,6 +359,7 @@ function dfs_CheckGoal(){
         // backtracking
         // genPath(dfs_cnode);
         ProgramEnded = 1;       
+        sstatus.innerHTML = "found it!"
         return true     
     }
 
@@ -324,7 +376,7 @@ function dfs_SetVisited(p){
     console.log("3) inside,dfs_SetVisited");
         
     if (dfs_cnode != undefined ){
-        if (dfs_cnode.Status != "isGoal")
+        if (dfs_cnode.Status != "isStart" )
         dfs_cnode.Status = "isVisited";
     }
     node2pop = stack[length-1];
@@ -337,11 +389,15 @@ function dfs_PopCurrNode(p){
         console.log("4) inside,dfs_PopCurrNode");
         // pop the node from stack and set it as current node
         dfs_cnode = stack.pop();
-        if (dfs_cnode != goalnode)
+        
+        if (dfs_cnode != goalnode && dfs_cnode.Status != "isStart")
             dfs_cnode.Status = "isCurrent";
 
         // dfs_cnode.updateMap();  
         return dfs_cnode;
+    }else{
+        ProgramEnded = 1
+        sstatus.innerHTML = "Unable to find it!"
     }
 }
 
@@ -353,21 +409,23 @@ function dfs_AddNeighinStack(p){
             // if (stack.indexOf[cneigh] < 0)// if this node is not inside stack already then add it.
                 for( let node in stack)if(node ==cneigh)continue
                 
-            if (cneigh.Status != "isVisited" && cneigh.Status !="inStack"){
+            if (cneigh.Status != "isVisited" && cneigh.Status !="inStack" && cneigh.Status !="isWall"){
                 stack.push(cneigh);
-                if (cneigh.Status != "isGoal")
+                if (cneigh.Status != "isStart" && cneigh.Status != "isGoal")
                     dfs_cnode.neighbours[i].Status = "inStack";
             }
+        }
     }
 }
 
+function resetbtn(){
 }
-
 function DFS(p){
 
         /** PAUSE */
         let ret = 0;
 
+        sstatus.innerHTML = "Searching..."
         setTimeout(() => {
             if (!ProgramEnded)
                 currentCodeIndex = 5;
@@ -385,6 +443,8 @@ function DFS(p){
         }, timeDueration*2);
 
 
+        // timeDueration = slider.value;
+        // MasterFrameRate = slider.value;
 
         // Draw in Canvas
         // // dfs_DrawNodes(p);
@@ -413,7 +473,7 @@ function DFS(p){
         // currentCodeIndex = 10;
         dfs_SetVisited(p);
 
-        if (stack[stack.length-1] != goalnode)
+        if (stack[stack.length-1].Status != "isStart" && stack[stack.length-1] != goalnode)
             stack[stack.length-1].Status = "isCurrent";
         dfs_DrawNodes(p);
     }, timeDueration*3);
