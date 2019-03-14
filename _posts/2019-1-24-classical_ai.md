@@ -48,7 +48,7 @@ function myFunction() {
 } 
 </script>
 
-In recent years, Aritificial Intelligence has recieved a lot of attention thanks to the re-birth of Neural Networks from <a id="post-link" target="_blank" href="https://en.wikipedia.org/wiki/Geoffrey_Hinton">Geoffery Hinton</a> , and the advent of technologies such as Siri,alex,self-driving cars etc but the idea of AI is not new, infact it all started in 1960s with a guy name <a id="post-link" target="_blank" href="https://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)">Jhon McCarthy</a> when he published his paper called <a id="post-link" target="_blank" href="https://www.cs.cornell.edu/selman/cs672/readings/mccarthy-upd.pdf">Programs with Common Sense</a>. after him there were sevral people from really diverse backgrounds which influences the methodoligies we use now....
+In recent years, Aritificial Intelligence has recieved a lot of attention thanks to the re-birth of Neural Networks, and the advent of technologies like Siri,alex and self-driving cars. but the idea of AI is not new, infact it all started in 1960s, when a guy name <a id="post-link" target="_blank" href="https://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)">Jhon McCarthy</a>  published his first paper on A.I called <a id="post-link" target="_blank" href="https://www.cs.cornell.edu/selman/cs672/readings/mccarthy-upd.pdf">Programs with Common Sense</a>. after him there were sevral people from really diverse backgrounds which influences the methodoligies we use now....
 
 {: .text-center}
 <a class="image-popup" href="{{site.url}}{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/fofai.jpg" title="classicalAI chart">
@@ -60,7 +60,7 @@ In recent years, Aritificial Intelligence has recieved a lot of attention thanks
 side note:if you want to dive deep into the beginnings of AI, there is a great series of interviews conducted by MIT which you might find intresting...
 <a id="post-link" target="_blank" href="https://techtv.mit.edu/videos/10268-the-thinking-machine-1961---mit-centennial-film">https://techtv.mit.edu/videos/10268-the-thinking-machine-1961---mit-centennial-film</a>
 
-although it might be tempting to think that classical AI is useless now, but it is still being used heavily... one of the most intresting field that utilize these algorithms is the games Indistry and in this post we are going to be learning about some of these algorithms by creating our very own self-driving car. but before that, we need to understand what it means to be intelligent. 
+although it might be tempting to think that classical AI is useless now, but it is still being used heavily... one of the most intresting field that utilize these algorithms is the games Indistry and in this post we are going to be learning about some of these algorithms by creating our very own self-driving car(.....kind of). but before that, we need to understand what it really means to be intelligent. 
 
 >one of the most prominent trait of being intelligent, is being able to slove problems correctly and efficiently. and like most of the problem solving tasks in real life, we tend to search for best possible route to get the best solution. so this means that most of the problems can be solved by "searching for the optimum solution", and that is exactly what we are trying to achieve using A.I.
 
@@ -81,28 +81,35 @@ let's take a simple problem (see L-fig (1.2)), suppose you have an appointment a
 
 <script src="{{site.baseurl}}/assets/js/my_js/classical-ai/lfig-1_car-game.js"></script>
 
-in the above exercise, we are able to solve this problem pretty easily, because..... we are humans,but if we want our computer to solve this problem we first need to explain it, in a language that they can understand. which brings us to our next topic, state spaces(we can understand) and search spaces(what computers can understand).
+in the above exercise, we are able to solve this problem pretty easily, because..... we are humans,but if we want our computer to solve this problem we first need to explain it, in a language that they can understand. which brings us to our next topic, "spaces"...
 
 **State Space and Search Space**
 
 In classical A.I litrature, there are 2 types of spaces, state space and search space,
-state space is what you see i.e, the physical configuration of our problem.(like the scene you see in L-fig 1.2) whereas, search space is the abstract configuration usually represented by tree or a graph data-structure , which is necessary because search space helps us to transform our problem in the language that computers can understand and potentially use it to solve the problem. it can be of many form,for e.g the search space of ( L-fig (1.2)) could be of the form (fig 1.3),(fig 1.4) or even fig 1.5. inwhich each node represent a specific state in our state space and each edge represent the path from one state to another(see fig 1.5).
+state space is what you see i.e, the physical configuration of our problem.(like the scene you see in L-fig-1.2 or driving a physical car and reaching your office on time (and next time, set alarm! ) whereas, search space is the abstract configuration usually represented by tree or a graph data-structure , which is necessary because search space helps us translate our problem-environment(city-map in our case) in the language that computers can understand and potentially use it to solve the problem. it can be of many form,for e.g the search space of  L-fig (1.2) could be of the form fig-1.3(a),fig-1.3(b) or even fig-1.3(c)(which is a tree). inwhich each node represent a specific state in our state space and each edge represent the path from one state to another(see fig-1.5).
 
-{% include gallery id="search_space" caption="fig1.3(left) and fig 1.4(right)" %}
+{% include gallery id="search_space" caption="fig-1.3(a)(left),fig1.3(b)(center) and fig 1.3(c)(right)" %}
 
 <a class="image-popup" href="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/search_space_disc.jpg">
 <img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/search_space_disc.jpg" />
 </a>
 
-<span id="discription">fig 1.5: as mentioned earlier, each node represent a perticular state in the state space, here in this figure we expand some of these nodes in order to show what state these nodes represents. namely, state(b) represent the goal state of our problem and (a) and (c) represent some other states in our state space</span>
+<span id="discription">fig 1.5: as mentioned earlier, each node represent a perticular state in the state space, here in this figure, we expand some of these nodes in order to show what state these nodes represents. namely, state(b) represent the goal state of our problem and (a) and (c) represent some other states in our state space</span>
 
-Now, these searches can broadly be categorised of 2 types, informed search and uninformed search:-
+Now, these searches can broadly be categorised into 2 types, informed search and uninformed search:-
 
-**Informed search**: In informed search, we have some information about our environment like for example in L-Fig 1.1 we can see where is our goal and we know how to reach there... which shows that, we have full information about our environment, which is the reason why we did'nt need to drive through every road in order to reach our goal because we already knew which road leads to our goal.
+**Informed search**: In informed search, we have some information about our environment like for example in L-fig-1.2 we can see where our goal is! and we know how to reach there... which shows that, we have full information about our environment, which is the reason why we did'nt need to drive through every road in order to find our goal because we already knew which path leads to our destination.
 
-**Uninformed search** : on the other hand in un-informed search, we don't know anything about our environment which means that we have to search the entire space one by one in order to reach our goal,take a look at L-fig 1.2, here we don't know where our goal is. so we are just **blindly** searching the entire space in hopes of finding our goal.
+**Uninformed search** : on the other hand in un-informed search, we don't know anything about our environment which means that we have to search the entire space(like roads/streets) one by one in order to find our goal. 
+In the next section we are first going to take a deep dive into uninformed search and its algorithm and after that we will take a look at some of the informed search stratigy. 
+
 
 <h1 style="border-bottom:5px solid black;">Uninformed Search Strategies</h1>
+
+As mentioned above, in uninfomed search we have little to no information about our environment and it turns out that, in most of the real life problems we don't know much about our environment which is the reason why these algorithms are much more common then the informed ones, for our purposes we can think of uninformed search as if we were **blindly** searching the entire space in hopes of finding our destination as illustrated in L-fig 1.4 :-
+
+instructions:-
+use W,A,S,D to find out our destination... don't worry you are not late this time ;) .
 
 {: .text-center}
 <div id="Lfig-2" style="width: inherit"></div>
@@ -111,14 +118,14 @@ blind run
 
 <script src="{{site.baseurl}}/assets/js/my_js/classical-ai/lfig-2_car-game-blind.js"></script>
 
-now first let's take a look at uninformed search because most of the time in real life applications we don't know much about our search space. so the first algorithms that we are going to be looking at are DFS and BFS.
-
+now that we know what it feels like to blindly searching the space, lets take a look at how our computers search in this environment by looking at some of these algorithms...
 **Depth First Search**
 
 ![image-right](/assets/imgs/posts_imgs/classical-ai/body/dfs.gif){: .align-right}
-In Depth First Search, we search to the deepest end of the current branch before moving to the next one.
+Now, suppose that our search space is a rectangular shaped coloney/street/block or a rectangular graph and we have to search the entire space ,so instead of first visiting our adjecent-horizontal neighbours (the ones that are on the left and right of us) we first go-head and visit the neighbours that are "in-front" of us and we keep doing that untill the end of our street and then we visit the horizontal neigbours(see fig.1.5), in-other words, we search length/depth wise instead of breadth wise.
 
-Techinically, in DFS we take the neighbours/childs of the current node and put it inside a stack(LIFO) and then take the last added node inside our stack and make that our current node, we repeat this process untill we reached our goal state or untill we exaust our search space.this method leads to a special behivour of searching depth-wise (which you can see on your right).
+
+More-Techinically, in DFS we take the neighbours/childs of the current node and put it inside a stack(LIFO) and then take the last added node inside our stack and make that our current node, we repeat this process untill we reached our goal state or untill we exaust our search space.this method leads to a special behivour of searching depth-wise (which you can see on your right).
 
 
 <a class="image-popup" href="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/dfs.jpg">
@@ -134,13 +141,13 @@ for dfs demo in graph
 {: .text-center}
 
 {: .text-center}
-<i><a target="blank_" href="{{site.baseurl}}/assets/js/my_js/classical-ai/page/DFS_Viz/index.html">Explore</a></i>
+if you want a more in-depth visualization on how dfs-works then click <i><a target="blank_" href="{{site.baseurl}}/assets/js/my_js/classical-ai/page/DFS_Viz/index.html">here</a></i>
 {: .text-center}
 
 **Breadth First Search**
 
 ![image-right](/assets/imgs/posts_imgs/classical-ai/body/bfs.gif){: .align-right}
-BFS is exactly like DFS but here, instead of using Stack, we use Queue(FIFO) which leads to a special behivour of searching breadth-wise (hence, Breadth-First Search), and just like any algorithm, its better to see it in action(see, right).
+BFS is exactly like DFS but here, instead of using Stack, we use Queue(FIFO) which leads to another special behivour of searching breadth-wise (hence, Breadth-First Search), and just like any algorithm, its better to see it in action(see, right).
 
 <a class="image-popup" href="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/bfs.jpg">
 <img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/bfs.jpg"/>
@@ -182,24 +189,30 @@ Now suppose, we have some information about our search space, just like in (L-fi
 
 <h1 style="border-bottom:5px solid black;">Informed Search Strategies</h1>
 
-the most common informed search strategy is known as best-first search, here, instead of treating all the nodes as equal and expand them one by one(as we did in uninformed search algorithms above), we tend to prioritise nodes based on something called an evaluation function ($$ f(n) $$).
-evaluation function construed as a cost estimate,so the node with the lowest evaluation is prioritised when expanding(which means here, we use priority queue) and the choice of $$ f(n) $$ determine the search strategy, in which most of them include something called a heuristic function ($$ h(n) $$) which is the cost of the cheapest path from a perticular state to our goal state.
+the most common informed search strategy is known as best-first search, here, instead of treating all the nodes as equal and expand them one by one(as we did in uninformed search algorithms above), we tend to prioritise nodes based on something called an evaluation function ($$ f(n) $$). for example, in our problem, we have to reach our destination as fast as possible, in other words, we need to find the "shortest path" from our home to our office and for that,we can search the space by prioritising the roads that are closer to our destination using this evaluation function which inturn, leads to finding our shortest path! and now we will learn about algorithms that implemets these assumptions...
 
 
 **Greedy best-first search**
 
-in this method we prioritise the nodes that is closest to the goal which means it evaluates the nodes by using just the heuristic function, this heuristic function can be the manhatten-distance b/w a perticular state and the goal state.
+in this method we prioritise the nodes that is closest to the goal which means it evaluates the nodes by using just the heuristic function, this heuristic function can be the manhatten-distance or even euclideon distance b/w a perticular/current state and the goal state.
 
 $$f(x) = h(x)$$
 
 **A* search**
 
-although GBFS is a pretty decent candidate for solving our problem, but it's not good enough, that is why we are going to be using the most widely used best-first search algoithm known as A* search to solve our problem, in this algorithm, we combine the cost of reaching the node "$$n$$" from the beginning "$$s$$" a.k.a ($$ g(n) $$) and the cost of going from "$$n$$" to our goal state "$$g$$ which leads to our final evaluation function:-
+although GBFS is a pretty decent candidate for solving our problem, but it's not good enough, that is why we are going to be using the most widely used best-first search algoithm known as A* search to solve our problem, in this algorithm, we combine the cost of reaching the node "$$n$$" from the beginning "$$s$$" a.k.a $$ w(n) $$ and the cost of going from "$$n$$" to our goal state "$$g$$ a.k.a $$h(x)$$ which leads to our final evaluation function:-
 
-$$f(x) = h(x) + g(x)$$
+$$f(x) = h(x) + e(x)$$
 
 and it turns out this evaluation function indeed gives us the estimated cost of the cheapest solution through a perticular node "$$n$$".
 
+//// A* of reaching our destination...
+
+so that all folks! we have covered some of the prominent algorithms, which you might use in creating your next game in which instead of having a fixed destination you can create a zombie A.I who follow and attack the player!(what are you waiting for!)....   and if you build anything cool! please don't forget to share it down below.. 
+
+some Resources I love:-
+Artificial intelligence a modern approach: https://www.cin.ufpe.br/~tfl2/artificial-intelligence-modern-approach.9780131038059.25368.pdf
+<a href="https://github.com/aimacode/aima-javascript">https://github.com/aimacode/aima-javascript<a>
   
 
 <!--
