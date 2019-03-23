@@ -1,37 +1,57 @@
 
 let map_dim = {w:100,h:100};
+
+// images
 let tilemap_alpha;
 let tilemap;
 let car_img;
+let startMenu_img;
+let startMenublind_img;
+let redMarker_img;
+let tilemapbild_alpha
 
-const thisdiv = document.getElementById("Lfig-1");
-const thispwidth    = thisdiv.offsetWidth;
+let playdemo   = 0;
+let markerAnim = 0;
+
+const thisdiv     = document.getElementById("Lfig-1");
+const thispwidth  = thisdiv.offsetWidth;
 
 var sketch1 = function(p){
+
     let redcar;
     p.preload = function(){
-        tilemap       = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/Tile_map.png",function(){console.log("yey!")},function(){console.log("no!")})
-        tilemap_alpha = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/Tile_map_collision.png")
-        car_img       = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/c2.png")
-        // p.setup();
-    }
+        tilemap       = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/Tile_map.png",function(){console.log("yey!")},function(){console.log("no!")});
+        tilemap_alpha = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/Tile_map_collision.png");
+        tilemapblind_alpha = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/Tile_map_collision_blind.png");
+        car_img       = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/c2.png");
+        startMenu_img = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/startMenu.jpg");
+        startMenublind_img = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/startMenu_blind.jpg");
+        redMarker_img = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/only_marker.png");
+       }
+
     p.setup = function(){
-        // console.log("done preloading",tilemap,tilemap_alpha,car_img);
-        
+
         let cvs = p.createCanvas(400,400);
         cvs.parent("#Lfig-1");
 
         console.log("inside setup")
         redcar = new car(tilemap_alpha);
 
-        // p.noLoop();
-
+        p.noLoop();
     }
+
     p.draw = function(){
         p.background(100);
-        p.image(tilemap,0,0,400,400);
 
-        // console.log("inside draw")
+        if(playdemo){
+            p.image(tilemap,0,0,400,400);
+            
+        }
+        else{
+            p.image(startMenu_img,0,0,400,400);
+            return null;
+        }
+
         if (redcar.reach_dest){
             menu(p);
         }
@@ -55,12 +75,20 @@ var sketch1 = function(p){
             }
 
 
-        }
 
+        }
 
         redcar.display(p,car_img);
 
-        // p.draw();
+        if(redcar.reach_dest ==0){
+
+            destMarker(p,markerAnim,[345, 163],[10,30]);
+            // destMarker(p,markerAnim,[145, 323],[10,30]);
+            // p.image(redMarker_img,0,Math.floor(Math.sin(markerAnim)*10) -10 ,400,400);
+            markerAnim += .05;
+
+        }
+
     }
 
     p.windowResized = function(){
@@ -68,24 +96,42 @@ var sketch1 = function(p){
     }
 
     p.mouseClicked = function(){
-
-        if( redcar.reach_dest){
-            redcar.pos        = {x:70,y:70};
-            redcar.reach_dest = false;
+        if(is_insideCanvas(p)){
+            if(!playdemo){
+                playdemo = 1;
+                p.loop(); 
+            }
+            if( redcar.reach_dest){
+                redcar.pos        = {x:70,y:70};
+                redcar.reach_dest = false;
+            }
         }
     }
+
+}
+
+function destMarker(p,theta,pos,radRange){
+
+    p.noFill();
+    p.strokeWeight(10);
+    p.stroke(235,0,0);
+    // p.stroke(255,0,0,Math.floor(Math.sin(markerAnim)*250) + (Math.floor((1-Math.sin(markerAnim))*150)));
+    let radius = Math.floor(Math.sin(theta)*radRange[0]) + (Math.floor((1-Math.sin(theta))*radRange[1]));
+    p.ellipse(pos[0],pos[1],radius,radius);
+
+    p.fill(255);
+
 }
 
 function menu(p){
 
-    p.fill(80,120)
-    p.rect(0,0,p.width,p.height) 
+    p.fill(80,120);
+    p.rect(0,0,p.width,p.height);
 
     p.fill(250,255);
     p.textSize(20);
     p.text("\t\tBravo!\n You Reached Your Destination",Math.floor(p.width*.1),p.height/2);
 
-    
 }
 
 function car(map){
@@ -95,9 +141,6 @@ function car(map){
     this.stepsize   = 1;
     this.map        = map;
     this.reach_dest = 0;
-    // this.velocity    = 0;
-    // this.accleration = 0;
-
     
     this.checkcollision = function(npos){
         let tpos = {x: Math.floor(((npos.x)**1)/(4)),y:Math.floor(((npos.y)**1)/(4))}; // in which tile he is at
@@ -123,7 +166,7 @@ function car(map){
         switch(dir){
             case("right"):
                 newpos.x += this.stepsize;
-                this.rotation = Math.PI/2;
+                this.rotation =  Math.PI/2;
             break;
 
             case("left"):
@@ -138,7 +181,7 @@ function car(map){
 
            case("down"):
                 newpos.y += this.stepsize;
-                this.rotation = Math.PI
+                this.rotation =  Math.PI
             break;
 
             default:

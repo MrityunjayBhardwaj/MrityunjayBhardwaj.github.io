@@ -1,7 +1,8 @@
 
 let glayer_blind;
 let glayer_menu; // menu
-
+let playdemo_blind = 0;
+let markerAnim_blind =0;
 var sketch2 = function(p){
     let redcar;
 
@@ -11,17 +12,18 @@ var sketch2 = function(p){
         let cvs = p.createCanvas(400,400);
         cvs.parent("#Lfig-2");
         p.pixelDensity(1);
-        glayer_blind = p.createGraphics(100*.5,100*.5);
-        glayer_menu  = p.createGraphics(p.width,p.height);
 
         console.log("inside setup",glayer_blind)
-        redcar = new car(tilemap_alpha);
+        redcar = new car(tilemapblind_alpha);
+
 
     }
     p.draw = function(){
-        p.background(100);
-        p.image(tilemap,0,0,400,400);
         
+        if(playdemo_blind == 1){
+            p.background(100);
+            p.image(tilemap,0,0,400,400);
+        glayer_blind.image(startMenublind_img,0,0,400,400);
         glayer_blind.background(0,255);
         glayer_blind.fill(0);
 
@@ -41,6 +43,8 @@ var sketch2 = function(p){
             }
         }
         glayer_blind.updatePixels();
+        // destMarker(p,markerAnim_blind,[345, 163],[10,30]);
+        destMarker(p,markerAnim_blind,[145, 323],[10,30]);
 
         if (redcar.reach_dest){
             menu(glayer_menu);
@@ -69,6 +73,17 @@ var sketch2 = function(p){
             p.image(glayer_blind,0,0,400,400);
 
         }
+            
+        }
+        else{ 
+            // p.image(startMenu_img,0,0,400,400);
+            p.image(startMenublind_img,0,0,400,400);
+            // p.FrameRate(1);
+            
+            // return null;
+        }
+
+        markerAnim_blind += .05;
 
     }
 
@@ -77,8 +92,26 @@ var sketch2 = function(p){
     }
 
     p.mouseClicked = function(){
-        redcar.pos        = {x:70,y:70};
-        redcar.reach_dest = false;
+        if (is_insideCanvas(p)){
+            if(!playdemo_blind){
+                glayer_blind   = p.createGraphics(100*.5,100*.5);
+                glayer_menu    = p.createGraphics(p.width,p.height);
+                playdemo_blind = 1;
+                p.loop();
+                p.FrameRate(60);
+            }
+
+            redcar.pos        = {x:70,y:70};
+            redcar.reach_dest = false;
+
+        }
     }
+}
+
+function is_insideCanvas(p){
+    if(p.mouseX > 0 && p.mouseX < 400 && p.mouseY > 0 && p.mouseY < 400)
+        return true;
+
+    return false;
 }
 var s2 = new p5(sketch2);

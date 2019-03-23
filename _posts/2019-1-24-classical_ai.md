@@ -54,6 +54,7 @@ In recent years, Aritificial Intelligence has recieved a lot of attention thanks
 <a class="image-popup" href="{{site.url}}{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/fofai.jpg" title="classicalAI chart">
 <img src="{{site.url}}{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/fofai.jpg">
 </a>
+
 <span id="discription">fig 1.1 : fields that influence A.I </span>
 {: .text-center}
 
@@ -69,7 +70,11 @@ let's take a simple problem (see, L-fig (1.2)), suppose you have an appointment 
 
 {: .text-center}
 
-<div id="Lfig-1" style="width: inherit"></div>
+<div id="Lfig-1" style="position: relative; z-index: 1; width: 400px; height: 400px; margin-left: auto; margin-right: auto; background-color: red;">
+
+</div>
+{: .text-center}
+
 <span id="discription">L-fig 1.2: use W,A,S,D keys to move the car and reach the destination (red marker)</span>
 {: .text-center}
 
@@ -84,7 +89,7 @@ state space is what you see i.e, the physical configuration of our problem.(like
 
 {% include gallery id="search_space" %}
 
-<span id="discription">fig-1.3(a)(left),fig1.3(b)(center) and fig 1.3(c)(right)</span>
+<span id="discription">fig-1.3(a)(left),fig1.3(b)(center) and fig 1.3(c)(right): where, green node represent start state and red node represent the goal state (we will learn more about this later in this blog post.) </span>
 {: .text-center}
 
 <a class="image-popup" href="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/search_space_disc.jpg">
@@ -110,7 +115,7 @@ use W,A,S,D to find out our destination... don't worry you are not late this tim
 
 {: .text-center}
 <div id="Lfig-2" style="width: inherit"></div>
-<span id="discription">L-fig 1.5: drive the car and find your destination</span>blind run
+<span id="discription">L-fig 1.5: drive the car and find your destination</span>
 {: .text-center}
 
 <script src="{{site.baseurl}}/assets/js/my_js/classical-ai/lfig-2_car-game-blind.js"></script>
@@ -132,12 +137,12 @@ More-Techinically, in DFS we take the neighbours/childs of the current node and 
 
 for javascript implimentation, click <a id="post-link" target="_blank" href="https://github.com/MrityunjayBhardwaj/Classical_AI/blob/master/Classical_Search/DFS.js" >here</a>.
 
-<img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/dfs_viz.gif"/>
+<img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/dfs_viz_2.gif" width="300px" />
 {: .text-center}
 
 {: .text-center}
 <span id="discription">
-fig 1.7: dfs in action, see how it works <i><a id="post-link" target="blank_" href="{{site.baseurl}}/assets/js/my_js/classical-ai/page/DFS_Viz/index.html"> under the hood </a></i> 
+fig 1.7: dfs in action, see how it works <i><a id="post-link" target="blank_" href="{{site.baseurl}}/assets/js/my_js/classical-ai/page/DFS_Viz/index.html"> under the hood </a></i>.
 </span>
 {: .text-center}
 
@@ -196,11 +201,12 @@ In Greedy best-first search we choose the evaluation function to just be the dis
 
 $$f(x) = h(x)$$
 
-
 {: .text-center}
 <a class="image-popup" href="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/Greedy_bfs_weight_map.jpg">
-<img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/Greedy_bfs_weight_map.jpg"/>
+<img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/Greedy_bfs_weight_map.jpg" width="400px"/>
 </a>
+{: .text-center}
+
 <span id="discription">fig 1.11:Weight map of Greedy Best-first Search</span>
 {: .text-center}
 
@@ -211,17 +217,21 @@ apart from calculating the distance from a perticular state to our goal state ($
 $$f(x) = h(x) + e(x)$$
 
 <a class="image-popup" href="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/Astar_weight_map.jpg">
-<img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/Astar_weight_map.jpg"/>
+<img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/Astar_weight_map.jpg" width="400px"/>
 </a>
+{: .text-center}
+
 <span id="discription">fig 1.12 : Weight map of A* Search</span>
 {: .text-center}
 
-Question: why most of the values are the same??  (Hint: see the formula)
+Question: why most of the values are the same??  (Hint: see the formula!!)
 
 
 <a class="image-popup" href="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/Astar_search.gif">
-<img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/Astar_search.gif"/>
+<img src="{{site.baseurl}}/assets/imgs/posts_imgs/classical-ai/body/Astar_search.gif" width="400px" />
 </a>
+{: .text-center}
+
 <span id="discription">fig 1.12 : using A* search on our problem</span>
 {: .text-center}
 
