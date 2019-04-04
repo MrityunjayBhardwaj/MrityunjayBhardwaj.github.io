@@ -17,7 +17,7 @@ header:
 <!-- if you are unfimilier with those concepts or just need to brush up some of them,  Imperial Collage London has a great course on coursera,which you might find useful:
 <a target="_blank" href="https://www.coursera.org/specializations/mathematics-machine-learning" target="_blank"><u>https://www.coursera.org/specializations/mathematics-machine-learning</u></a> -->
 
- In this tutorial, we are going to take a deep dive inside support vector machines, we are going to talk about what svm is and how it works internally/mathematically by deconstructing every single part that leads to it's final formulation and then, we are going to take a look at how to solve that formulation using an algorithm called SMO.... by the end of this article, you should have a solid understand of one of the most important Algorithm in Machine Learning.
+ In this tutorial, we are going to take a deep dive inside support vector machines, we are going to talk about what svm is and how it works (internally/mathematically) by deconstructing every single part that leads to it's final formulation and then, we are going to take a look at how to solve that formulation using an algorithm called SMO.... by the end of this article, you will have a solid understand of one of the most important Algorithm in Machine Learning.
  
  So as you might know, SVM stands for support vector machines.... its probably the most successful hyperplane based classifier out there...what it means is that, in svm you are classifing 2 classes by constructing a hyperplane(a.k.a decision boundary) which seperate both of them as clearly as possible.
 
@@ -286,7 +286,6 @@ why $$ \max{\alpha_i} $$ you may ask... because as discussed earlier we are opti
 
 so essentially, if we can solve this optimization function we can find our $$ \alpha $$ and if we can find our alphas we can find our $$ \Theta $$ using(10) which is our unknown parameter of our decison-boundary... so essential we can get our decision-boundary by solving this optimization problem
 
-
 for a point to be the most optimal, it need to satisfy some of the conditions, these conditions are known as <a target="_blank" href="https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions" style="color:#3399ff">K.K.T condition</a>:
 
 1), stationarity condition:
@@ -483,14 +482,6 @@ and just like that, we are going to heuristically take 2 alphas and update them 
 Now its a great time to summerise what we have just did, we first looked at what we are try to achieve using L-fig 1.1 and 1.2.. then we introduce the concept of margin and we clearify that we have to maximize it in order to find our best hyperplane, then we moved on and formulate this idea and came up with the objective function, but we realized that it would be more benificial to optimize its dual counterpart which introduces our final optimization function(12)... althought, we could use a black-box QPSolvers to solve our function but we instead go with SMO and layed out the entire algorithm and found the way to maximize our objective function using 2 alphas at a time, we disussed why we choose 2 alphas instead of one and then we take a look at our constraints and how is it going to change if we freeze all of the alphas accept 2 of them... which leads us to the final values of our alphas, which we can calcuate and update untill it converges, in the end we take a look at how are we going to be using these alphas to calculate our decision-boundary.
 
 I hope that you enjoyed and learned something new... if there is any thing that you did'nt like please let me know, i am just a beginner in this stuff so i hope you could help me by critiquing it ( please be brutal)..
-
-
-
-
-
-
-
-
 
 <!-- 
 
