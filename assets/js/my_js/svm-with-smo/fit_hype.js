@@ -158,30 +158,29 @@ var sketch1 = function(p){
 
 }
 
-function pts(p,npos){
-    this.pos  = npos;
-    this.size = 10;
-    this.is_sv= 0;// is this point a support vector??
-    this.mc = 0;// miss classified
+function pts(p,pos){
+    this.pos   = pos;
+    this.size  = 10;
+    this.is_sv = 0;// is this point a support vector??
+    this.mc    = 0;// miss classified
 
     this.display = function(){
         // p.stroke(this.color);
 
-        if (this.is_sv){
+        if (this.is_sv){// for support vectors
             p.noFill();
             p.stroke(0);
             // p.stroke(0);
             p.ellipse(this.pos.x,this.pos.y,this.size,this.size);
         }
         else{
-            if(this.mc){
+            if(this.mc){// for Miss-Classificed pts 
                 p.textSize(15);
                 p.fill(85);    
                 p.text("X",this.pos.x,this.pos.y);
                 p.strokeWeight(1);
             }
             else{
-
                 p.noStroke();
                 p.ellipse(this.pos.x,this.pos.y,this.size,this.size);
             }
@@ -195,8 +194,8 @@ function rnd_pts(p,nps,pos1,pos2,ptarr){
     p.randomGaussian()*p.width;
 // (p.width*.4,p.height*.3)
     for(let i=0;i<nps*.7;i++){
-        let npos = {x: Math.floor(p.randomGaussian()*(32)+pos1.x),
-                    y: Math.floor(p.randomGaussian()*32 +pos1.y )}
+        let npos = {x: Math.floor(p.randomGaussian()*(32) + pos1.x),
+                    y: Math.floor(p.randomGaussian()*(32) + pos1.y)}
 
             ptarr.push(new pts(p,npos))
 
@@ -205,7 +204,7 @@ function rnd_pts(p,nps,pos1,pos2,ptarr){
 
     for(let i=0;i<nps*.3;i++){
         let npos = {x: Math.floor(p.randomGaussian()*(40) + pos2.x),
-                    y: Math.floor(p.randomGaussian()*20   +  pos2.y)}
+                    y: Math.floor(p.randomGaussian()*(20) + pos2.y)}
 
             ptarr.push(new pts(p,npos))
     }
