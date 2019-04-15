@@ -316,6 +316,7 @@ function hplane(p,poz,sm=0){
         p.translate(this.pos.x,this.pos.y);
         p.rotate(this.rotation);
 
+        // theta and theta_0 
 
         // main-db
         p.strokeWeight(5);

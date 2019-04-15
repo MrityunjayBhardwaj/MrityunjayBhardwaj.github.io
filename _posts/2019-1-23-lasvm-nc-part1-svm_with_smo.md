@@ -25,19 +25,17 @@ header:
 
  -->
 
-In this tutorial, In first half of this article, we are going to take a deep dive inside support vector machines, we are going first aquire an intuitive understanding of what is it that we wanted to do using some interactive visualization and then we are going to give our intuition a mathematical framework which will give a structure to our problem.and in the secod one we are going to take a dive inside an Algorithm called SMO which is a way of solving the final formulation of our problem... by the end of this article, you will have not only an intutive understanding of SVM but also know how it works internally/mathematically so that you know whats really going on when you type SVM.fit(X).
-
+In this tutorial, we are going to take a deep dive inside support vector machines, we are first going to aquire an intuitive understanding of what is it that we wanted to do and then we are going to give our intuition a mathematical framework which will give a structure to our problem.In the second half of this article, we are going to take a dive inside an Algorithm called SMO which is a way of solving the final formulation of our problem... by the end of this article, you will have not only an intutive understanding of SVM but also know how it works internally/mathematically.
 
  So as you might know, SVM stands for support vector machines. its probably the most successful hyperplane based classifier out there. what it means is that, in svm you are classifing 2 classes by constructing a hyperplane(a.k.a decision boundary) which seperate both of them as clearly as possible.
 
-In order to solidify what we are trying to achieve ...lets play a little game, in it, what i want you to do is to construct a hyperplane/decision-boundary which seprate these 2( "<font style="color: red">&#8226;</font>" and "<font style="color: blue">&#8226;</font>" ) classes as accurately as possible...so go ahead and see if you could figure out the best decision boundary!...
+In order to solidify what we are trying to achieve ...lets play a little game, in it, what i want you to do is to construct a hyperplane/decision-boundary which seprate these 2( class "<font style="color: blue">-1;</font>" and class "<font style="color: orange">+1</font>" ) classes as accurately as possible...so go ahead and see if you could figure out the best decision boundary!...
 
->**Info**: 
->
+<!-- >**Info**: >
 >  "orange-dot" = class 1
 >  "blue-dot"   = class 2
 >  "X"          =  missclassified points
-{: .notice--info}
+{: .notice--info} -->
 
 {: .text-center}
 <div id="fit_hyperplane_yourself_0" style="width: inherit"></div>
@@ -54,12 +52,12 @@ In order to solidify what we are trying to achieve ...lets play a little game, i
 
 
 
-Ok, so what you just did in couple of seconds, is exactly what we are trying to accomplish using pure mathematical techniques... excited now? let's get started,shall we.
+<!-- Ok, so what you just did in couple of seconds, is exactly what we are trying to accomplish using pure mathematical techniques... excited now? let's get started,shall we. -->
 
-now, as you might have observed,in order to solve this problem, we want a decision boundry which does'nt touch any data point i.e, which is farthest from both the classes... we can imagine that there is a **margin** which represent that **distance** b/w decision-boundry and closest data points and we need to **maximize** it in-order to seprate both the classes..this becomes more prominent when we look at the 
+now, as you might have observed,in order to solve this problem, we want a decision boundry which does'nt touch any data point i.e, which is farthest from both the nearest data point( the ones in the dark circle)... we can imagine that there is a **margin** which represent that **distance** b/w decision-boundry and closest data points and we need to **maximize** it in-order to seprate both the classes as clearly as possible..doing this becomes more important when we look at the 
 <a target="_blank" href="https://en.wikipedia.org/wiki/Generalization_error" style="color:#3399ff"><i>generalization error</i>
 </a>
-(which   by the way, is what we are always trying to minimize in any ML scenario)... you can observe this in L-fig 1.2 , by placing your hyperplane near to any one of the classes and then generate new samples and see how it perform,as compare to the scenario where, if we place the hyperplane farthest from both the classes(i.e, placing the hyperplane in the middle).... 
+(which   by the way, is what we are always trying to minimize in any ML scenario)... you can observe this in L-fig 1.2 , by placing your hyperplane near to any one of the classes and then generate new samples and see how it perform,as compare to the scenario where, if we place the hyperplane farthest from both the classes.... 
 
 >**Note**: Click <button class="btn--primary " onclick="onclickreset()">reload</button> to generate new samples.
 {: .notice--info}
@@ -69,11 +67,11 @@ now, as you might have observed,in order to solve this problem, we want a decisi
 
 
 <script src="{{site.baseurl}}/assets/js/my_js/svm-with-smo/fit_hype_2.js"></script>
-<i style="font-size:15px">L-fig 1.2</i>
-<i style="font-size:15px">fit the classifier</i>
+<i style="font-size:15px">L-fig 1.2: fit the classifier</i>
+<i style="font-size:15px"> here, the the color of the margin discribe the quality of our decision boundary, greener the better(because its farthest from both the classes)</i>
 {: .text-center}
 
-as you might have observed, if we place the margin near to any one of the class's data point and generate new samples... our accuracy is fluctuating alot(which means our mean accuracy is going to be much less), which is not the case if we were to place our decision boundary farthest from both the class's data points, here, our average accuracy is better then the other 2 cases...and as discussed earlier, the notion of near and far is quantified by those "margins" which suggest the fact that if we want to find the best decision boundary we need to maximize these margins.
+as you might have observed, if we place the margin near to any one of the class's data point and generate new samples... our accuracy is fluctuating alot(which means our<span id="highlight"> mean accuracy </span >is going to be much less), which is not the case if we were to place our decision boundary farthest from both the class's data points, here, our average accuracy is better then the other 2 cases...and as discussed earlier, the notion of near and far is quantified by those "margins" which suggest the fact that if we want to find the best decision boundary we need to maximize these margins.
 
 <!-- 
 as you might have observed the margin is essentially just a line that sits on top of the nearest point of the classes and
@@ -95,9 +93,9 @@ function myFunction() {
 
 <!-- <a target="_blank" href="#" class="btn btn--inverse">Link Text</a> -->
 
-uptill now, we have done every thing ourselves, we have specified which slope and intercepts to choose in order to classify our data points and not only that we have also came to know why we need to maximize those margins(more on that later...) but now we want to translate all of our intuitions into mathematics because we don't want to classify all the zillions classification problems ourselves! do we?... be lazy guys!! let the math and computers do the work for us!!
+uptill now, we have done every thing ourselves, we have specified which slope and intercepts to choose in order to classify our data points and not only that we have also came to know why we need to maximize those margins(more on that later...) but now we want to translate all of our intuitions into mathematics because we don't want to classify all the zillions classification problems ourselves! do we?... we are lazy guys!! let the math and computers do the work for us!!
 
-first, we need to find the points that are nearest to our decision boundry and for that, we first need to calculate the perpendicular distance b/w hyperplane and our data points...we can do that by projecting the point onto the hyperplane and then calculating that distance and this is exactly what we are going to be doing after deriving couple of equations which might seams out of context at first but please, take it with a grain of salt everything will start to come together as we progress through this article... so let's get started shell we?
+<!-- first thing we need to do is to find the points that are nearest to our decision boundry and for that, we need to calculate the perpendicular distance b/w hyperplane and our data points...we can do that by projecting the point onto the hyperplane and then calculating that distance and this is exactly what we are going to be doing after deriving couple of equations which might seams out of context at first but please, take it with a grain of salt everything will start to come together as we progress through this article... so let's get started shell we? -->
 
 <h1 style="border-bottom:5px solid black;">Support Vector Machine</h1>
 

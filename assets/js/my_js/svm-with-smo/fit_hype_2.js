@@ -50,6 +50,7 @@ function btn(p,x,y,ico) {
     }
 
 }
+
 function onclickreset(){
     let npt     = ptsArray.length;
     ptsArray_2  = [];
@@ -221,14 +222,15 @@ var sketch2 = function(p){
         outlier_pts[0].display();
         outlier_pts[1].display();
 
-        /* margin 1 */
+        /* support -vector line 1*/
         p.push();
 
         p.translate(outlier_pts[0].pos.x,outlier_pts[0].pos.y);
         p.rotate(mhp_2.rotation);
 
         p.fill(0);
-        p.stroke(0);
+        p.stroke(100);
+        
         
         p.line(-p.width,0,p.width,0);
 
@@ -242,13 +244,16 @@ var sketch2 = function(p){
         p.rotate(mhp_2.rotation);
 
         p.fill(0);
-        p.stroke(0);
+        p.stroke(100);
         
         // p.line(-p.width,0,p.width,0);
         p.line(-p.width,0,p.width,0);
         // p.line(-p.width,-52,p.width,-52);
 
         p.pop();
+
+
+
 
         /* margins */
         p.push();
@@ -260,16 +265,74 @@ var sketch2 = function(p){
 
         let cval = mhp_2.pos.y;
 
+        dist = p.dist(mhp_2.pos,outlier_pts[1].pos);
+        let tlen = 15;
 
         p.fill(0);
 
+        p.fill(251, 29, 255);
+        p.fill(0);
+        p.stroke(0);
 
         p.stroke((2*p.abs(0.5-margin_range))*300,(1-2*p.abs(0.5-margin_range))*300,0);// colors 
 
         p.strokeWeight(2);
-        p.line(shift,0,shift,(1-margin_range)*(57));
-        // p.stroke(0,300,0);
+        p.translate(shift,0);
+
+        /* UPPER MARGIN */
+
+        /* SPEARS */
+        p.push(); 
+        p.translate(shift+5,-(margin_range)*(55));
+        p.translate(0,5)
+        // p.line(-tlen/2,0,tlen/2,0)
+        let fac = .4;
+        p.line(tlen*fac,0,0,-tlen/2)
+        p.line(0,-tlen/2,-tlen*fac,0)
+        // p.triangle(-tlen/2,0,tlen/2,0,0,-tlen/2)
+        p.pop();
+
+        p.push(); 
+        p.translate(shift+5,0);
+        p.scale(-1);
+        p.translate(0,8);
+        // p.line(-tlen/2,0,tlen/2,0)
+        p.line(tlen*fac,0,0,-tlen/2)
+        p.line(0,-tlen/2,-tlen*fac,0)
+        // p.triangle(-tlen/2,0,tlen/2,0,0,-tlen/2)
+        p.pop();
+
+        // upper margin
         p.line(shift+5,0,shift+5,-(margin_range)*(55));
+
+        /* LOWER MARGIN */
+
+        /* SPEARS */
+        p.push(); 
+        p.translate(shift,(1-margin_range)*(57));
+        p.scale(-1);
+        p.translate(0,5)
+        // p.line(-tlen/2,0,tlen/2,0)
+        // let fac = .4;
+        p.line(tlen*fac,0,0,-tlen/2)
+        p.line(0,-tlen/2,-tlen*fac,0)
+        // p.triangle(-tlen/2,0,tlen/2,0,0,-tlen/2)
+        p.pop();
+
+        p.push(); 
+        p.translate(shift,0);
+        // p.scale(-1);
+        p.translate(0,8);
+        // p.line(-tlen/2,0,tlen/2,0)
+        p.line(tlen*fac,0,0,-tlen/2)
+        p.line(0,-tlen/2,-tlen*fac,0)
+        // p.triangle(-tlen/2,0,tlen/2,0,0,-tlen/2)
+        p.pop();
+
+
+        // lower margin
+        p.line(shift,0,shift,(1-margin_range)*(57));
+
 
         p.pop();
 
@@ -277,9 +340,14 @@ var sketch2 = function(p){
         p.translate(p.width/2,p.height/2);
         p.rotate(mhp_2.rotation);
 
-        p.text("margins",-200,-70);
+        p.text("margins",-280,-70);
         p.stroke(0);
-        p.line(shift-50,-10,-150,-60);
+        p.line(-240,-60, p.map(margin_range,0,1,-130,-180)  ,p.map(margin_range,0,1,-15,10));
+        p.line(-240,-60, p.map(margin_range,0,1,-135,-180)  ,p.map(margin_range,0,1,10,40));
+        // p.line(-280,-70,-135,10);
+        // p.line(-280,-70,-180,40);
+        // p.map(margin_range,0,1,-180,-130)
+        // p.map(1,0,1,10,-15)
 
         p.pop();
         // let shift_startpt_1  = -74;
@@ -373,8 +441,8 @@ var sketch2 = function(p){
         if (!origin_selected_2){
 
             
-            mhp_2.update_rot();
-            console.log("rot: "+p.degrees(mhp_2.rotation))
+            // mhp_2.update_rot();
+            // console.log("rot: "+p.degrees(mhp_2.rotation))
             // mhp_2.update_margin();
 
             // console.log("classify from blue",classify(mhp_2.rotation,mhp_2.pos.y,ptsArray_2[1].pos.x,ptsArray_2[1].pos.y));
