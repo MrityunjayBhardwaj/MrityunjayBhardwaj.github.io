@@ -101,6 +101,18 @@ function resample(p,npt,accuracy_arr){
 
 }
 
+function dottedlines(p,divisions=30,length){
+    let gapSize  = 5;// in px
+    let lineSize = length/divisions;
+
+    let lastx = 0 
+   for(let i=0;i<divisions;i++) {
+    p.line(lastx+gapSize,0,lastx+lineSize,0);
+    lastx = lastx+lineSize
+   }
+}
+
+
 // function accuracy(accuracy_arr){
 //     p.mean(accuracy_arr);
 // }
@@ -231,8 +243,9 @@ var sketch2 = function(p){
         p.fill(0);
         p.stroke(100);
         
-        
-        p.line(-p.width,0,p.width,0);
+        p.translate(-400,0)
+        dottedlines(p,70,800);
+        // p.line(-p.width,0,p.width,0);
 
         p.pop();
 
@@ -246,8 +259,10 @@ var sketch2 = function(p){
         p.fill(0);
         p.stroke(100);
         
+        p.translate(-400,0)
+        dottedlines(p,70,800);
         // p.line(-p.width,0,p.width,0);
-        p.line(-p.width,0,p.width,0);
+        // p.line(-p.width,0,p.width,0);
         // p.line(-p.width,-52,p.width,-52);
 
         p.pop();
@@ -342,12 +357,27 @@ var sketch2 = function(p){
 
         p.text("margins",-280,-70);
         p.stroke(0);
-        p.line(-240,-60, p.map(margin_range,0,1,-130,-180)  ,p.map(margin_range,0,1,-15,10));
-        p.line(-240,-60, p.map(margin_range,0,1,-135,-180)  ,p.map(margin_range,0,1,10,40));
-        // p.line(-280,-70,-135,10);
-        // p.line(-280,-70,-180,40);
-        // p.map(margin_range,0,1,-180,-130)
-        // p.map(1,0,1,10,-15)
+        p.line(-230,-60, p.map(margin_range,0,1,-140,-185)  ,p.map(margin_range,0,1,-19,10));
+        p.line(-230,-60, p.map(margin_range,0,1,-145,-185)  ,p.map(margin_range,0,1,10,40));
+
+        // adding spears to margin_1 arrow
+        p.push(); 
+        p.translate(p.map(margin_range,0,1,-140,-185)  ,p.map(margin_range,0,1,-19,10));
+        p.rotate(p.map(margin_range,0,1,p.PI*.65,p.PI*.81))
+        p.translate(0,5);
+            p.line(tlen*fac,0,0,-tlen/2);
+            p.line(0,-tlen/2,-tlen*fac,0);
+        p.pop();
+
+
+        // adding spears to margin_2 arrow
+        p.push(); 
+        p.translate(p.map(margin_range,0,1,-145,-185)  ,p.map(margin_range,0,1,10,40));
+        p.rotate(p.map(margin_range,0,1,p.PI*.70,p.PI*.81))
+        p.translate(0,5);
+            p.line(tlen*fac,0,0,-tlen/2);
+            p.line(0,-tlen/2,-tlen*fac,0);
+        p.pop();
 
         p.pop();
         // let shift_startpt_1  = -74;
