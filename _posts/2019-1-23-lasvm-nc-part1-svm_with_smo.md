@@ -340,7 +340,45 @@ so by combining everything that we've learned so far,when we solve our optimizat
 because only the points that are on the margin have alpha > 0 which means when we calculate the parameters of our hyperplane using (10) only the points that are on the margin is going to affect the decision...
 
 
-now that we know what support vectors are and we have derived our final optimization problem the only thing left for us to do is to actually solve our formulation, as you might have noticed, our problem is quadratic in nature, so eiter we can use prebuild QPSolvers to solve (12) or we can use a better and more faster approch by using an algorithm called SMO, we are going with the latter one,which will also help us to construct ground for our next article, so lets get started... 
+although at this point we are finished defining our full objective function along with its constraints but as discussed before, SVM construct a linear decision boundary which classify 2 classes but in real life, nothing is strictly linearly seperable like for example in Fig_1.4 we can see that there are 3 missclassified points which in our expression above (     ) violates our constraints so, in order to produce good decision boundery we have to ignore some of these missclassified points and the way we are going to do is to add a slack-variable which ease out the constraints this kind of SVM is called Soft-Margin SVM.
+
+
+
+Although, what we have done untill now in order to find our decision boundary is perfectly reasonable and infact if we apply this same techniques we do get a decision boundary which will linearly separate the 2 classes...but in real life, nothing is smooth or linearly seprable there is always noise just like we see in fig 1.4 , here, we have 3 missclassified points and as you can see there is no linear boundary which can perfectly separate these point... So instead of strictly imposing the constraint ( theta x + theta0 == 1) we ease out a bit by allowing some error in choosing our support vectors and ignore these missclassified points which will be very helpful for us in making of perfectly linear decision boundary but it will not perfectly seprate the 2 classes as we can see, there will be error, which is indeed what we want. This new technique of softning out constraint is called soft margin svm and the stricter counterpart of this method ( the one that we are solving untill now) is called Hard Margin SVM...
+
+{: .text-center}
+<img src="{{site.url}}{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/need_for_soft_margin_svm.png">
+<i style="font-size:15px">fig. 1.4 constraint violation problem</i>
+{: .text-center}
+
+Now as you can infer, soft margin SVM is used most of the time in real world scenarios... So on that note, we need to implement the idea of soft margin in our objective function and our constraints... Here, we add another constraint which we call slack variable which act as a tuning params which specify our softness towards our margin constraint.
+
+$$ L_P = { { 1 \over 2} {||\theta||^2} } + { C{\sum_{i=1}^{n}} \zeta - {\sum_{i=1}^{n}}\alpha_i[yi(x_i^T\Theta + \theta_0) - (1- \zeta)] -{\sum_{i=1}^{n}}\mu_i\zeta_i   } \tag{14}  $$
+
+so by taking the partial derivative w.r.t the primal variables we get these three equations
+
+$$
+\Theta = \sum_{i=1}^{n}{\alpha_i y_i x_i} \tag{15}
+$$
+
+$$
+\sum_{i=1}^{n}{\alpha_i y_i} = 0 \tag{16}
+$$
+
+$$
+ 0 \leq \alpha \leq C \tag{17}
+$$
+
+and if we use (15) (16) (17) in our primal form(14) we can have our objective function soley in terms of the dual variables:
+
+$$
+\max_{\alpha_i} \quad L(\alpha_i)={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } }\tag{6}\\
+s.t. \quad \left \{ { {\alpha \geq 0};
+{ {\sum_{i=1}^n} {\alpha_i y_i} = 0}  }\right.
+$$
+
+
+now that we know what support vectors are and we have derived our final optimization problem the only thing left for us to do is to actually solve our formulation in order to find our best linear decision boundary, as you might have noticed, our problem is quadratic in nature, so eiter we can use prebuild QPSolvers to solve (12) or we can use a better and more faster approch by using an algorithm called SMO, we are going with the latter one,which will also help us to construct ground for our next article, so lets get started... 
 
 <h1 style="border-bottom:5px solid black;">Sequential Minimal Optimizer</h1>
 
@@ -567,6 +605,7 @@ and if we encounter a minimum point that violates our constraint we will just go
 
 
 have a great day!
+
 
 **References**:-
 

@@ -168,10 +168,15 @@ function pts(p,pos){
         // p.stroke(this.color);
 
         if (this.is_sv){// for support vectors
+            p.fill(0);
+            p.ellipse(this.pos.x,this.pos.y,this.size,this.size);
+
+            let radFac = 2.0;
             p.noFill();
             p.stroke(0);
-            // p.stroke(0);
-            p.ellipse(this.pos.x,this.pos.y,this.size,this.size);
+            p.ellipse(this.pos.x,this.pos.y,this.size*radFac,this.size*radFac);
+
+            p.fill(0);
         }
         else{
             if(this.mc){// for Miss-Classificed pts 

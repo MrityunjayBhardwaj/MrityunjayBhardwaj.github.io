@@ -57,6 +57,9 @@ function onclickreset(){
     ptsArray2_2 = [];
 
     outlier_pts = [new pts(thisp,{x: thisp.width/2 -20 + 2*thisp.random() ,y: thisp.height/2-10 + 5*thisp.random()}),new pts(thisp,{x: thisp.width/2 + 25 + 2*thisp.random() ,y: thisp.height/2 + 30+ 5*thisp.random()})]
+    outlier_pts[0].is_sv = 1;
+    outlier_pts[1].is_sv = 1;
+    
     rnd_pts(thisp,
         npt,
         {x: thisp.width*0.4,y:thisp.height*0.3},
@@ -71,7 +74,6 @@ function onclickreset(){
     );
     accuracy_2 =  (1-classifyArray(thisp,mhp_2.rotation,mhp_2.pos.y,ptsArray2_2) + classifyArray(thisp,mhp_2.rotation,mhp_2.pos.y,ptsArray_2,1))/2;
     accuracy_arr.push(0);
-
 
 
 }
@@ -146,8 +148,8 @@ var sketch2 = function(p){
 
 
     outlier_pts = [new pts(thisp,{x: thisp.width/2 -20 + 2*thisp.random() ,y: thisp.height/2-10 + 5*thisp.random()}),new pts(thisp,{x: thisp.width/2 + 25 + 2*thisp.random() ,y: thisp.height/2 + 30+ 5*thisp.random()})]
-        // outlier_pts[0].is_sv = 0;
-        // outlier_pts[1].is_sv = 0;
+        outlier_pts[0].is_sv = 1;
+        outlier_pts[1].is_sv = 1;
 
         // console.log(ptsArray_2)
         mhp_2.rotation = -0.7;
@@ -229,10 +231,8 @@ var sketch2 = function(p){
 
         let margin = 30;
 
-        /* Support Vectors */
-        p.fill(0);
-        outlier_pts[0].display();
-        outlier_pts[1].display();
+
+
 
         /* support -vector line 1*/
         p.push();
@@ -355,8 +355,11 @@ var sketch2 = function(p){
         p.translate(p.width/2,p.height/2);
         p.rotate(mhp_2.rotation);
 
+        p.strokeWeight(1);
         p.text("margins",-280,-70);
+
         p.stroke(0);
+        p.strokeWeight(2);
         p.line(-230,-60, p.map(margin_range,0,1,-140,-185)  ,p.map(margin_range,0,1,-19,10));
         p.line(-230,-60, p.map(margin_range,0,1,-145,-185)  ,p.map(margin_range,0,1,10,40));
 
@@ -380,6 +383,13 @@ var sketch2 = function(p){
         p.pop();
 
         p.pop();
+
+
+        /* Support Vectors */
+        p.fill(0);
+        outlier_pts[0].display();
+        outlier_pts[1].display();
+            
         // let shift_startpt_1  = -74;
         // let shift_endpt_1    = p.abs(outlier_pts[0].pos.x-outlier_pts[1].pos.x)+shift_startpt_1*1.3;
         // let margin_endpt_1   = {x: outlier_pts[1].pos.x+shift_startpt_1, y: calc_y(p, mhp_2.rotation,shift_startpt_1,outlier_pts[1].pos.y,true)};
