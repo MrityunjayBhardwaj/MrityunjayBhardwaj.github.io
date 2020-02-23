@@ -1,17 +1,14 @@
 ---
-layout: single
+layout: post 
 title : SVM with SMO
 tags  : [ML,AI,SVM,non-convex,online-learning,research-paper]
 title-seprator: "|"
 categories: blog  Artificial-Intelligence MachineLearning
 permalink: /:categories/:title.html
 mathjax: true
-author-bio: false
-author_profile: false
 p5js: true   
 comments: true
-header: 
-    teaser: /assets/imgs/posts_imgs/svm-with-smo/teaser/svm_db.png
+img: /posts_imgs/svm-with-smo/teaser/svm_db.png
 ---
 
 <!-- if you are unfimilier with those concepts or just need to brush up some of them,  Imperial Collage London has a great course on coursera,which you might find useful:
@@ -54,6 +51,7 @@ In order to solidify what we are trying to achieve ...lets play a little game, i
 
 <!-- Ok, so what you just did in couple of seconds, is exactly what we are trying to accomplish using pure mathematical techniques... excited now? let's get started,shall we. -->
 
+<!--
 now, as you might have observed,in order to solve this problem, we want a decision boundry which does'nt touch any data point i.e, which is farthest from both the nearest data point( the ones in the dark circle)... we can imagine that there is a **margin** which represent that **distance** b/w decision-boundry and closest data points and we need to **maximize** it in-order to seprate both the classes as clearly as possible..doing this becomes more important when we look at the 
 <a target="_blank" href="https://en.wikipedia.org/wiki/Generalization_error" style="color:#3399ff"><i>generalization error</i>
 </a>
@@ -76,9 +74,8 @@ as you might have observed, if we place the margin near to any one of the class'
 <!-- 
 as you might have observed the margin is essentially just a line that sits on top of the nearest point of the classes and
 now, all we have to do is to compute this margin and for that we need to do some math... don't worry its all going to be simple.  -->
-<!-- <button class="btn--primary " onclick="myFunction()">Click Me</button> -->
+<!-- <button class="btn--primary " onclick="myFunction()">Click Me</button> 
  
-<!-- click here and lets get into it! -->
 
 <script>
 function myFunction() {
@@ -91,7 +88,9 @@ function myFunction() {
 } 
 </script>
 
-<!-- <a target="_blank" href="#" class="btn btn--inverse">Link Text</a> -->
+<!-- <a target="_blank" href="#" class="btn btn--inverse">Link Text</a> 
+-->
+
 
 uptill now, we have done every thing ourselves, we have specified which slope and intercepts to choose in order to classify our data points and not only that we have also came to know why we need to maximize those margins(more on that later...) but now we want to translate all of our intuitions into mathematics because we don't want to classify all the zillions classification problems ourselves! do we?... we are lazy guys!! let the math and computers do the work for us!!
 
@@ -157,7 +156,7 @@ although, I am not going to go over projections but if you are a bit on that the
 <a target="_blank" href="https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/least-squares-determinants-and-eigenvalues/projections-onto-subspaces/MIT18_06SCF11_Ses2.2sum.pdf" style="color:#3399ff"> <i> notes </i></a> as well
 
 
-<img src="{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/proj.jpg">
+<img src="{{site.baseurl}}/assets/img/posts_imgs/svm-with-smo/body/proj.jpg">
 {: .text-center}
 
 <span id="discription" >fig. 1.3: project onto a hyperplane</span>
@@ -347,7 +346,7 @@ although at this point we are finished defining our full objective function alon
 Although, what we have done untill now in order to find our decision boundary is perfectly reasonable and infact if we apply this same techniques we do get a decision boundary which will linearly separate the 2 classes...but in real life, nothing is smooth or linearly seprable there is always noise just like we see in fig 1.4 , here, we have 3 missclassified points and as you can see there is no linear boundary which can perfectly separate these point... So instead of strictly imposing the constraint ( theta x + theta0 == 1) we ease out a bit by allowing some error in choosing our support vectors and ignore these missclassified points which will be very helpful for us in making of perfectly linear decision boundary but it will not perfectly seprate the 2 classes as we can see, there will be error, which is indeed what we want. This new technique of softning out constraint is called soft margin svm and the stricter counterpart of this method ( the one that we are solving untill now) is called Hard Margin SVM...
 
 {: .text-center}
-<img src="{{site.url}}{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/need_for_soft_margin_svm.png">
+<img src="{{site.baseurl}}/assets/img/posts_imgs/svm-with-smo/body/need_for_soft_margin_svm.png">
 <i style="font-size:15px">fig. 1.4 constraint violation problem</i>
 {: .text-center}
 
@@ -394,7 +393,7 @@ so, because we are optimizing 2 alphas together (let them be  $$ \alpha_1 $$ and
 
 
 {: .text-center}
-<img src="{{site.url}}{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/smo_constraint_1.jpg">
+<img src="{{site.baseurl}}/assets/img/posts_imgs/svm-with-smo/body/smo_constraint_1.jpg">
 
 <i style="font-size:15px">fig. 1.4 (box constraint)</i>
 {: .text-center}
@@ -455,7 +454,7 @@ L &= \min\{C,{ { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}\tag{18}
 $$
 
 {: .text-center}
-<img src="{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/bounds_for_alpha2.png">
+<img src="{{site.baseurl}}/assets/img/posts_imgs/svm-with-smo/body/bounds_for_alpha2.png">
 <i style="font-size:15px">fig 1.5 (bounds in $$ \alpha_2$$ </i>
 {: .text-center}
 
@@ -584,7 +583,7 @@ $$
 <br>
 <br>
 {: .text-center}
-<img src="{{site.url}}{{site.baseurl}}/assets/imgs/posts_imgs/svm-with-smo/body/smo_constraint_2.jpg">
+<img src="{{site.baseurl}}/assets/img/posts_imgs/svm-with-smo/body/smo_constraint_2.jpg">
 <i style="font-size:15px">image source: fig. 1.1 (box constraint)</i>
 {: .text-center}
 
