@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>SVM with SMO - My personal blog - Mrityunjay Bhardwaj</title>
+	<meta name="description" content="">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="">
+	<link rel="shortcut icon" href="/mrityunjay-blog/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/mrityunjay-blog/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/mrityunjay-blog/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/mrityunjay-blog/assets/img/favicon/apple-touch-icon-114x114.png">
+	<!-- Chrome, Firefox OS and Opera -->
+	<meta name="theme-color" content="#311e3e">
+	<!-- Windows Phone -->
+	<meta name="msapplication-navbutton-color" content="#311e3e">
+	<!-- iOS Safari -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="#311e3e">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="/mrityunjay-blog/assets/fonts/font-awesome/css/font-awesome.min.css">
+	<!-- Styles -->
+	<link rel="stylesheet" href="/mrityunjay-blog/assets/css/main.css">
+
+</head>
+
+<body>
+  <div class="flex-container">
+  <header class="main-header">
+  <div class="wrapper">
+    <div class="header-flex">
+      <div class="menu-icon-container">
+        <span class="menu-icon"><i class="fa fa-bars" aria-hidden="true"></i></span>
+      </div>
+      <nav class="main-nav">
+        <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+        <ul>
+          <li><a href="/mrityunjay-blog/">Blog</a></li>
+          <li><a href="/mrityunjay-blog/about">About</a></li>
+        </ul>
+      </nav>
+      <p class="logo"><a href="/mrityunjay-blog/">Mrityunjay Bhardwaj</a></p>
+      <div class="search-icon-container">
+        <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
+      </div>
+    </div>
+  </div>
+</header> <!-- End Header -->
+
+
+  <!-- including mathjax -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      extensions: [
+        "MathMenu.js",
+        "MathZoom.js",
+        "AssistiveMML.js",
+        "a11y/accessibility-menu.js"
+      ],
+      jax: ["input/TeX", "output/CommonHTML"],
+      TeX: {
+        extensions: [
+          "AMSmath.js",
+          "AMSsymbols.js",
+          "noErrors.js",
+          "noUndefined.js",
+        ]
+      }
+    });
+  </script>
+  <script type="text/javascript" async
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
+
+  <!-- inculding p5js -->
+  <script type="text/javascript" async src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+
+  <article class="article-page">
+    <div class="page-image">
+      <div class="cover-image" style="background: url(/mrityunjay-blog/assets/img//posts_imgs/svm-with-smo/teaser/svm_db.png) center no-repeat; background-size: cover;"></div>
+    </div>
+    <div class="wrapper">
+      <div class="page-content">
+        <div class="header-page">
+          <h1 class="page-title">SVM with SMO</h1>
+          <div class="page-date"><time datetime="2019-01-23 00:00:00 +0530">2019, Jan 23</time></div>
+        </div>
+        <!-- if you are unfimilier with those concepts or just need to brush up some of them,  Imperial Collage London has a great course on coursera,which you might find useful:
+<a target="_blank" href="https://www.coursera.org/specializations/mathematics-machine-learning" target="_blank"><u>https://www.coursera.org/specializations/mathematics-machine-learning</u></a> -->
+<!-- 
+ In this tutorial, we are going to take a deep dive inside support vector machines, we are going to talk about what svm is and how it works (internally/mathematically) by deconstructing every single part that leads to it's final formulation and then, we are going to take a look at how to solve that formulation using an algorithm called SMO.... by the end of this article, you will have a solid understand of one of the most important Algorithm in Machine Learning. -->
+
+<!-- 
+
+
+ -->
+
+<p>In this tutorial, we are going to take a deep dive inside support vector machines, we are first going to aquire an intuitive understanding of what is it that we wanted to do and then we are going to give our intuition a mathematical framework which will give a structure to our problem.In the second half of this article, we are going to take a dive inside an Algorithm called SMO which is a way of solving the final formulation of our problem… by the end of this article, you will have not only an intutive understanding of SVM but also know how it works internally/mathematically.</p>
+
+<p>So as you might know, SVM stands for support vector machines. its probably the most successful hyperplane based classifier out there. what it means is that, in svm you are classifing 2 classes by constructing a hyperplane(a.k.a decision boundary) which seperate both of them as clearly as possible.</p>
+
+<p>In order to solidify what we are trying to achieve …lets play a little game, in it, what i want you to do is to construct a hyperplane/decision-boundary which seprate these 2( class “<font style="color: blue">-1;</font>” and class “<font style="color: orange">+1</font>” ) classes as accurately as possible…so go ahead and see if you could figure out the best decision boundary!…</p>
+
+<!-- >**Info**: >
+>  "orange-dot" = class 1
+>  "blue-dot"   = class 2
+>  "X"          =  missclassified points
+{: .notice--info} -->
+
+<div id="fit_hyperplane_yourself_0" style="width: inherit" class="text-center"></div>
+
+<script src="/mrityunjay-blog/assets/js/dependency/p5/p5.min.js"></script>
+
+<script src="/mrityunjay-blog/assets/js/dependency/p5/addons/p5.dom.min.js"></script>
+
+<script src="/mrityunjay-blog/assets/js/my_js/svm-with-smo/fit_hype.js"></script>
+
+<p class="text-center"><i style="font-size:15px">L-fig 1.1</i><br />
+<i style="font-size:15px">fit the classifier by moving the gizmo(black arrow) of your hyperplane, make sure to have as less missclassification points(denoted by “X”) as possible..good luck!!</i></p>
+
+<!-- Ok, so what you just did in couple of seconds, is exactly what we are trying to accomplish using pure mathematical techniques... excited now? let's get started,shall we. -->
+
+<!--
+now, as you might have observed,in order to solve this problem, we want a decision boundry which does'nt touch any data point i.e, which is farthest from both the nearest data point( the ones in the dark circle)... we can imagine that there is a **margin** which represent that **distance** b/w decision-boundry and closest data points and we need to **maximize** it in-order to seprate both the classes as clearly as possible..doing this becomes more important when we look at the 
+<a target="_blank" href="https://en.wikipedia.org/wiki/Generalization_error" style="color:#3399ff"><i>generalization error</i>
+</a>
+(which   by the way, is what we are always trying to minimize in any ML scenario)... you can observe this in L-fig 1.2 , by placing your hyperplane near to any one of the classes and then generate new samples and see how it perform,as compare to the scenario where, if we place the hyperplane farthest from both the classes.... 
+
+>**Note**: Click <button class="btn--primary " onclick="onclickreset()">reload</button> to generate new samples.
+{: .notice--info}
+
+{: .text-center}
+<div id="fit_hyperplane_yourself_1" style="width: inherit"></div>
+
+
+<script src="/mrityunjay-blog/assets/js/my_js/svm-with-smo/fit_hype_2.js"></script>
+<i style="font-size:15px">L-fig 1.2: fit the classifier</i>
+<i style="font-size:15px"> here, the the color of the margin discribe the quality of our decision boundary, greener the better(because its farthest from both the classes)</i>
+{: .text-center}
+
+as you might have observed, if we place the margin near to any one of the class's data point and generate new samples... our accuracy is fluctuating alot(which means our<span id="highlight"> mean accuracy </span >is going to be much less), which is not the case if we were to place our decision boundary farthest from both the class's data points, here, our average accuracy is better then the other 2 cases...and as discussed earlier, the notion of near and far is quantified by those "margins" which suggest the fact that if we want to find the best decision boundary we need to maximize these margins.
+
+<!-- 
+as you might have observed the margin is essentially just a line that sits on top of the nearest point of the classes and
+now, all we have to do is to compute this margin and for that we need to do some math... don't worry its all going to be simple.  -->
+<!-- <button class="btn--primary " onclick="myFunction()">Click Me</button> 
+ 
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+} 
+</script>
+
+<!-- <a target="_blank" href="#" class="btn btn--inverse">Link Text</a> 
+-->
+
+<p>uptill now, we have done every thing ourselves, we have specified which slope and intercepts to choose in order to classify our data points and not only that we have also came to know why we need to maximize those margins(more on that later…) but now we want to translate all of our intuitions into mathematics because we don’t want to classify all the zillions classification problems ourselves! do we?… we are lazy guys!! let the math and computers do the work for us!!</p>
+
+<!-- first thing we need to do is to find the points that are nearest to our decision boundry and for that, we need to calculate the perpendicular distance b/w hyperplane and our data points...we can do that by projecting the point onto the hyperplane and then calculating that distance and this is exactly what we are going to be doing after deriving couple of equations which might seams out of context at first but please, take it with a grain of salt everything will start to come together as we progress through this article... so let's get started shell we? -->
+
+<h1 style="border-bottom:5px solid black;">Support Vector Machine</h1>
+
+<script type="math/tex; mode=display">\require{cancel}</script>
+
+<p>Some Notation to be aware of:</p>
+
+<ul>
+  <li><script type="math/tex">\Theta</script>   = slope of hyperplane</li>
+  <li><script type="math/tex">\Theta_0</script> = intercept of the hyperplane</li>
+  <li><script type="math/tex">x</script>        = our data points</li>
+</ul>
+
+<p>As we know that, if a point is <strong>on the hyperplane</strong> then its neither in class -1(orange class ) nor +1(blue class) we can exploit this property to conclude that the <script type="math/tex">\Theta</script> is orthogonal to decision boundry and we can derive it as follows :-</p>
+
+<p>let <script type="math/tex">x_1</script>  and <script type="math/tex">x_2</script> can be any 2 arbitry points that are on the hyperplane so,</p>
+
+<script type="math/tex; mode=display">\Theta^Tx_1 + \cancel{\Theta_0} = \Theta^Tx_2 + \cancel {\Theta_0} = 0</script>
+
+<script type="math/tex; mode=display">{\Theta^Tx_1 - \Theta^Tx_2 = 0}</script>
+
+<script type="math/tex; mode=display">\Theta^T(x_1 -x_2) = 0</script>
+
+<script type="math/tex; mode=display">{\Theta \bot (x_1-x_2)} \tag{1}</script>
+
+<p>also, we observe that, for any point <script type="math/tex">x_0</script> which is on the hyperplane :-</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+
+\Theta^Tx_0 + \Theta_0 &= 0 \\
+ \Theta_0 & = -\Theta^Tx_0  \tag{2}
+\end{align} %]]></script>
+
+<!-- 
+$$
+\left\{
+\begin{array}{ll}
+a_1x+b_1y+c_1z &=d_1+e_1 \\ 
+a_2x+b_2y &=d_2 \\ 
+a_3x+b_3y+c_3z &=d_3 
+\end{array} 
+\right.
+$$
+
+$$
+\begin{alignat}{5}
+  \max \quad        & z = &   x_1  & + & 12 x_2  &   &       &         && \\
+  \mbox{s.t.} \quad &     & 13 x_1 & + & x_2     & + & 12x_3 & \geq 5  && \tag{constraint 1} \\
+                    &     & x_1    &   &         & + & x_3   & \leq 16 &                   &\tag{2} \\
+                    &     & 15 x_1 & + & 201 x_2 &   &       & =    14 && \tag{constraint 3} \\
+                    &     & \rlap{x_i \ge 0, i = 1, 2, 3}
+\end{alignat}
+$$ -->
+
+<p>although, I am not going to go over projections but if you are a bit on that then, i recommend you to watch this great lecture by legendry prof. gilbert strang
+ <a target="_blank" href="https://www.youtube.com/watch?v=Y_Ac6KiQ1t0" style="color:#3399ff"><i>projection onto subspace</i></a> 
+ or you can check its
+<a target="_blank" href="https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/least-squares-determinants-and-eigenvalues/projections-onto-subspaces/MIT18_06SCF11_Ses2.2sum.pdf" style="color:#3399ff"> <i> notes </i></a> as well</p>
+
+<p class="text-center"><img src="/mrityunjay-blog/assets/img/posts_imgs/svm-with-smo/body/proj.jpg" /></p>
+
+<p class="text-center"><span id="discription">fig. 1.3: project onto a hyperplane</span></p>
+
+<p>so, in order to compute the perpendicular distance from <script type="math/tex">x</script> to the hyperplane we can take an arbitary point on the hyperplane and compute the vector b/w <script type="math/tex">x_0</script> and any point <script type="math/tex">x</script> (blue vector in fig 1.3) . and then project that vector on the hyperplane in order to get the distance. by using the formula of projection we can find that,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+d &= { {\Theta^T(x-x_0)}\over{||{\Theta}||}}\\
+&= { {\Theta^T(x) - \Theta^T(x_0)}\over {||\Theta||} }
+\end{align} %]]></script>
+
+<p><em>using (2) we get,</em></p>
+
+<script type="math/tex; mode=display">d= { {\Theta^T(x) - \Theta_0}\over {||\Theta||} } \tag{3}</script>
+
+<p>so the distance from an arbitary data point(<script type="math/tex">x_i</script>) to the hyperplane can be written as:</p>
+
+<script type="math/tex; mode=display">distance = { d_i*y_i \tag{ where,y_i = \{ 1,+1 \} } }</script>
+
+<p>so the final expression of finding the best margin is:</p>
+
+<script type="math/tex; mode=display">margin = \min||y_i*d_i||</script>
+
+<p>which means we need to find the point which has a minimum distance from hyper-plane and we have calculated the <script type="math/tex">d_i</script> before so, putting it all together we get our objective function:-</p>
+
+<script type="math/tex; mode=display">\min { { y_i (\Theta^Tx_i + \Theta_0)}\over     ||\Theta||}  \tag{4}</script>
+
+<p>now, as you can see, if the point is on hyperplane then it is 0 and if it is not then <script type="math/tex">d_i > 0</script> i.e,</p>
+
+<p>So, as we can see in order for its margin to expand, it has to be greater then 0. now, if it is &gt; 0 then there has to be a lower bound let’s call it “k”  i.e,</p>
+
+<script type="math/tex; mode=display">(\Theta^Tx_i + \Theta_0) \geq k</script>
+
+<p>so, by dividing both sides by k we get the following expression:</p>
+
+<script type="math/tex; mode=display">{1\over k}(\Theta^Tx_i + \Theta_0) \geq {\cancel{k}\over \cancel{k}}</script>
+
+<p>and as we know that, if we divide the vector by a scaler its just change the magnitude of the vector not its direction which is what we are intrested in, so instead of multiplying l.h.s by 1/k we can leave it as it is.. which means:</p>
+
+<script type="math/tex; mode=display">(\Theta^Tx_i + \Theta_0) \geq 1 \tag{5}</script>
+
+<p>so, it means that we have to change <script type="math/tex">\Theta</script> in such a way that the minimum distance b/w point and the decision-boundary mustbe atleast <strong>1 unit</strong> and as we know in (4) we have to minimize this function as well. so, we combine both the expression and get our final objective function:</p>
+
+<script type="math/tex; mode=display">\min { { y_i (\Theta^Tx_i + \Theta_0)}\over     ||\Theta||}   = \min({1\over {|| \Theta || } }) \tag{6}</script>
+
+<p>this means our margin only depends on the norm of the  <script type="math/tex">\Theta</script></p>
+
+<p>we can re-write this as:</p>
+
+<script type="math/tex; mode=display">\max \quad{1 \over 2}||\Theta||^2\tag{7}\\
+\text{s.t.}\quad y_i(\Theta^Tx_i + \Theta_0) \geq 1</script>
+
+<p>but instead of finding the solution to this objective function we are going to be optimizing the <strong>dual of this objective function</strong> the reason will be apperant when we will talk about the non-linear SVM</p>
+
+<p>so just like in any dual optimization scenario, we need to form a <strong>legrangian</strong> of the objective function and here let <script type="math/tex">\alpha</script> be our <strong>legrange multiplier</strong></p>
+
+<p><script type="math/tex">L(\Theta,\Theta_0,\alpha) = {1 \over 2} ||\Theta||^2 - \sum_{i=1}^n\alpha [y_i(\Theta^Tx_i + \Theta_0)-1]</script> 
+<script type="math/tex">where,\quad\quad \alpha\geq 0 \tag{8}</script></p>
+
+<p>so, if we take the derivative of <script type="math/tex">L \quad  w.r.t \quad \Theta</script>:-</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+{ {\partial L}\over {\partial \Theta} } &=
+{ {\partial }\over {\partial \Theta} }
+\left (
+ {1 \over 2} ||\Theta||^2 - \sum_{i=1}^n\alpha_i[y_i(\Theta^Tx_i + \Theta_0)-1]
+ \right ) \\
+{ {\partial L}\over {\partial \Theta} } &=
+\Theta - \sum_{i=1}^{n}{\alpha_iy_ix_i}=0 \tag{9}
+\end{align} %]]></script>
+
+<p>using (9) we can imply that,</p>
+
+<script type="math/tex; mode=display">\Theta = \sum_{i=1}^{n}{\alpha_i y_i x_i} \tag{10}</script>
+
+<p>now, we need to find the derivative w.r.t our second primal variable i.e, <script type="math/tex">\Theta_0</script> i.e,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+{ {\partial L}\over {\partial \Theta_0} } &=
+{ {\partial }\over {\partial \Theta_0} }
+\left (
+ {1 \over 2} ||\Theta||^2 - \sum_{i=1}^n\alpha_i[y_i(\Theta^Tx_i + \Theta_0)-1]
+ \right )  = 0\\
+{ {\partial L}\over {\partial \Theta_0} } &=
+0 - \sum_{i=1}^{n}{\alpha_i y_i} = 0\\ 
+{ {\partial L}\over {\partial \Theta_0} } &=
+\sum_{i=1}^{n}{\alpha_i y_i} = 0 
+\end{align} %]]></script>
+
+<p>i.e,</p>
+
+<script type="math/tex; mode=display">\sum_{i=1}^{n}{\alpha_i y_i} = 0 \tag{11}</script>
+
+<p>now using (10) and (11) we can re-write legrangian using only the dual-variable:</p>
+
+<!--
+L(\alpha_i) &= {1 \over 2}|| \sum_{i=1}^{n}{\alpha_i y_i x_i} ||^2 - \sum_{i=1}^{n}(\alpha_iy_i)*\sum_{i=1}^{n}(\Theta^Tx_i + \Theta_0) - \sum_{i=1}^{n}\alpha_i \\
+ L(\alpha_i) &= {1 \over 2}|| \sum_{i=1}^{n}{\alpha_i y_i x_i} ||^2 - 0 - \sum_{i=1}^{n}\alpha_i \tag{using (4)\\
+
+L(\alpha_i) &= {1 \over 2}|| \sum_{i=1}^{n}{\alpha_i y_i x_i} ||^2 + \sum_{i=1}^{n}\alpha_i \tag{using  -->
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+L(\alpha_i) &={ {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } }  - \sum_{i=1}^{n}[\alpha_iy_i(\Theta^Tx_i + \Theta_0) - \alpha_i] } \\
+&= {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - \Theta^T\sum_{i=1}^{n}(\alpha_iy_i x_i) - \Theta_0\sum_{i=1}^{n}(\alpha_i y_i ) + \sum_{i=1}^{n}\alpha_i \\
+&= {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - \Theta^T\sum_{i=1}^{n}(\alpha_iy_i x_i) + \sum_{i=1}^{n}\alpha_i \tag{using, (10)}\\
+&= -{1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } + {\sum_{i=1}^{n}\alpha_i}\\ 
+&={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ \left( {\left(\sum_{i=1}^{n}{\alpha_i y_i x_i} \right) }^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } \right) } \\ 
+&={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ \left( {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } \right) } \\ 
+\end{align} %]]></script>
+
+<p>so this is my final legrangian which only depend on the dual variable..</p>
+
+<script type="math/tex; mode=display">L(\alpha_i)= {\sum_{i=1}^{n}\alpha_i}- {1 \over 2}{ {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } }\\</script>
+
+<p>now, our final objective function will become:</p>
+
+<script type="math/tex; mode=display">\max_{\alpha_i} \quad L(\alpha_i)={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } }\\
+s.t. \quad \left \{ { {\alpha \geq 0};
+{ {\sum_{i=1}^n} {\alpha_i y_i} = 0}  }\right.</script>
+
+<p>why <script type="math/tex">\max{\alpha_i}</script> you may ask?… because as discussed earlier, we are optimizing the dual of our initial objective function which means that, when we are maximizing the dual we are essentially, minimizing the primal function and vice-versa.</p>
+
+<p>this means that, if we can solve this optimization function we can find our <script type="math/tex">\alpha</script> and if we can find our alphas we can find our <script type="math/tex">\Theta</script> using(10) which is our unknown parameter of our decison-boundary… so essential, we can get our decision-boundary by solving this optimization problem. but how can we know that this certain point(let it be <script type="math/tex">x^*</script>) is the most optimal one? enter, K.K.T conditions…</p>
+
+<p>for a point to be the most optimal, it need to satisfy some of the conditions, these conditions are known as <a target="_blank" href="https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions" style="color:#3399ff">K.K.T condition</a>:</p>
+
+<p>1), stationarity condition:
+at <script type="math/tex">x^*</script> the derivative should be 0</p>
+
+<p>1) primal feasiblity: primal constraints should’nt be violated. in our case its gidi &gt;= 0</p>
+
+<p>2) Dual feasibility: dual constraints shold’nt be violated .. in our case its <script type="math/tex">\alpha \geq 0</script></p>
+
+<p>3) Complementary slackness condition: at optimial point dual variable * primal constraints should be equal to 0</p>
+
+<p>uptill now, we have covered 3 kkt conditions but now, we are going to be looking at the 4th one, that is  complementary slackness condition.</p>
+
+<script type="math/tex; mode=display">\alpha_i*d_i = 0 \\ \alpha_i[y_i(\Theta^Tx_i + \Theta_0)]=0 \tag{13}</script>
+
+<p>this means that if one of the term is greater then 0 then one of them has to be zero in order to satisfy (13)
+which means that, there are only 2 possible scenarios i.e,</p>
+
+<script type="math/tex; mode=display">if \quad \quad \alpha > 0</script>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+then,\quad y_i(\Theta^Tx_i+\Theta_0) -1 &= 0 \\
+y_i(\Theta^Tx_i+\Theta_0) &= 1
+\end{align} %]]></script>
+
+<p>which means that,this perticular point is on the margin and <em>these points that are on the margin are called <strong>support vectors</strong></em>, in other words,</p>
+
+<blockquote>
+  <p>support vectors are those points whose <script type="math/tex">\alpha</script> are greater then 0</p>
+</blockquote>
+
+<p>but what if the <script type="math/tex">\alpha</script> is equals to 0? then <script type="math/tex">y_i[\Theta^Tx_i+\Theta_0] > 1</script> which means that, this point is not on the margin in other words,</p>
+
+<blockquote>
+  <p>any points whose alpha is close to 0 is not on the margin, are not our support vectors</p>
+</blockquote>
+
+<p>so by combining everything that we’ve learned so far,when we solve our optimization problem w.r.t <script type="math/tex">\alpha</script>, we get the sparse matrix(full of zeros) martrix of alphas  and in that matrix we need to take out those alphas which are close to 1 and those points are going to be our support vectors.</p>
+
+<p>because only the points that are on the margin have alpha &gt; 0 which means when we calculate the parameters of our hyperplane using (10) only the points that are on the margin is going to affect the decision…</p>
+
+<p>although at this point we are finished defining our full objective function along with its constraints but as discussed before, SVM construct a linear decision boundary which classify 2 classes but in real life, nothing is strictly linearly seperable like for example in Fig_1.4 we can see that there are 3 missclassified points which in our expression above (     ) violates our constraints so, in order to produce good decision boundery we have to ignore some of these missclassified points and the way we are going to do is to add a slack-variable which ease out the constraints this kind of SVM is called Soft-Margin SVM.</p>
+
+<p>Although, what we have done untill now in order to find our decision boundary is perfectly reasonable and infact if we apply this same techniques we do get a decision boundary which will linearly separate the 2 classes…but in real life, nothing is smooth or linearly seprable there is always noise just like we see in fig 1.4 , here, we have 3 missclassified points and as you can see there is no linear boundary which can perfectly separate these point… So instead of strictly imposing the constraint ( theta x + theta0 == 1) we ease out a bit by allowing some error in choosing our support vectors and ignore these missclassified points which will be very helpful for us in making of perfectly linear decision boundary but it will not perfectly seprate the 2 classes as we can see, there will be error, which is indeed what we want. This new technique of softning out constraint is called soft margin svm and the stricter counterpart of this method ( the one that we are solving untill now) is called Hard Margin SVM…</p>
+
+<p class="text-center text-center"><img src="/mrityunjay-blog/assets/img/posts_imgs/svm-with-smo/body/need_for_soft_margin_svm.png" />
+<i style="font-size:15px">fig. 1.4 constraint violation problem</i></p>
+
+<p>Now as you can infer, soft margin SVM is used most of the time in real world scenarios… So on that note, we need to implement the idea of soft margin in our objective function and our constraints… Here, we add another constraint which we call slack variable which act as a tuning params which specify our softness towards our margin constraint.</p>
+
+<script type="math/tex; mode=display">L_P = { { 1 \over 2} {||\theta||^2} } + { C{\sum_{i=1}^{n}} \zeta - {\sum_{i=1}^{n}}\alpha_i[yi(x_i^T\Theta + \theta_0) - (1- \zeta)] -{\sum_{i=1}^{n}}\mu_i\zeta_i   } \tag{14}</script>
+
+<p>so by taking the partial derivative w.r.t the primal variables we get these three equations</p>
+
+<script type="math/tex; mode=display">\Theta = \sum_{i=1}^{n}{\alpha_i y_i x_i} \tag{15}</script>
+
+<script type="math/tex; mode=display">\sum_{i=1}^{n}{\alpha_i y_i} = 0 \tag{16}</script>
+
+<script type="math/tex; mode=display">0 \leq \alpha \leq C \tag{17}</script>
+
+<p>and if we use (15) (16) (17) in our primal form(14) we can have our objective function soley in terms of the dual variables:</p>
+
+<script type="math/tex; mode=display">\max_{\alpha_i} \quad L(\alpha_i)={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } }\tag{6}\\
+s.t. \quad \left \{ { {\alpha \geq 0};
+{ {\sum_{i=1}^n} {\alpha_i y_i} = 0}  }\right.</script>
+
+<p>now that we know what support vectors are and we have derived our final optimization problem the only thing left for us to do is to actually solve our formulation in order to find our best linear decision boundary, as you might have noticed, our problem is quadratic in nature, so eiter we can use prebuild QPSolvers to solve (12) or we can use a better and more faster approch by using an algorithm called SMO, we are going with the latter one,which will also help us to construct ground for our next article, so lets get started…</p>
+
+<h1 style="border-bottom:5px solid black;">Sequential Minimal Optimizer</h1>
+
+<p>So,SMO stands for Sequential Minimal Optimization,it is an iterative algorithm which is going to help us calculate our <script type="math/tex">\alpha_s</script> by breaking down our quadratic progamming problem into smaller more tracktable sub-problems. the advantage of this technique is that, through smo we are able to avoide having to numerically optimize our QP problem entirely, which makes this method more efficient and faster to use.</p>
+
+<p>in smo, we optimize 2 alphas samultaniously by taking the rest as a constant, which makes our optimization problem, just a simple quadratic expression, which is great because optimizing this expression is much simpler and faster then optimizing (12)… this is the reason why smo is the primery choice for solving svm… but before moving forward we need to understand how there constraint behave and why we choose 2 alphas instead of 1??</p>
+
+<p>let’s take a look at our first constraint <script type="math/tex">\alpha \geq 0</script>,  we know that in this constraint, there is a lower bound “0” and we can assume that there is an upperbound (let it be “C”),which makes our constraint as follows:</p>
+
+<script type="math/tex; mode=display">0 \leq \alpha \leq C \tag{14}</script>
+
+<p>so, because we are optimizing 2 alphas together (let them be  <script type="math/tex">\alpha_1</script> and <script type="math/tex">\alpha_2</script>) our constraint in expression (14) will become a box constraint which means that our alpha must reside inside this box of size C x C . which will look something like in fig 1.4:</p>
+
+<p class="text-center"><img src="/mrityunjay-blog/assets/img/posts_imgs/svm-with-smo/body/smo_constraint_1.jpg" /></p>
+
+<p class="text-center"><i style="font-size:15px">fig. 1.4 (box constraint)</i></p>
+
+<p>there is a another constaint which we have to keep in mind, which is:</p>
+
+<script type="math/tex; mode=display">\sum_{i=0}^{n} { {\alpha_i} {y_i} } = 0 \tag{15}</script>
+
+<!-- 
+as the name suggest, if we were to visualize this constaint this will construct a line... which both the alphas must follow, now if we were to combine both the constraint, our final constraint viz. will look like this. -->
+
+<!-- |||||||||||||||||| Fig 1.5 ||||||||||||||||||| -->
+
+<p>and as discussed earlier, in smo we optimize our expression(12) by samultaniously optimizing 2 alphas and freeze the rest them, which modifies our constraint something like this:-</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+\sum_{i=1}^{n} { {\alpha_i} {y_i} } &= 0 \\
+ { {\alpha_1} {y_1} } + { {\alpha_2} {y_2} } + { \sum_{i=2}^{n} { {\alpha_i} {y_i} } } &= 0 \\
+{ {\alpha_1} {y_1} } + { {\alpha_2} {y_2} } &= -{ \sum_{i=2}^{n} { {\alpha_i} {y_i} } } 
+\end{align} %]]></script>
+
+<p>which suggest that because all the alphas accept 1 and 2 are frozen, our r.h.s is just a constant value let it be <script type="math/tex">\rho</script></p>
+
+<script type="math/tex; mode=display">{ {\alpha_1} {y_1} } + { {\alpha_2} {y_2} } = \rho \tag{16}</script>
+
+<p>which, if we were to visualize, it construct a line, that is the reason why its also known as linear constraint (see, fig 1.5)….which also means that for <script type="math/tex">\alpha_2</script> in order to satify both the constraints, there has to be an upper and lower bound for it , let those bounds be <script type="math/tex">H</script> and <script type="math/tex">L</script> in our case <script type="math/tex">L = 0</script> which is not always the case, so the next thing left for us to do is to calcuate our <script type="math/tex">H</script> and <script type="math/tex">L</script> for our $$ \alpha_2 $:-</p>
+
+<script type="math/tex; mode=display">H \leq \alpha_2^{(new)} \leq L,\\</script>
+
+<p>where, H and L are depend on the values of y(s) and are clipped accordingly in order to keep the alphas from violating the constraints.</p>
+
+<p>if <script type="math/tex">y_1 \neq y_2</script></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left \{
+\begin{array}{ll}
+H &=\max\{0, { \alpha_2^{(old)}}-{\alpha_1^{(old)}}\},\\
+L &= \min\{C,{ C - { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}\tag{17}
+\end{array}
+\right. %]]></script>
+
+<p>if <script type="math/tex">y_1 = y_2</script></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\left \{
+\begin{array}{ll}
+H &=\max\{0,{ { \alpha_1^{(old)}}-{\alpha_2^{(old)}} - C } \},\\
+L &= \min\{C,{ { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}\tag{18}
+\end{array}
+\right. %]]></script>
+
+<p class="text-center text-center"><img src="/mrityunjay-blog/assets/img/posts_imgs/svm-with-smo/body/bounds_for_alpha2.png" />
+<i style="font-size:15px">fig 1.5 (bounds in <script type="math/tex">\alpha_2</script> </i></p>
+
+<p>using equation (16) we can also write <script type="math/tex">\alpha_1</script> as a function of <script type="math/tex">\alpha_2</script></p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+{ {\alpha_1} {y_1} } + { {\alpha_2} {y_2} } &= \rho \\
+{ {\alpha_1} {y_1} }  &= \rho - { {\alpha_2} {y_2} } \\
+\text{Multiplying both sides by } y_1 \text{we get:} \\
+{ {\alpha_1} { (y_1) }^2 }  &= y_1{ (\rho - { {\alpha_2} {y_2} } ) } \\
+{ {\alpha_1} { (y_1) }^2 }  &= y_1{ (\rho - { {\alpha_2} {y_2} } ) } \\
+\end{align} %]]></script>
+
+<p>because, <script type="math/tex">y_i \in \{-1,+1 \},</script> our expression will become,</p>
+
+<script type="math/tex; mode=display">{\alpha_1} = y_1{ (\rho - { {\alpha_2} {y_2} } ) } \tag{19}</script>
+
+<p>now, before moving any further lets look at a case where,instead of taking 2 alphas at a time, we take only one,which makes our second constraint something like this,</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align} 
+\sum_{i=0}^{n} { {\alpha_i} {y_i} } &= 0 \\
+ { { {\alpha_1} {y_i} } + { \sum_{i=1}^{n} { {\alpha_i} {y_i} } } } &= 0 \\
+ { {\alpha_1} {y_i} }  &= - { \sum_{i=0}^{n} { {\alpha_i} {y_i} } } \\ \text{ multiplying both side by } y_1 \text{we get,}\quad \quad \\
+ { {\alpha_1}  }  &= -{y_1} { \sum_{i=0}^{n} { {\alpha_i} {y_i} } }  \\
+\end{align} %]]></script>
+
+<p>which clearly suggest that, <script type="math/tex">\alpha_1</script> is a function of all the alphas and because we have fixed all of them then its just a constant value which means we cannot change our <script type="math/tex">\alpha_1</script> without violating our linear constraint, that is the reason why the minimal number of alphas we can use has to be atleast 2.</p>
+
+<p>Now that we have understood about the constraints , let’s now take a look at how it all comes together and optimize our expression (12) using smo algorithm….</p>
+
+<p>smo algorithm has 2 parts, 1 is to choose the alphas based on a certain heuristics, and second is to optimize our objective function w.r.t these alphas…. although, you can choose the alphas randomly, but using heurisitics will help us to choose only the most promising one i.e, which can gives us the most improvement in our optimization, in this article we are not going to worry about the first one because it more of an implementation concern (which we will address in part 2)… for now, we suppose that we have already choose those alphas and all that left for us to do is to optimize our objective (12) w.r.t them….</p>
+
+<p>using equation (19) we can conclude that our final objective function will look something like this:-</p>
+
+<script type="math/tex; mode=display">W(\alpha_1,\alpha_2,.....,\alpha_n) = W((\rho -\alpha_2y_2)y_1,\alpha_2,.....,\alpha_n)\tag{20}</script>
+
+<p>and as discussed earlier, in smo we hold all the alphas, accept 2 of them, which convert our entire expression into a simple quadratic function in the form of <script type="math/tex">a(\alpha_2)^2 + b(\alpha_1) +c</script> for some appropriate <script type="math/tex">a,</script> <script type="math/tex">b</script> and<script type="math/tex">c</script> which we can easily maximize by putting 0 on the r.h.s and taking its second derivative ignoring the box constraints…gives us <script type="math/tex">\eta</script> which is less then zero and maximum along the  directions of the linear constraint.</p>
+
+<script type="math/tex; mode=display">\eta = 2 K(x_1,x_2) - K(x_1,x_1) - K(x_2,x_2)</script>
+
+<p>where, K is our kernel function.</p>
+
+<p>now that we know our derivative, we can now use this to calculate the new values for our alphas using this formula:</p>
+
+<script type="math/tex; mode=display">\alpha_2^{(new)} = { \alpha_2^{ (new) } } - { {y_2(E_1 - E_2) } \over { \eta } } \tag{21}</script>
+
+<p>where, <script type="math/tex">E_i = f^{old}(x_i) - y_i</script> is the error on the ith training eample… but what if our optimal point is outside our box constraint??… if that the case then we can just clip our <script type="math/tex">\alpha_2</script> to its bounds….</p>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\alpha_2 = \left \{
+\begin{align}
+H,&\quad \text{if }\alpha_2 \geq H \\
+\alpha_2,&\quad \text{if } L < \alpha_2 < H \\
+L,&\quad \text{if }\alpha_2 \leq L \tag{22}\\
+\end{align}
+\right. %]]></script>
+
+<p>now we know our new <script type="math/tex">\alpha_2</script>, we can find our <script type="math/tex">\alpha_1</script> using equation (19):</p>
+
+<script type="math/tex; mode=display">\alpha_1^{(new)} = \alpha_1^{(old)} + s{ ( \alpha_2^{(old)} - \alpha_2^{(new)} ) } \tag{23}</script>
+
+<p>where, <script type="math/tex">s = y_1y_2</script></p>
+
+<p>and just like that, we are going to heuristically take 2 alphas and update them untill all the alphas stops changing within certian iteration. and after finding the value of all the alphas we are just going to be using equation (12) to calculate our hyperplane and thats it!</p>
+
+<p>Now its a great time to summerise what we have just did, we first looked at what we are try to achieve using L-fig 1.1 and 1.2.. then we introduce the concept of margin and we clearify that we have to maximize it in order to find our best hyperplane, then we moved on and formulate this idea and came up with the objective function, but we realized that it would be more benificial to optimize its dual counterpart which introduces our final optimization function(12)… althought, we could use a black-box QPSolvers to solve our function but we instead go with SMO and layed out the entire algorithm and found the way to maximize our objective function using 2 alphas at a time, we disussed why we choose 2 alphas instead of one and then we take a look at our constraints and how is it going to change if we freeze all of the alphas accept 2 of them… which leads us to the final values of our alphas, which we can calcuate and update untill it converges, in the end we take a look at how are we going to be using these alphas to calculate our decision-boundary.</p>
+
+<p>I hope that you enjoyed and learned something new… if there is any thing that you did’nt like please let me know, i am just a beginner in this stuff so i hope you could help me by critiquing it ( please be brutal)..</p>
+
+<!-- 
+
+
+
+
+but we have to address some edge cases, suppose if our alpha is greater then C or
+
+
+The way it works is by takes 2 \alpha_s saperatly and optimize them together, find the optimal values and then finally updating our expression to reflect these new values.
+
+
+
+In order to compute these new values for these 2 multiplyers, we have to compute in such a way that the new values must be on the line, because of our linear constraints $$ \sum_{i=1}^n   { {\alpha_i} {y_i} }$$.
+
+
+<br>
+
+
+ which means that the search-space is a box of length C (see fig. 1.1)..but when we combine our box costraint with our linear equality constraint gives us a more strict constraint beacuse it makes the choice of alphas to follow the diagonal line  i.e,
+
+ $$ U \leq \alpha_2^{(new)} \leq L,\\  $$
+
+  where, U and L are depend on the values of y(s) and are clipped accordingly in order to keep the alphas from violating the constraints.
+
+if $$ y_1 \neq y_2$$
+
+
+$$
+\left \{
+\begin{array}{ll}
+U &=\max\{0, { \alpha_2^{(old)}}-{\alpha_1^{(old)}}\},\\
+L &= \min\{C,{ C - { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}
+\end{array}
+\right.
+$$
+
+if $$y_1 = y_2$$
+
+$$
+\left \{
+\begin{array}{ll}
+U &=\max\{0,{ { \alpha_1^{(old)}}-{\alpha_2^{(old)}} - C } \},\\
+L &= \min\{C,{ { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}
+\end{array}
+\right.
+$$
+
+<br>
+<br>
+{: .text-center}
+<img src="/mrityunjay-blog/assets/img/posts_imgs/svm-with-smo/body/smo_constraint_2.jpg">
+<i style="font-size:15px">image source: fig. 1.1 (box constraint)</i>
+{: .text-center}
+
+which is good because our search space is reduced even further and the reason why we choose 2 multipliers is beacuse this is the minimum number of multipliers which can satisfy both the constraints, if we have only one multiplyer to optimize, it will satify the box constraint but not linear equality constraint.
+
+now that we have specified our constraints we can now move on and understand the full algorithm, so smo consist of 2 parts, first choose the best multiplyers to optimize, based on certain heuristics, and then by holding everything accept \alpha_1 and \alpha_2 we are going to optimize our objective function w.r.t these 2 alphas, while satifying all the constraints...
+
+so by doing that we made our complex QP problem into a simple quadratic equation which we easily fit its minimum...
+
+$$   \min \quad ax^2 + bx+c$$
+
+and if we encounter a minimum point that violates our constraint we will just going to clip it! using U and L...
+
+\image showing the clipping 
+
+ -->
+
+<p>have a great day!</p>
+
+<p><strong>References</strong>:-</p>
+
+<p><a target="_blank" href="https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/" style="color:#3399ff">
+https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/
+</a></p>
+
+<p><a target="_blank" href="https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/" style="color:#3399ff">
+https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/smo-book.pdf
+<a></a></a></p>
+
+        <div class="page-footer">
+          <div class="page-tag">
+            <span>Tags:</span>
+            
+            <a href="/mrityunjay-blog/tags#ML" class="tag">| ML</a>
+            
+            <a href="/mrityunjay-blog/tags#AI" class="tag">| AI</a>
+            
+            <a href="/mrityunjay-blog/tags#SVM" class="tag">| SVM</a>
+            
+            <a href="/mrityunjay-blog/tags#non-convex" class="tag">| non-convex</a>
+            
+            <a href="/mrityunjay-blog/tags#online-learning" class="tag">| online-learning</a>
+            
+            <a href="/mrityunjay-blog/tags#research-paper" class="tag">| research-paper</a>
+            
+          </div><!-- End Tags -->
+          <div class="page-share">
+            <span>Share:</span>
+            <a href="https://twitter.com/intent/tweet?text=SVM with SMO&url=http://localhost:4000/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html" title="Share on Twitter" rel="nofollow" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+            <a href="https://facebook.com/sharer.php?u=http://localhost:4000/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html" title="Share on Facebook" rel="nofollow" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://plus.google.com/share?url=http://localhost:4000/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html" title="Share on Google+" rel="nofollow" target="_blank"><i class="fa fa-google" aria-hidden="true"></i></a>
+          </div><!-- End Share -->
+        </div>
+        <section class="author-box">
+  <img src="/mrityunjay-blog/assets/img/myPic.png" alt="Mrityunjay Bhardwaj" class="author-img">
+  <div class="author-desc">
+    <h2>Mrityunjay Bhardwaj</h2>
+    <p>I love learning New things.</p>
+    <ul>
+      
+        <li class="email"><a href="mailto:example.adam@blog.com"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="phone"><a href="tel:044 825 5523"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="website"><a href="https://artemsheludko.github.io" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i></a></li>
+      
+      
+        <li class="twitter"><a href="https://twitter.com/@mrityunjay_99" target="_blank"><i class="fa fa-twitter"></i></a></li>
+      
+    </ul>
+  </div>
+</section>
+
+        <div class="recent-box">
+  <h2 class="recent-title">Recent post</h2>
+  <div class="recent-list">
+    
+      
+        <a href="/mrityunjay-blog/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html" class="recent-item" style="background: url(/mrityunjay-blog/assets/img//posts_imgs/svm-with-smo/teaser/svm_db.png) center no-repeat; background-size: cover;"><span>SVM with SMO</span></a>
+      
+    
+      
+        <a href="/mrityunjay-blog/blog/artificial-intelligence/machinelearning/rnns.html" class="recent-item" style="background: url(/mrityunjay-blog/assets/img//posts_imgs/rnn_with_math/teaser/RNNunfolded.png) center no-repeat; background-size: cover;"><span>Understanding Recurrent Neural Nets</span></a>
+      
+    
+  </div>
+</div> <!-- End Recent-Box -->
+
+        <div class="newsletter" id="mc_embed_signup">
+  <h2 class="newsletter-title">Newsletter</h2>
+  <div class="form-container">
+    <p>Subscribe here to get our latest updates</p>
+    <form action="//" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+      <label class="screen-reader-text" for="mce-EMAIL">Email Address</label>
+      <div class="newsletter-box" id="mc_embed_signup_scroll">
+        <input type="email" name="EMAIL" placeholder="Email address" class="email-input" id="mce-EMAIL" required>
+        <input type="submit" value="Subscribe" name="subscribe" class="subscribe-btn" id="mc-embedded-subscribe">
+      </div>
+    </form>
+  </div>
+</div> <!-- End Newsletter -->
+
+        <section class="comment-area">
+  <div class="comment-wrapper">
+    
+    <div id="disqus_thread" class="article-comments"></div>
+    <script>
+      (function() {
+          var d = document, s = d.createElement('script');
+          s.src = '//https-mrityunjaybhardwaj-github-io.disqus.com/embed.js';
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    
+  </div>
+</section> <!-- End Comment Area -->
+
+      </div>
+    </div> <!-- End Wrapper -->
+  </article>
+  <div class="search-box">
+  <div class="wrapper">
+    <div class="search-grid">
+      <form class="search-form">
+        <div id="search-container">
+          <input type="text" id="search-input" class="search" placeholder="Search">
+        </div>
+      </form>
+      <ul id="results-container" class="results-search"></ul>
+      <div class="icon-close-container">
+        <span class="search-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <footer class="main-footer">
+  <div class="copyright">
+    <p>2020 &copy; Mrityunjay Bhardwaj</p>
+  </div>
+</footer> <!-- End Footer -->
+
+</div>
+
+  <!-- JS -->
+<script src="/mrityunjay-blog/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/mrityunjay-blog/assets/js/jekyll-search.js"></script>
+<script>
+  SimpleJekyllSearch({
+    searchInput: document.getElementById('search-input'),
+    resultsContainer: document.getElementById('results-container'),
+    json: '/mrityunjay-blog/search.json',
+    searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
+    noResultsText: 'No results found',
+    fuzzy: false,
+    exclude: ['Welcome']
+  });
+</script>
+<script src="/mrityunjay-blog/assets/js/main.js"></script>
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', '', 'auto');
+  ga('send', 'pageview');
+</script> <!-- End Analytics -->
+
+</body>
+</html>

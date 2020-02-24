@@ -1,0 +1,747 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/mrityunjay-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/mrityunjay-blog/" rel="alternate" type="text/html" /><updated>2020-02-24T11:35:44+05:30</updated><id>http://localhost:4000/mrityunjay-blog/feed.xml</id><title type="html">My personal blog - Mrityunjay Bhardwaj</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+</subtitle><author><name>Mrityunjay Bhardwaj</name></author><entry><title type="html">SVM with SMO</title><link href="http://localhost:4000/mrityunjay-blog/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html" rel="alternate" type="text/html" title="SVM with SMO" /><published>2019-01-23T00:00:00+05:30</published><updated>2019-01-23T00:00:00+05:30</updated><id>http://localhost:4000/mrityunjay-blog/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo</id><content type="html" xml:base="http://localhost:4000/mrityunjay-blog/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html">&lt;!-- if you are unfimilier with those concepts or just need to brush up some of them,  Imperial Collage London has a great course on coursera,which you might find useful:
+&lt;a target=&quot;_blank&quot; href=&quot;https://www.coursera.org/specializations/mathematics-machine-learning&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;https://www.coursera.org/specializations/mathematics-machine-learning&lt;/u&gt;&lt;/a&gt; --&gt;
+&lt;!-- 
+ In this tutorial, we are going to take a deep dive inside support vector machines, we are going to talk about what svm is and how it works (internally/mathematically) by deconstructing every single part that leads to it's final formulation and then, we are going to take a look at how to solve that formulation using an algorithm called SMO.... by the end of this article, you will have a solid understand of one of the most important Algorithm in Machine Learning. --&gt;
+
+&lt;!-- 
+
+
+ --&gt;
+
+&lt;p&gt;In this tutorial, we are going to take a deep dive inside support vector machines, we are first going to aquire an intuitive understanding of what is it that we wanted to do and then we are going to give our intuition a mathematical framework which will give a structure to our problem.In the second half of this article, we are going to take a dive inside an Algorithm called SMO which is a way of solving the final formulation of our problem… by the end of this article, you will have not only an intutive understanding of SVM but also know how it works internally/mathematically.&lt;/p&gt;
+
+&lt;p&gt;So as you might know, SVM stands for support vector machines. its probably the most successful hyperplane based classifier out there. what it means is that, in svm you are classifing 2 classes by constructing a hyperplane(a.k.a decision boundary) which seperate both of them as clearly as possible.&lt;/p&gt;
+
+&lt;p&gt;In order to solidify what we are trying to achieve …lets play a little game, in it, what i want you to do is to construct a hyperplane/decision-boundary which seprate these 2( class “&lt;font style=&quot;color: blue&quot;&gt;-1;&lt;/font&gt;” and class “&lt;font style=&quot;color: orange&quot;&gt;+1&lt;/font&gt;” ) classes as accurately as possible…so go ahead and see if you could figure out the best decision boundary!…&lt;/p&gt;
+
+&lt;!-- &gt;**Info**: &gt;
+&gt;  &quot;orange-dot&quot; = class 1
+&gt;  &quot;blue-dot&quot;   = class 2
+&gt;  &quot;X&quot;          =  missclassified points
+{: .notice--info} --&gt;
+
+&lt;div id=&quot;fit_hyperplane_yourself_0&quot; style=&quot;width: inherit&quot; class=&quot;text-center&quot;&gt;&lt;/div&gt;
+
+&lt;script src=&quot;/mrityunjay-blog/assets/js/dependency/p5/p5.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;script src=&quot;/mrityunjay-blog/assets/js/dependency/p5/addons/p5.dom.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;script src=&quot;/mrityunjay-blog/assets/js/my_js/svm-with-smo/fit_hype.js&quot;&gt;&lt;/script&gt;
+
+&lt;p class=&quot;text-center&quot;&gt;&lt;i style=&quot;font-size:15px&quot;&gt;L-fig 1.1&lt;/i&gt;&lt;br /&gt;
+&lt;i style=&quot;font-size:15px&quot;&gt;fit the classifier by moving the gizmo(black arrow) of your hyperplane, make sure to have as less missclassification points(denoted by “X”) as possible..good luck!!&lt;/i&gt;&lt;/p&gt;
+
+&lt;!-- Ok, so what you just did in couple of seconds, is exactly what we are trying to accomplish using pure mathematical techniques... excited now? let's get started,shall we. --&gt;
+
+&lt;!--
+now, as you might have observed,in order to solve this problem, we want a decision boundry which does'nt touch any data point i.e, which is farthest from both the nearest data point( the ones in the dark circle)... we can imagine that there is a **margin** which represent that **distance** b/w decision-boundry and closest data points and we need to **maximize** it in-order to seprate both the classes as clearly as possible..doing this becomes more important when we look at the 
+&lt;a target=&quot;_blank&quot; href=&quot;https://en.wikipedia.org/wiki/Generalization_error&quot; style=&quot;color:#3399ff&quot;&gt;&lt;i&gt;generalization error&lt;/i&gt;
+&lt;/a&gt;
+(which   by the way, is what we are always trying to minimize in any ML scenario)... you can observe this in L-fig 1.2 , by placing your hyperplane near to any one of the classes and then generate new samples and see how it perform,as compare to the scenario where, if we place the hyperplane farthest from both the classes.... 
+
+&gt;**Note**: Click &lt;button class=&quot;btn--primary &quot; onclick=&quot;onclickreset()&quot;&gt;reload&lt;/button&gt; to generate new samples.
+{: .notice--info}
+
+{: .text-center}
+&lt;div id=&quot;fit_hyperplane_yourself_1&quot; style=&quot;width: inherit&quot;&gt;&lt;/div&gt;
+
+
+&lt;script src=&quot;/mrityunjay-blog/assets/js/my_js/svm-with-smo/fit_hype_2.js&quot;&gt;&lt;/script&gt;
+&lt;i style=&quot;font-size:15px&quot;&gt;L-fig 1.2: fit the classifier&lt;/i&gt;
+&lt;i style=&quot;font-size:15px&quot;&gt; here, the the color of the margin discribe the quality of our decision boundary, greener the better(because its farthest from both the classes)&lt;/i&gt;
+{: .text-center}
+
+as you might have observed, if we place the margin near to any one of the class's data point and generate new samples... our accuracy is fluctuating alot(which means our&lt;span id=&quot;highlight&quot;&gt; mean accuracy &lt;/span &gt;is going to be much less), which is not the case if we were to place our decision boundary farthest from both the class's data points, here, our average accuracy is better then the other 2 cases...and as discussed earlier, the notion of near and far is quantified by those &quot;margins&quot; which suggest the fact that if we want to find the best decision boundary we need to maximize these margins.
+
+&lt;!-- 
+as you might have observed the margin is essentially just a line that sits on top of the nearest point of the classes and
+now, all we have to do is to compute this margin and for that we need to do some math... don't worry its all going to be simple.  --&gt;
+&lt;!-- &lt;button class=&quot;btn--primary &quot; onclick=&quot;myFunction()&quot;&gt;Click Me&lt;/button&gt; 
+ 
+
+&lt;script&gt;
+function myFunction() {
+  var x = document.getElementById(&quot;myDIV&quot;);
+  if (x.style.display === &quot;none&quot;) {
+    x.style.display = &quot;block&quot;;
+  } else {
+    x.style.display = &quot;none&quot;;
+  }
+} 
+&lt;/script&gt;
+
+&lt;!-- &lt;a target=&quot;_blank&quot; href=&quot;#&quot; class=&quot;btn btn--inverse&quot;&gt;Link Text&lt;/a&gt; 
+--&gt;
+
+&lt;p&gt;uptill now, we have done every thing ourselves, we have specified which slope and intercepts to choose in order to classify our data points and not only that we have also came to know why we need to maximize those margins(more on that later…) but now we want to translate all of our intuitions into mathematics because we don’t want to classify all the zillions classification problems ourselves! do we?… we are lazy guys!! let the math and computers do the work for us!!&lt;/p&gt;
+
+&lt;!-- first thing we need to do is to find the points that are nearest to our decision boundry and for that, we need to calculate the perpendicular distance b/w hyperplane and our data points...we can do that by projecting the point onto the hyperplane and then calculating that distance and this is exactly what we are going to be doing after deriving couple of equations which might seams out of context at first but please, take it with a grain of salt everything will start to come together as we progress through this article... so let's get started shell we? --&gt;
+
+&lt;h1 style=&quot;border-bottom:5px solid black;&quot;&gt;Support Vector Machine&lt;/h1&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\require{cancel}&lt;/script&gt;
+
+&lt;p&gt;Some Notation to be aware of:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;   = slope of hyperplane&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\Theta_0&lt;/script&gt; = intercept of the hyperplane&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt;        = our data points&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As we know that, if a point is &lt;strong&gt;on the hyperplane&lt;/strong&gt; then its neither in class -1(orange class ) nor +1(blue class) we can exploit this property to conclude that the &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; is orthogonal to decision boundry and we can derive it as follows :-&lt;/p&gt;
+
+&lt;p&gt;let &lt;script type=&quot;math/tex&quot;&gt;x_1&lt;/script&gt;  and &lt;script type=&quot;math/tex&quot;&gt;x_2&lt;/script&gt; can be any 2 arbitry points that are on the hyperplane so,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Theta^Tx_1 + \cancel{\Theta_0} = \Theta^Tx_2 + \cancel {\Theta_0} = 0&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{\Theta^Tx_1 - \Theta^Tx_2 = 0}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Theta^T(x_1 -x_2) = 0&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{\Theta \bot (x_1-x_2)} \tag{1}&lt;/script&gt;
+
+&lt;p&gt;also, we observe that, for any point &lt;script type=&quot;math/tex&quot;&gt;x_0&lt;/script&gt; which is on the hyperplane :-&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+
+\Theta^Tx_0 + \Theta_0 &amp;= 0 \\
+ \Theta_0 &amp; = -\Theta^Tx_0  \tag{2}
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;!-- 
+$$
+\left\{
+\begin{array}{ll}
+a_1x+b_1y+c_1z &amp;=d_1+e_1 \\ 
+a_2x+b_2y &amp;=d_2 \\ 
+a_3x+b_3y+c_3z &amp;=d_3 
+\end{array} 
+\right.
+$$
+
+$$
+\begin{alignat}{5}
+  \max \quad        &amp; z = &amp;   x_1  &amp; + &amp; 12 x_2  &amp;   &amp;       &amp;         &amp;&amp; \\
+  \mbox{s.t.} \quad &amp;     &amp; 13 x_1 &amp; + &amp; x_2     &amp; + &amp; 12x_3 &amp; \geq 5  &amp;&amp; \tag{constraint 1} \\
+                    &amp;     &amp; x_1    &amp;   &amp;         &amp; + &amp; x_3   &amp; \leq 16 &amp;                   &amp;\tag{2} \\
+                    &amp;     &amp; 15 x_1 &amp; + &amp; 201 x_2 &amp;   &amp;       &amp; =    14 &amp;&amp; \tag{constraint 3} \\
+                    &amp;     &amp; \rlap{x_i \ge 0, i = 1, 2, 3}
+\end{alignat}
+$$ --&gt;
+
+&lt;p&gt;although, I am not going to go over projections but if you are a bit on that then, i recommend you to watch this great lecture by legendry prof. gilbert strang
+ &lt;a target=&quot;_blank&quot; href=&quot;https://www.youtube.com/watch?v=Y_Ac6KiQ1t0&quot; style=&quot;color:#3399ff&quot;&gt;&lt;i&gt;projection onto subspace&lt;/i&gt;&lt;/a&gt; 
+ or you can check its
+&lt;a target=&quot;_blank&quot; href=&quot;https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/least-squares-determinants-and-eigenvalues/projections-onto-subspaces/MIT18_06SCF11_Ses2.2sum.pdf&quot; style=&quot;color:#3399ff&quot;&gt; &lt;i&gt; notes &lt;/i&gt;&lt;/a&gt; as well&lt;/p&gt;
+
+&lt;p class=&quot;text-center&quot;&gt;&lt;img src=&quot;/mrityunjay-blog/assets/img/posts_imgs/svm-with-smo/body/proj.jpg&quot; /&gt;&lt;/p&gt;
+
+&lt;p class=&quot;text-center&quot;&gt;&lt;span id=&quot;discription&quot;&gt;fig. 1.3: project onto a hyperplane&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;so, in order to compute the perpendicular distance from &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; to the hyperplane we can take an arbitary point on the hyperplane and compute the vector b/w &lt;script type=&quot;math/tex&quot;&gt;x_0&lt;/script&gt; and any point &lt;script type=&quot;math/tex&quot;&gt;x&lt;/script&gt; (blue vector in fig 1.3) . and then project that vector on the hyperplane in order to get the distance. by using the formula of projection we can find that,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+d &amp;= { {\Theta^T(x-x_0)}\over{||{\Theta}||}}\\
+&amp;= { {\Theta^T(x) - \Theta^T(x_0)}\over {||\Theta||} }
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;&lt;em&gt;using (2) we get,&lt;/em&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;d= { {\Theta^T(x) - \Theta_0}\over {||\Theta||} } \tag{3}&lt;/script&gt;
+
+&lt;p&gt;so the distance from an arbitary data point(&lt;script type=&quot;math/tex&quot;&gt;x_i&lt;/script&gt;) to the hyperplane can be written as:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;distance = { d_i*y_i \tag{ where,y_i = \{ 1,+1 \} } }&lt;/script&gt;
+
+&lt;p&gt;so the final expression of finding the best margin is:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;margin = \min||y_i*d_i||&lt;/script&gt;
+
+&lt;p&gt;which means we need to find the point which has a minimum distance from hyper-plane and we have calculated the &lt;script type=&quot;math/tex&quot;&gt;d_i&lt;/script&gt; before so, putting it all together we get our objective function:-&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\min { { y_i (\Theta^Tx_i + \Theta_0)}\over     ||\Theta||}  \tag{4}&lt;/script&gt;
+
+&lt;p&gt;now, as you can see, if the point is on hyperplane then it is 0 and if it is not then &lt;script type=&quot;math/tex&quot;&gt;d_i &gt; 0&lt;/script&gt; i.e,&lt;/p&gt;
+
+&lt;p&gt;So, as we can see in order for its margin to expand, it has to be greater then 0. now, if it is &amp;gt; 0 then there has to be a lower bound let’s call it “k”  i.e,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;(\Theta^Tx_i + \Theta_0) \geq k&lt;/script&gt;
+
+&lt;p&gt;so, by dividing both sides by k we get the following expression:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{1\over k}(\Theta^Tx_i + \Theta_0) \geq {\cancel{k}\over \cancel{k}}&lt;/script&gt;
+
+&lt;p&gt;and as we know that, if we divide the vector by a scaler its just change the magnitude of the vector not its direction which is what we are intrested in, so instead of multiplying l.h.s by 1/k we can leave it as it is.. which means:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;(\Theta^Tx_i + \Theta_0) \geq 1 \tag{5}&lt;/script&gt;
+
+&lt;p&gt;so, it means that we have to change &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; in such a way that the minimum distance b/w point and the decision-boundary mustbe atleast &lt;strong&gt;1 unit&lt;/strong&gt; and as we know in (4) we have to minimize this function as well. so, we combine both the expression and get our final objective function:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\min { { y_i (\Theta^Tx_i + \Theta_0)}\over     ||\Theta||}   = \min({1\over {|| \Theta || } }) \tag{6}&lt;/script&gt;
+
+&lt;p&gt;this means our margin only depends on the norm of the  &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;we can re-write this as:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\max \quad{1 \over 2}||\Theta||^2\tag{7}\\
+\text{s.t.}\quad y_i(\Theta^Tx_i + \Theta_0) \geq 1&lt;/script&gt;
+
+&lt;p&gt;but instead of finding the solution to this objective function we are going to be optimizing the &lt;strong&gt;dual of this objective function&lt;/strong&gt; the reason will be apperant when we will talk about the non-linear SVM&lt;/p&gt;
+
+&lt;p&gt;so just like in any dual optimization scenario, we need to form a &lt;strong&gt;legrangian&lt;/strong&gt; of the objective function and here let &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; be our &lt;strong&gt;legrange multiplier&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;L(\Theta,\Theta_0,\alpha) = {1 \over 2} ||\Theta||^2 - \sum_{i=1}^n\alpha [y_i(\Theta^Tx_i + \Theta_0)-1]&lt;/script&gt; 
+&lt;script type=&quot;math/tex&quot;&gt;where,\quad\quad \alpha\geq 0 \tag{8}&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;so, if we take the derivative of &lt;script type=&quot;math/tex&quot;&gt;L \quad  w.r.t \quad \Theta&lt;/script&gt;:-&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+{ {\partial L}\over {\partial \Theta} } &amp;=
+{ {\partial }\over {\partial \Theta} }
+\left (
+ {1 \over 2} ||\Theta||^2 - \sum_{i=1}^n\alpha_i[y_i(\Theta^Tx_i + \Theta_0)-1]
+ \right ) \\
+{ {\partial L}\over {\partial \Theta} } &amp;=
+\Theta - \sum_{i=1}^{n}{\alpha_iy_ix_i}=0 \tag{9}
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;using (9) we can imply that,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Theta = \sum_{i=1}^{n}{\alpha_i y_i x_i} \tag{10}&lt;/script&gt;
+
+&lt;p&gt;now, we need to find the derivative w.r.t our second primal variable i.e, &lt;script type=&quot;math/tex&quot;&gt;\Theta_0&lt;/script&gt; i.e,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+{ {\partial L}\over {\partial \Theta_0} } &amp;=
+{ {\partial }\over {\partial \Theta_0} }
+\left (
+ {1 \over 2} ||\Theta||^2 - \sum_{i=1}^n\alpha_i[y_i(\Theta^Tx_i + \Theta_0)-1]
+ \right )  = 0\\
+{ {\partial L}\over {\partial \Theta_0} } &amp;=
+0 - \sum_{i=1}^{n}{\alpha_i y_i} = 0\\ 
+{ {\partial L}\over {\partial \Theta_0} } &amp;=
+\sum_{i=1}^{n}{\alpha_i y_i} = 0 
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;i.e,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\sum_{i=1}^{n}{\alpha_i y_i} = 0 \tag{11}&lt;/script&gt;
+
+&lt;p&gt;now using (10) and (11) we can re-write legrangian using only the dual-variable:&lt;/p&gt;
+
+&lt;!--
+L(\alpha_i) &amp;= {1 \over 2}|| \sum_{i=1}^{n}{\alpha_i y_i x_i} ||^2 - \sum_{i=1}^{n}(\alpha_iy_i)*\sum_{i=1}^{n}(\Theta^Tx_i + \Theta_0) - \sum_{i=1}^{n}\alpha_i \\
+ L(\alpha_i) &amp;= {1 \over 2}|| \sum_{i=1}^{n}{\alpha_i y_i x_i} ||^2 - 0 - \sum_{i=1}^{n}\alpha_i \tag{using (4)\\
+
+L(\alpha_i) &amp;= {1 \over 2}|| \sum_{i=1}^{n}{\alpha_i y_i x_i} ||^2 + \sum_{i=1}^{n}\alpha_i \tag{using  --&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+L(\alpha_i) &amp;={ {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } }  - \sum_{i=1}^{n}[\alpha_iy_i(\Theta^Tx_i + \Theta_0) - \alpha_i] } \\
+&amp;= {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - \Theta^T\sum_{i=1}^{n}(\alpha_iy_i x_i) - \Theta_0\sum_{i=1}^{n}(\alpha_i y_i ) + \sum_{i=1}^{n}\alpha_i \\
+&amp;= {1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } - \Theta^T\sum_{i=1}^{n}(\alpha_iy_i x_i) + \sum_{i=1}^{n}\alpha_i \tag{using, (10)}\\
+&amp;= -{1 \over 2} { {\Theta}^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } } + {\sum_{i=1}^{n}\alpha_i}\\ 
+&amp;={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ \left( {\left(\sum_{i=1}^{n}{\alpha_i y_i x_i} \right) }^T{\sum_{i=1}^{n}{\alpha_i y_i x_i} } \right) } \\ 
+&amp;={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ \left( {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } \right) } \\ 
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;so this is my final legrangian which only depend on the dual variable..&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;L(\alpha_i)= {\sum_{i=1}^{n}\alpha_i}- {1 \over 2}{ {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } }\\&lt;/script&gt;
+
+&lt;p&gt;now, our final objective function will become:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\max_{\alpha_i} \quad L(\alpha_i)={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } }\\
+s.t. \quad \left \{ { {\alpha \geq 0};
+{ {\sum_{i=1}^n} {\alpha_i y_i} = 0}  }\right.&lt;/script&gt;
+
+&lt;p&gt;why &lt;script type=&quot;math/tex&quot;&gt;\max{\alpha_i}&lt;/script&gt; you may ask?… because as discussed earlier, we are optimizing the dual of our initial objective function which means that, when we are maximizing the dual we are essentially, minimizing the primal function and vice-versa.&lt;/p&gt;
+
+&lt;p&gt;this means that, if we can solve this optimization function we can find our &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; and if we can find our alphas we can find our &lt;script type=&quot;math/tex&quot;&gt;\Theta&lt;/script&gt; using(10) which is our unknown parameter of our decison-boundary… so essential, we can get our decision-boundary by solving this optimization problem. but how can we know that this certain point(let it be &lt;script type=&quot;math/tex&quot;&gt;x^*&lt;/script&gt;) is the most optimal one? enter, K.K.T conditions…&lt;/p&gt;
+
+&lt;p&gt;for a point to be the most optimal, it need to satisfy some of the conditions, these conditions are known as &lt;a target=&quot;_blank&quot; href=&quot;https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions&quot; style=&quot;color:#3399ff&quot;&gt;K.K.T condition&lt;/a&gt;:&lt;/p&gt;
+
+&lt;p&gt;1), stationarity condition:
+at &lt;script type=&quot;math/tex&quot;&gt;x^*&lt;/script&gt; the derivative should be 0&lt;/p&gt;
+
+&lt;p&gt;1) primal feasiblity: primal constraints should’nt be violated. in our case its gidi &amp;gt;= 0&lt;/p&gt;
+
+&lt;p&gt;2) Dual feasibility: dual constraints shold’nt be violated .. in our case its &lt;script type=&quot;math/tex&quot;&gt;\alpha \geq 0&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;3) Complementary slackness condition: at optimial point dual variable * primal constraints should be equal to 0&lt;/p&gt;
+
+&lt;p&gt;uptill now, we have covered 3 kkt conditions but now, we are going to be looking at the 4th one, that is  complementary slackness condition.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\alpha_i*d_i = 0 \\ \alpha_i[y_i(\Theta^Tx_i + \Theta_0)]=0 \tag{13}&lt;/script&gt;
+
+&lt;p&gt;this means that if one of the term is greater then 0 then one of them has to be zero in order to satisfy (13)
+which means that, there are only 2 possible scenarios i.e,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;if \quad \quad \alpha &gt; 0&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+then,\quad y_i(\Theta^Tx_i+\Theta_0) -1 &amp;= 0 \\
+y_i(\Theta^Tx_i+\Theta_0) &amp;= 1
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;which means that,this perticular point is on the margin and &lt;em&gt;these points that are on the margin are called &lt;strong&gt;support vectors&lt;/strong&gt;&lt;/em&gt;, in other words,&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;support vectors are those points whose &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; are greater then 0&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;but what if the &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; is equals to 0? then &lt;script type=&quot;math/tex&quot;&gt;y_i[\Theta^Tx_i+\Theta_0] &gt; 1&lt;/script&gt; which means that, this point is not on the margin in other words,&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;any points whose alpha is close to 0 is not on the margin, are not our support vectors&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;so by combining everything that we’ve learned so far,when we solve our optimization problem w.r.t &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt;, we get the sparse matrix(full of zeros) martrix of alphas  and in that matrix we need to take out those alphas which are close to 1 and those points are going to be our support vectors.&lt;/p&gt;
+
+&lt;p&gt;because only the points that are on the margin have alpha &amp;gt; 0 which means when we calculate the parameters of our hyperplane using (10) only the points that are on the margin is going to affect the decision…&lt;/p&gt;
+
+&lt;p&gt;although at this point we are finished defining our full objective function along with its constraints but as discussed before, SVM construct a linear decision boundary which classify 2 classes but in real life, nothing is strictly linearly seperable like for example in Fig_1.4 we can see that there are 3 missclassified points which in our expression above (     ) violates our constraints so, in order to produce good decision boundery we have to ignore some of these missclassified points and the way we are going to do is to add a slack-variable which ease out the constraints this kind of SVM is called Soft-Margin SVM.&lt;/p&gt;
+
+&lt;p&gt;Although, what we have done untill now in order to find our decision boundary is perfectly reasonable and infact if we apply this same techniques we do get a decision boundary which will linearly separate the 2 classes…but in real life, nothing is smooth or linearly seprable there is always noise just like we see in fig 1.4 , here, we have 3 missclassified points and as you can see there is no linear boundary which can perfectly separate these point… So instead of strictly imposing the constraint ( theta x + theta0 == 1) we ease out a bit by allowing some error in choosing our support vectors and ignore these missclassified points which will be very helpful for us in making of perfectly linear decision boundary but it will not perfectly seprate the 2 classes as we can see, there will be error, which is indeed what we want. This new technique of softning out constraint is called soft margin svm and the stricter counterpart of this method ( the one that we are solving untill now) is called Hard Margin SVM…&lt;/p&gt;
+
+&lt;p class=&quot;text-center text-center&quot;&gt;&lt;img src=&quot;/mrityunjay-blog/assets/img/posts_imgs/svm-with-smo/body/need_for_soft_margin_svm.png&quot; /&gt;
+&lt;i style=&quot;font-size:15px&quot;&gt;fig. 1.4 constraint violation problem&lt;/i&gt;&lt;/p&gt;
+
+&lt;p&gt;Now as you can infer, soft margin SVM is used most of the time in real world scenarios… So on that note, we need to implement the idea of soft margin in our objective function and our constraints… Here, we add another constraint which we call slack variable which act as a tuning params which specify our softness towards our margin constraint.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;L_P = { { 1 \over 2} {||\theta||^2} } + { C{\sum_{i=1}^{n}} \zeta - {\sum_{i=1}^{n}}\alpha_i[yi(x_i^T\Theta + \theta_0) - (1- \zeta)] -{\sum_{i=1}^{n}}\mu_i\zeta_i   } \tag{14}&lt;/script&gt;
+
+&lt;p&gt;so by taking the partial derivative w.r.t the primal variables we get these three equations&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\Theta = \sum_{i=1}^{n}{\alpha_i y_i x_i} \tag{15}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\sum_{i=1}^{n}{\alpha_i y_i} = 0 \tag{16}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;0 \leq \alpha \leq C \tag{17}&lt;/script&gt;
+
+&lt;p&gt;and if we use (15) (16) (17) in our primal form(14) we can have our objective function soley in terms of the dual variables:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\max_{\alpha_i} \quad L(\alpha_i)={\sum_{i=1}^{n}\alpha_i} - {1 \over 2}{ {\sum_{j=1}^{n}\sum_{i=1}^{n}{ {\alpha_i \alpha_j} {y_i y_j} {x_i x_j} } } }\tag{6}\\
+s.t. \quad \left \{ { {\alpha \geq 0};
+{ {\sum_{i=1}^n} {\alpha_i y_i} = 0}  }\right.&lt;/script&gt;
+
+&lt;p&gt;now that we know what support vectors are and we have derived our final optimization problem the only thing left for us to do is to actually solve our formulation in order to find our best linear decision boundary, as you might have noticed, our problem is quadratic in nature, so eiter we can use prebuild QPSolvers to solve (12) or we can use a better and more faster approch by using an algorithm called SMO, we are going with the latter one,which will also help us to construct ground for our next article, so lets get started…&lt;/p&gt;
+
+&lt;h1 style=&quot;border-bottom:5px solid black;&quot;&gt;Sequential Minimal Optimizer&lt;/h1&gt;
+
+&lt;p&gt;So,SMO stands for Sequential Minimal Optimization,it is an iterative algorithm which is going to help us calculate our &lt;script type=&quot;math/tex&quot;&gt;\alpha_s&lt;/script&gt; by breaking down our quadratic progamming problem into smaller more tracktable sub-problems. the advantage of this technique is that, through smo we are able to avoide having to numerically optimize our QP problem entirely, which makes this method more efficient and faster to use.&lt;/p&gt;
+
+&lt;p&gt;in smo, we optimize 2 alphas samultaniously by taking the rest as a constant, which makes our optimization problem, just a simple quadratic expression, which is great because optimizing this expression is much simpler and faster then optimizing (12)… this is the reason why smo is the primery choice for solving svm… but before moving forward we need to understand how there constraint behave and why we choose 2 alphas instead of 1??&lt;/p&gt;
+
+&lt;p&gt;let’s take a look at our first constraint &lt;script type=&quot;math/tex&quot;&gt;\alpha \geq 0&lt;/script&gt;,  we know that in this constraint, there is a lower bound “0” and we can assume that there is an upperbound (let it be “C”),which makes our constraint as follows:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;0 \leq \alpha \leq C \tag{14}&lt;/script&gt;
+
+&lt;p&gt;so, because we are optimizing 2 alphas together (let them be  &lt;script type=&quot;math/tex&quot;&gt;\alpha_1&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\alpha_2&lt;/script&gt;) our constraint in expression (14) will become a box constraint which means that our alpha must reside inside this box of size C x C . which will look something like in fig 1.4:&lt;/p&gt;
+
+&lt;p class=&quot;text-center&quot;&gt;&lt;img src=&quot;/mrityunjay-blog/assets/img/posts_imgs/svm-with-smo/body/smo_constraint_1.jpg&quot; /&gt;&lt;/p&gt;
+
+&lt;p class=&quot;text-center&quot;&gt;&lt;i style=&quot;font-size:15px&quot;&gt;fig. 1.4 (box constraint)&lt;/i&gt;&lt;/p&gt;
+
+&lt;p&gt;there is a another constaint which we have to keep in mind, which is:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\sum_{i=0}^{n} { {\alpha_i} {y_i} } = 0 \tag{15}&lt;/script&gt;
+
+&lt;!-- 
+as the name suggest, if we were to visualize this constaint this will construct a line... which both the alphas must follow, now if we were to combine both the constraint, our final constraint viz. will look like this. --&gt;
+
+&lt;!-- |||||||||||||||||| Fig 1.5 ||||||||||||||||||| --&gt;
+
+&lt;p&gt;and as discussed earlier, in smo we optimize our expression(12) by samultaniously optimizing 2 alphas and freeze the rest them, which modifies our constraint something like this:-&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+\sum_{i=1}^{n} { {\alpha_i} {y_i} } &amp;= 0 \\
+ { {\alpha_1} {y_1} } + { {\alpha_2} {y_2} } + { \sum_{i=2}^{n} { {\alpha_i} {y_i} } } &amp;= 0 \\
+{ {\alpha_1} {y_1} } + { {\alpha_2} {y_2} } &amp;= -{ \sum_{i=2}^{n} { {\alpha_i} {y_i} } } 
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;which suggest that because all the alphas accept 1 and 2 are frozen, our r.h.s is just a constant value let it be &lt;script type=&quot;math/tex&quot;&gt;\rho&lt;/script&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\alpha_1} {y_1} } + { {\alpha_2} {y_2} } = \rho \tag{16}&lt;/script&gt;
+
+&lt;p&gt;which, if we were to visualize, it construct a line, that is the reason why its also known as linear constraint (see, fig 1.5)….which also means that for &lt;script type=&quot;math/tex&quot;&gt;\alpha_2&lt;/script&gt; in order to satify both the constraints, there has to be an upper and lower bound for it , let those bounds be &lt;script type=&quot;math/tex&quot;&gt;H&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;L&lt;/script&gt; in our case &lt;script type=&quot;math/tex&quot;&gt;L = 0&lt;/script&gt; which is not always the case, so the next thing left for us to do is to calcuate our &lt;script type=&quot;math/tex&quot;&gt;H&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;L&lt;/script&gt; for our $$ \alpha_2 $:-&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;H \leq \alpha_2^{(new)} \leq L,\\&lt;/script&gt;
+
+&lt;p&gt;where, H and L are depend on the values of y(s) and are clipped accordingly in order to keep the alphas from violating the constraints.&lt;/p&gt;
+
+&lt;p&gt;if &lt;script type=&quot;math/tex&quot;&gt;y_1 \neq y_2&lt;/script&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\left \{
+\begin{array}{ll}
+H &amp;=\max\{0, { \alpha_2^{(old)}}-{\alpha_1^{(old)}}\},\\
+L &amp;= \min\{C,{ C - { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}\tag{17}
+\end{array}
+\right. %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;if &lt;script type=&quot;math/tex&quot;&gt;y_1 = y_2&lt;/script&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\left \{
+\begin{array}{ll}
+H &amp;=\max\{0,{ { \alpha_1^{(old)}}-{\alpha_2^{(old)}} - C } \},\\
+L &amp;= \min\{C,{ { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}\tag{18}
+\end{array}
+\right. %]]&gt;&lt;/script&gt;
+
+&lt;p class=&quot;text-center text-center&quot;&gt;&lt;img src=&quot;/mrityunjay-blog/assets/img/posts_imgs/svm-with-smo/body/bounds_for_alpha2.png&quot; /&gt;
+&lt;i style=&quot;font-size:15px&quot;&gt;fig 1.5 (bounds in &lt;script type=&quot;math/tex&quot;&gt;\alpha_2&lt;/script&gt; &lt;/i&gt;&lt;/p&gt;
+
+&lt;p&gt;using equation (16) we can also write &lt;script type=&quot;math/tex&quot;&gt;\alpha_1&lt;/script&gt; as a function of &lt;script type=&quot;math/tex&quot;&gt;\alpha_2&lt;/script&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+{ {\alpha_1} {y_1} } + { {\alpha_2} {y_2} } &amp;= \rho \\
+{ {\alpha_1} {y_1} }  &amp;= \rho - { {\alpha_2} {y_2} } \\
+\text{Multiplying both sides by } y_1 \text{we get:} \\
+{ {\alpha_1} { (y_1) }^2 }  &amp;= y_1{ (\rho - { {\alpha_2} {y_2} } ) } \\
+{ {\alpha_1} { (y_1) }^2 }  &amp;= y_1{ (\rho - { {\alpha_2} {y_2} } ) } \\
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;because, &lt;script type=&quot;math/tex&quot;&gt;y_i \in \{-1,+1 \},&lt;/script&gt; our expression will become,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{\alpha_1} = y_1{ (\rho - { {\alpha_2} {y_2} } ) } \tag{19}&lt;/script&gt;
+
+&lt;p&gt;now, before moving any further lets look at a case where,instead of taking 2 alphas at a time, we take only one,which makes our second constraint something like this,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align} 
+\sum_{i=0}^{n} { {\alpha_i} {y_i} } &amp;= 0 \\
+ { { {\alpha_1} {y_i} } + { \sum_{i=1}^{n} { {\alpha_i} {y_i} } } } &amp;= 0 \\
+ { {\alpha_1} {y_i} }  &amp;= - { \sum_{i=0}^{n} { {\alpha_i} {y_i} } } \\ \text{ multiplying both side by } y_1 \text{we get,}\quad \quad \\
+ { {\alpha_1}  }  &amp;= -{y_1} { \sum_{i=0}^{n} { {\alpha_i} {y_i} } }  \\
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;which clearly suggest that, &lt;script type=&quot;math/tex&quot;&gt;\alpha_1&lt;/script&gt; is a function of all the alphas and because we have fixed all of them then its just a constant value which means we cannot change our &lt;script type=&quot;math/tex&quot;&gt;\alpha_1&lt;/script&gt; without violating our linear constraint, that is the reason why the minimal number of alphas we can use has to be atleast 2.&lt;/p&gt;
+
+&lt;p&gt;Now that we have understood about the constraints , let’s now take a look at how it all comes together and optimize our expression (12) using smo algorithm….&lt;/p&gt;
+
+&lt;p&gt;smo algorithm has 2 parts, 1 is to choose the alphas based on a certain heuristics, and second is to optimize our objective function w.r.t these alphas…. although, you can choose the alphas randomly, but using heurisitics will help us to choose only the most promising one i.e, which can gives us the most improvement in our optimization, in this article we are not going to worry about the first one because it more of an implementation concern (which we will address in part 2)… for now, we suppose that we have already choose those alphas and all that left for us to do is to optimize our objective (12) w.r.t them….&lt;/p&gt;
+
+&lt;p&gt;using equation (19) we can conclude that our final objective function will look something like this:-&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;W(\alpha_1,\alpha_2,.....,\alpha_n) = W((\rho -\alpha_2y_2)y_1,\alpha_2,.....,\alpha_n)\tag{20}&lt;/script&gt;
+
+&lt;p&gt;and as discussed earlier, in smo we hold all the alphas, accept 2 of them, which convert our entire expression into a simple quadratic function in the form of &lt;script type=&quot;math/tex&quot;&gt;a(\alpha_2)^2 + b(\alpha_1) +c&lt;/script&gt; for some appropriate &lt;script type=&quot;math/tex&quot;&gt;a,&lt;/script&gt; &lt;script type=&quot;math/tex&quot;&gt;b&lt;/script&gt; and&lt;script type=&quot;math/tex&quot;&gt;c&lt;/script&gt; which we can easily maximize by putting 0 on the r.h.s and taking its second derivative ignoring the box constraints…gives us &lt;script type=&quot;math/tex&quot;&gt;\eta&lt;/script&gt; which is less then zero and maximum along the  directions of the linear constraint.&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\eta = 2 K(x_1,x_2) - K(x_1,x_1) - K(x_2,x_2)&lt;/script&gt;
+
+&lt;p&gt;where, K is our kernel function.&lt;/p&gt;
+
+&lt;p&gt;now that we know our derivative, we can now use this to calculate the new values for our alphas using this formula:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\alpha_2^{(new)} = { \alpha_2^{ (new) } } - { {y_2(E_1 - E_2) } \over { \eta } } \tag{21}&lt;/script&gt;
+
+&lt;p&gt;where, &lt;script type=&quot;math/tex&quot;&gt;E_i = f^{old}(x_i) - y_i&lt;/script&gt; is the error on the ith training eample… but what if our optimal point is outside our box constraint??… if that the case then we can just clip our &lt;script type=&quot;math/tex&quot;&gt;\alpha_2&lt;/script&gt; to its bounds….&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\alpha_2 = \left \{
+\begin{align}
+H,&amp;\quad \text{if }\alpha_2 \geq H \\
+\alpha_2,&amp;\quad \text{if } L &lt; \alpha_2 &lt; H \\
+L,&amp;\quad \text{if }\alpha_2 \leq L \tag{22}\\
+\end{align}
+\right. %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;now we know our new &lt;script type=&quot;math/tex&quot;&gt;\alpha_2&lt;/script&gt;, we can find our &lt;script type=&quot;math/tex&quot;&gt;\alpha_1&lt;/script&gt; using equation (19):&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\alpha_1^{(new)} = \alpha_1^{(old)} + s{ ( \alpha_2^{(old)} - \alpha_2^{(new)} ) } \tag{23}&lt;/script&gt;
+
+&lt;p&gt;where, &lt;script type=&quot;math/tex&quot;&gt;s = y_1y_2&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;and just like that, we are going to heuristically take 2 alphas and update them untill all the alphas stops changing within certian iteration. and after finding the value of all the alphas we are just going to be using equation (12) to calculate our hyperplane and thats it!&lt;/p&gt;
+
+&lt;p&gt;Now its a great time to summerise what we have just did, we first looked at what we are try to achieve using L-fig 1.1 and 1.2.. then we introduce the concept of margin and we clearify that we have to maximize it in order to find our best hyperplane, then we moved on and formulate this idea and came up with the objective function, but we realized that it would be more benificial to optimize its dual counterpart which introduces our final optimization function(12)… althought, we could use a black-box QPSolvers to solve our function but we instead go with SMO and layed out the entire algorithm and found the way to maximize our objective function using 2 alphas at a time, we disussed why we choose 2 alphas instead of one and then we take a look at our constraints and how is it going to change if we freeze all of the alphas accept 2 of them… which leads us to the final values of our alphas, which we can calcuate and update untill it converges, in the end we take a look at how are we going to be using these alphas to calculate our decision-boundary.&lt;/p&gt;
+
+&lt;p&gt;I hope that you enjoyed and learned something new… if there is any thing that you did’nt like please let me know, i am just a beginner in this stuff so i hope you could help me by critiquing it ( please be brutal)..&lt;/p&gt;
+
+&lt;!-- 
+
+
+
+
+but we have to address some edge cases, suppose if our alpha is greater then C or
+
+
+The way it works is by takes 2 \alpha_s saperatly and optimize them together, find the optimal values and then finally updating our expression to reflect these new values.
+
+
+
+In order to compute these new values for these 2 multiplyers, we have to compute in such a way that the new values must be on the line, because of our linear constraints $$ \sum_{i=1}^n   { {\alpha_i} {y_i} }$$.
+
+
+&lt;br&gt;
+
+
+ which means that the search-space is a box of length C (see fig. 1.1)..but when we combine our box costraint with our linear equality constraint gives us a more strict constraint beacuse it makes the choice of alphas to follow the diagonal line  i.e,
+
+ $$ U \leq \alpha_2^{(new)} \leq L,\\  $$
+
+  where, U and L are depend on the values of y(s) and are clipped accordingly in order to keep the alphas from violating the constraints.
+
+if $$ y_1 \neq y_2$$
+
+
+$$
+\left \{
+\begin{array}{ll}
+U &amp;=\max\{0, { \alpha_2^{(old)}}-{\alpha_1^{(old)}}\},\\
+L &amp;= \min\{C,{ C - { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}
+\end{array}
+\right.
+$$
+
+if $$y_1 = y_2$$
+
+$$
+\left \{
+\begin{array}{ll}
+U &amp;=\max\{0,{ { \alpha_1^{(old)}}-{\alpha_2^{(old)}} - C } \},\\
+L &amp;= \min\{C,{ { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}
+\end{array}
+\right.
+$$
+
+&lt;br&gt;
+&lt;br&gt;
+{: .text-center}
+&lt;img src=&quot;/mrityunjay-blog/assets/img/posts_imgs/svm-with-smo/body/smo_constraint_2.jpg&quot;&gt;
+&lt;i style=&quot;font-size:15px&quot;&gt;image source: fig. 1.1 (box constraint)&lt;/i&gt;
+{: .text-center}
+
+which is good because our search space is reduced even further and the reason why we choose 2 multipliers is beacuse this is the minimum number of multipliers which can satisfy both the constraints, if we have only one multiplyer to optimize, it will satify the box constraint but not linear equality constraint.
+
+now that we have specified our constraints we can now move on and understand the full algorithm, so smo consist of 2 parts, first choose the best multiplyers to optimize, based on certain heuristics, and then by holding everything accept \alpha_1 and \alpha_2 we are going to optimize our objective function w.r.t these 2 alphas, while satifying all the constraints...
+
+so by doing that we made our complex QP problem into a simple quadratic equation which we easily fit its minimum...
+
+$$   \min \quad ax^2 + bx+c$$
+
+and if we encounter a minimum point that violates our constraint we will just going to clip it! using U and L...
+
+\image showing the clipping 
+
+ --&gt;
+
+&lt;p&gt;have a great day!&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;References&lt;/strong&gt;:-&lt;/p&gt;
+
+&lt;p&gt;&lt;a target=&quot;_blank&quot; href=&quot;https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/&quot; style=&quot;color:#3399ff&quot;&gt;
+https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/
+&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a target=&quot;_blank&quot; href=&quot;https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/&quot; style=&quot;color:#3399ff&quot;&gt;
+https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/smo-book.pdf
+&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Mrityunjay Bhardwaj</name></author><category term="ML" /><category term="AI" /><category term="SVM" /><category term="non-convex" /><category term="online-learning" /><category term="research-paper" /><summary type="html"></summary></entry><entry><title type="html">Understanding Recurrent Neural Nets</title><link href="http://localhost:4000/mrityunjay-blog/blog/artificial-intelligence/machinelearning/rnns.html" rel="alternate" type="text/html" title="Understanding Recurrent Neural Nets" /><published>2019-01-13T00:00:00+05:30</published><updated>2019-01-13T00:00:00+05:30</updated><id>http://localhost:4000/mrityunjay-blog/blog/artificial-intelligence/machinelearning/rnns</id><content type="html" xml:base="http://localhost:4000/mrityunjay-blog/blog/artificial-intelligence/machinelearning/rnns.html">&lt;p&gt;Recurrent Neural Nets are one of the most crucial architecture to understand in the field of deep learning and for good reason, today, when it comes to modeling sequential data, our goto architecture are RNNs, whether it’s predicting what are you going to type next or to have a virtual assistant like Siri or Alexa or even to pridict stock prices.in-short,RNNs are important.&lt;/p&gt;
+
+&lt;p&gt;Now that you are convinced! we can move forward into really understanding it, don’t worry its not that unfamiliar…. it’s just a simple Neural-net including aspects of a dynamic system that are incorporated into its architecture with a twist in its backpropagation algorithm… so let’s get into it!&lt;/p&gt;
+
+&lt;p&gt;As discussed before, RNNs are used to model sequential data which are usually generated by a dynamic system like our speech, we can think of a dynamic system(see equation (1)) as a function which depends on the function of previous time step… i.e, when we deliver a sentence our choice of current word is bounded by the choice of our previous word and so on.. for example, we can’t just say “Today harry a beautiful day” instead of “Today is a beautiful day”…&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;S_t = f(S_{t-1}) \tag{1}&lt;/script&gt;
+
+&lt;p&gt;and if we were to represent it in computation graph it looks something like fig 1.1 (a):&lt;/p&gt;
+
+&lt;p class=&quot;text-center text-center&quot;&gt;&lt;img src=&quot;/mrityunjay-blog/assets/img/posts_imgs/rnn_with_math/body/rnn_dsys2unfold.jpg&quot; /&gt;
+&lt;!-- &lt;i style=&quot;font-size:15px&quot;&gt;image source: WildML&lt;/i&gt; --&gt;
+&lt;i style=&quot;font-size:15px&quot;&gt;fig 1.1&lt;/i&gt;
+&lt;i style=&quot;font-size:15px&quot;&gt;a. Dynamic System (left) b. unfolded RNN graph (right)&lt;/i&gt;&lt;/p&gt;
+
+&lt;p&gt;Some Notations to be aware of:-&lt;br /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;s_t&lt;/script&gt; = State or hidden units at time step &lt;script type=&quot;math/tex&quot;&gt;(t)&lt;/script&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;o_t&lt;/script&gt; = output at time step (t)&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;V&lt;/script&gt; = Weight Matrix b/w hidden unit and the output&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;W&lt;/script&gt; = Weight Matrix b/w hidden units&lt;/li&gt;
+  &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;U&lt;/script&gt; = Weight Matrix b/w input and &lt;script type=&quot;math/tex&quot;&gt;s_t&lt;/script&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;where,&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;a_t = b + Ws_{t-1} + Ux_t&lt;/script&gt;
+
+&lt;p&gt;&lt;script type=&quot;math/tex&quot;&gt;s_t = \sigma(a_t)&lt;/script&gt;   (where, &lt;script type=&quot;math/tex&quot;&gt;\sigma&lt;/script&gt; = activation function )&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;o_t = c + Vs_t&lt;/script&gt;
+
+&lt;p&gt;now, in order to predict the next word or the next stock prices we first need to input some data and the way we are going to be doing that is by putting every input-unit(word in a sentence,history of stock prices) into each time step,think of it like our&lt;a id=&quot;post_link&quot; target=&quot;_blank&quot; href=&quot;https://en.wikipedia.org/wiki/Prior_probability&quot;&gt; prior knowledge&lt;/a&gt; that we feed into our network in order to predict the next unit in the sequence…&lt;/p&gt;
+
+&lt;p&gt;in case of speech generation, the output is a huge matrix consist of the probabilities of occurence of every word in our vocabulary,in case of stock market prediction its going to be just a simple output of prices…. from now on we are just going to be focusing on the general form of a simple RNNs&lt;/p&gt;
+
+&lt;p&gt;ok, so we know how are we going to get our prediction but what if we predict it wrong?? first of all we need a measure to calculate the correctness of our prediction.enter, Loss function, loss function is just a accumulation of all the individual loss at each time step… i.e, &lt;script type=&quot;math/tex&quot;&gt;l_t = 1/2*(o_t - y_t)^2&lt;/script&gt; where &lt;script type=&quot;math/tex&quot;&gt;y_t&lt;/script&gt; is the true output and &lt;script type=&quot;math/tex&quot;&gt;o_t&lt;/script&gt; is the probability @ timestep &lt;script type=&quot;math/tex&quot;&gt;t&lt;/script&gt; although usually we use cross-entropy loss for language modelling but for simplicity we are going with standard&lt;a id=&quot;post_link&quot; target=&quot;_blank&quot; href=&quot;https://en.wikipedia.org/wiki/Mean_squared_error&quot;&gt; MSE&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;now that we know hot to quantify the correctness our prediction, we need to find a way to minimize it and just like a simple perceptron, we need to come up with Weights that minimize our Loss function.
+and the way we are going to be doing that is by calculating the derivative of our Loss function w.r.t. these weights which will tells us in which direction we should move in order to minimize our Loss function and update our weights accordingly.
+which means, we need to calculate these values:-&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial L}\over{\partial V} },
+ { {\partial L}\over{\partial W} }, 
+ { {\partial L}\over{\partial U} } \tag{2}&lt;/script&gt;
+
+&lt;p&gt;but in order to calculate these, we first need to calculate some derivatives beforehand,which will prove useful in calculating our final weight derivatives(2). first we need to calculate the derivative of &lt;script type=&quot;math/tex&quot;&gt;o_t&lt;/script&gt; w.r.t our loss function:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ { \partial L }\over{\partial o_t}} = { { \partial L }\over{ \partial l_t }} * { { \partial l_t }\over{ \partial o_t } }&lt;/script&gt;
+
+&lt;p&gt;so as we know:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;L = l_t + l_{t-1} + ..... + l_{1}&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+{ { \partial L }\over{\partial l_t} } &amp;= { {\partial }\over{\partial l_t} }(l_t + l_{t-1} + ....... + l_1) \\
+&amp;= 1
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;for second term :&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+{ { \partial l_t } \over {\partial o_t} }  &amp;= {1\over2}({ {\partial } \over {\partial o_t} }((o_t - y_t)^2)) \\
+&amp;=  (o_t - y_t)*1
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;p&gt;putting it all together we get:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ { \partial L }\over {\partial o_t} } = { {(o_t-y_1)*1}*{1} }&lt;/script&gt;
+
+&lt;p&gt;now the next thing we need to calculate is &lt;script type=&quot;math/tex&quot;&gt;{ {\partial L} \over{\partial s_t}}&lt;/script&gt;,
+this is not an easy fleet… beacuse if you change &lt;script type=&quot;math/tex&quot;&gt;s_t&lt;/script&gt; its going to change} &lt;script type=&quot;math/tex&quot;&gt;s_{t+1}&lt;/script&gt; and} &lt;script type=&quot;math/tex&quot;&gt;s_{t+2}&lt;/script&gt; and so on… untill the end of the time or untill the end of our input sequence and finally change our Loss function. so our derivative is going to be:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial L} \over{\partial s_t}} = ({ {\partial L} \over {\partial o_t} } * { {\partial o_t} \over {\partial s_t} }) + ({ {\partial L}\over{\partial s_{t+1}} } * { {\partial s_{t+1}}\over {\partial s_t} })&lt;/script&gt;
+
+&lt;p&gt;for convenience, let &lt;script type=&quot;math/tex&quot;&gt;\kappa = { {\partial L} \over{\partial s} }&lt;/script&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\kappa_t = ({ {\partial L} \over {\partial o_t} } * { {\partial o_t} \over {\partial s_t} } ) + (\kappa_{t+1} * ({ {\partial L}\over{\partial s_{t+1}} }*{ {\partial s_{t+1}}\over {\partial s_t} }) )&lt;/script&gt;
+
+&lt;p&gt;where, &lt;script type=&quot;math/tex&quot;&gt;{ {\partial s_{t+1}}\over {\partial s_t} } = { {\partial }\over {\partial s_t} }(s_t*W) = W&lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;but we can’t calculate &lt;script type=&quot;math/tex&quot;&gt;\kappa_t&lt;/script&gt; just yet, basically we want to calcaulate the derivative w.r.t current time but as u can see in the expression above we also need to calculate the derivative w.r.t the next time step and so on…(because of &lt;script type=&quot;math/tex&quot;&gt;\kappa_{t+1}&lt;/script&gt; ) untill the end of time…(litrally)
+that is why we first need to calculate the derivative w.r.t last time-step and then &lt;strong&gt;backpropagate through time&lt;/strong&gt; to get to the current time step (t), which is the reason why this algorithm is known as backpropagation through time(BPTT).&lt;/p&gt;
+
+&lt;p&gt;so the derivative w.r.t last time step &lt;script type=&quot;math/tex&quot;&gt;(T)&lt;/script&gt; is going to be:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial L} \over{\partial s_T}} = { {\partial L} \over {\partial o_T} } * { {\partial o_T} \over {\partial s_T} }&lt;/script&gt;
+
+&lt;p&gt;here, we know &lt;script type=&quot;math/tex&quot;&gt;{ {\partial L} \over {\partial o_T} }&lt;/script&gt;… but what about the second term??&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial o_T} \over {\partial s_T} }={ {\partial} \over {\partial s_T} }(c + Vs_T) = V&lt;/script&gt;
+
+&lt;p&gt;our final &lt;script type=&quot;math/tex&quot;&gt;{ {\partial L} \over{\partial s_T}}&lt;/script&gt; :-&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial L} \over{\partial s_T}} = (o_t-y_t) * V&lt;/script&gt;
+
+&lt;p&gt;it should be clear by now that the derivative of loss function w.r.t s_t is going to depend on the derivative w.r.t s_t+1 and s_t+2 and so on untill the last time step which we now know how to calculate, so our final expression of calculating &lt;script type=&quot;math/tex&quot;&gt;\kappa_t&lt;/script&gt;&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\kappa_t = ( (o_t - y_t)* V) + ((\kappa_{t+1}) * W )&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\kappa_{t+1} = ( (o_t - y_t)* V) + ((\kappa_{t+2}) * W )&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\vdots&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\kappa_{T-1} = ( (o_t - y_t)* V) + ((\kappa_{T}) * W )&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;\kappa_T = ( (o_t - y_t)* V)&lt;/script&gt;
+
+&lt;p&gt;Finally we have every thing we need in order to calculate the derivatives our weights.. we can now move forward and calculate them respectively:-&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial L} \over{\partial V}} = { {\partial L} \over{\partial o_t} } * { {\partial o_t} \over{\partial V} }&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial L} \over{\partial W}} = { {\partial L} \over{\partial s_t} } * { {\partial s_t} \over{\partial W} }&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial L} \over{\partial U}} = { {\partial L} \over{\partial s_t} } * { {\partial s_t} \over{\partial U} }&lt;/script&gt;
+
+&lt;p&gt;calculating,&lt;script type=&quot;math/tex&quot;&gt;{ {\partial L} \over{\partial V}}&lt;/script&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+{ {\partial L} \over{\partial V}} &amp;= { {\partial L} \over{\partial o_t} } * { {\partial o_t} \over{\partial V} } \\
+&amp;= (o_t - y_t) * { {\partial o_t} \over{\partial V} }
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial o_t} \over{\partial V} } = { {\partial} \over{\partial V} }(V*s_t) = s_t&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial L} \over{\partial V}} = (o_t - y_t) * s_t&lt;/script&gt;
+
+&lt;p&gt;calculating,&lt;script type=&quot;math/tex&quot;&gt;{ {\partial L} \over{\partial U} }&lt;/script&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+{ {\partial L} \over{\partial U}} &amp;= { {\partial L} \over{\partial s_t} } * { {\partial s_t} \over{\partial U} } \\
+&amp;= (\kappa_t) * { {\partial s_t} \over{\partial U} }
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial s_t} \over{\partial U} }
+= { {\partial s_t} \over{\partial a_t} }*{ {\partial a_t} \over{\partial U} }&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial s_t} \over{\partial a_t} }
+=  { {\partial } \over{\partial a_t} }(tanh(a_t))&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial s_t} \over{\partial a_t} }
+=  (1-tanh^2(a_t))&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial a_t} \over{\partial U} }
+= { {\partial } \over{\partial U} }(b+ W*s_{t-1} + U*x_t)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial a_t} \over{\partial U} }
+= (x_t)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial s_t} \over{\partial U} }
+= (1- tanh^2(a_t))*(x_t)&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{   {\partial L} \over{\partial U}} = (\kappa_t)*((1-tanh^2(a_t)) * (x_{t}))&lt;/script&gt;
+
+&lt;p&gt;calculating,&lt;script type=&quot;math/tex&quot;&gt;{ {\partial L} \over{\partial W}}&lt;/script&gt;:&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+{ {\partial L} \over{\partial W}} &amp;= { {\partial L} \over{\partial s_t} } * { {\partial s_t} \over{\partial W} } \\
+&amp;= (\kappa_t) * { {\partial s_t} \over{\partial W} }
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial s_t} \over{\partial W} }
+= { {\partial s_t} \over{\partial a_t} }*{ {\partial a_t} \over{\partial W} }&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
+\begin{align}
+{ {\partial a_t} \over{\partial W} } &amp;= { {\partial } \over{\partial W} }(b+ W*s_{t-1} + U*x_i) \\
+&amp;= ( s_{t-1})
+\end{align} %]]&gt;&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial s_t} \over{\partial W} }
+= (1-tanh^2(a_t))* (s_{t-1})&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial L} \over{\partial W}} = (\kappa_t)*((1-tanh^2(a_t)) * (s_{t-1}))&lt;/script&gt;
+
+&lt;p&gt;putting all the derivatives together our final derivative of Loss function w.r.t all the weights are:-&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial L} \over{\partial V}} = (o_t - y_t) * s_t&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial L} \over{\partial U}} = (\kappa_t)*((1-tanh^2(a_t)) * (x_{t}))&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;{ {\partial L} \over{\partial W}} = (\kappa_t)*((1-tanh^2(a_t)) * (s_{t-1}))&lt;/script&gt;
+
+&lt;p&gt;Now that we have the derivatives of all the weights we can finally compute our weights&lt;/p&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;V_{\text{new}} = V_{\text{old}} + \alpha{ {\partial L} \over{\partial V} }&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;W_{\text{new}} = W_{\text{old}} + \alpha{ {\partial L} \over{\partial W} }&lt;/script&gt;
+
+&lt;script type=&quot;math/tex; mode=display&quot;&gt;U_{\text{new}} = U_{\text{old}} + \alpha{ {\partial L} \over{\partial U} }&lt;/script&gt;
+
+&lt;p&gt;Congratulations,now that you know how Recurrent Neural Network works internally/mathematically as well as intuitively…we can now worry about how to implement it… if you ask anyone in the industry they all say RNNs doesnt work as it is… in paper it is really great and this is how it works internall but in practice we need to do some modification in order to make it work and that we will do in the next part of this blog…&lt;/p&gt;</content><author><name>Mrityunjay</name></author><category term="ML" /><category term="DL" /><category term="AI" /><category term="RNN" /><category term="neural-networks" /><summary type="html">Recurrent Neural Nets are one of the most crucial architecture to understand in the field of deep learning and for good reason, today, when it comes to modeling sequential data, our goto architecture are RNNs, whether it’s predicting what are you going to type next or to have a virtual assistant like Siri or Alexa or even to pridict stock prices.in-short,RNNs are important.</summary></entry></feed>
