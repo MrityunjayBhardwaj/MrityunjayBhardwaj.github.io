@@ -20,13 +20,13 @@ var sketch1 = function(p){
 
     let redcar;
     p.preload = function(){
-        tilemap       = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/Tile_map.png",function(){console.log("yey!")},function(){console.log("no!")});
-        tilemap_alpha = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/Tile_map_collision.png");
-        tilemapblind_alpha = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/Tile_map_collision_blind.png");
-        car_img       = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/c2.png");
-        startMenu_img = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/startMenu.jpg");
-        startMenublind_img = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/startMenu_blind.jpg");
-        redMarker_img = p.loadImage("../../../assets/imgs/posts_imgs/classical-ai/body/lfigs/only_marker.png");
+        tilemap       = p.loadImage("../../../assets/img/posts_imgs/classical-ai/body/lfigs/Tile_map.png",function(){console.log("yey!")},function(){console.log("no!")});
+        tilemap_alpha = p.loadImage("../../../assets/img/posts_imgs/classical-ai/body/lfigs/Tile_map_collision.png");
+        tilemapblind_alpha = p.loadImage("../../../assets/img/posts_imgs/classical-ai/body/lfigs/Tile_map_collision_blind.png");
+        car_img       = p.loadImage("../../../assets/img/posts_imgs/classical-ai/body/lfigs/c2.png");
+        startMenu_img = p.loadImage("../../../assets/img/posts_imgs/classical-ai/body/lfigs/startMenu.jpg");
+        startMenublind_img = p.loadImage("../../../assets/img/posts_imgs/classical-ai/body/lfigs/startMenu_blind.jpg");
+        redMarker_img = p.loadImage("../../../assets/img/posts_imgs/classical-ai/body/lfigs/only_marker.png");
        }
 
     p.setup = function(){
@@ -36,6 +36,7 @@ var sketch1 = function(p){
 
         console.log("inside setup")
         redcar = new car(tilemap_alpha);
+
 
         p.noLoop();
     }
@@ -119,6 +120,7 @@ function destMarker(p,theta,pos,radRange){
     let radius = Math.floor(Math.sin(theta)*radRange[0]) + (Math.floor((1-Math.sin(theta))*radRange[1]));
     p.ellipse(pos[0],pos[1],radius,radius);
 
+    p.noStroke();
     p.fill(255);
 
 }
@@ -130,7 +132,7 @@ function menu(p){
 
     p.fill(250,255);
     p.textSize(20);
-    p.text("\t\tBravo!\n You Reached Your Destination",Math.floor(p.width*.1),p.height/2);
+    p.text("Bravo!\n You Reached Your Destination\n \t\t\t\tTap to play again",Math.floor(p.width*.1),p.height/2);
 
 }
 
@@ -220,4 +222,4 @@ function car(map){
 }
 
 
-var c1 = new p5(sketch1);
+let c1 = new p5(sketch1);

@@ -10,9 +10,11 @@ let ptsArray2 = [];
 
 let rndSeed = 1;
 let accuracy = 0;
+let wakeUpTime = 1;
+
+let isCanvasSleeping = false;
 
 var sketch1 = function(p){
-    // p.randomSeed(rndSeed);
 
     console.log("inside sketch1")
     p.setup = function(){
@@ -22,7 +24,6 @@ var sketch1 = function(p){
         // init hyperplane
         mhp = new hplane(p,{x:p.width/2,y:p.height*.9});
 
-        console.log("sdkfjldkf")
         rnd_pts(p,
             400,
             {x: p.width*0.4,y:p.height*0.3},
@@ -39,6 +40,7 @@ var sketch1 = function(p){
         accuracy =  (1-classifyArray(p,mhp.rotation,mhp.pos.y,ptsArray2) + classifyArray(p,mhp.rotation,mhp.pos.y,ptsArray,1))/2;
 
         // console.log(ptsArray)
+
     }
 
     p.draw = function(){
@@ -109,43 +111,86 @@ var sketch1 = function(p){
             mhp.orad = 20;
         }else {mhp.orad = 10;}
 
+
+        // if the sketch is running for 30 seconds then put it to sleep
+
+        if((p.frameCount % 60 === 0) ){
+            console.log("wakeUpTime: "+ wakeUpTime);
+            wakeUpTime++;
+
+            if (wakeUpTime > 10){
+            console.log("putting our sketch to sleep"+ wakeUpTime)
+            isCanvasSleeping = true;
+            wakeUpTime = 1;
+            
+            p.noLoop();
+
+            }
+        }
     }
 
     p.mouseClicked = function(){ 
+
+
         if(origin_selected){
             origin_selected = 0;
             mhp.orad = 10;
+
+            // restart the canvas if it is sleeping
+            if (isCanvasSleeping)p.loop();
+            // resetting wake up time
+            wakeUpTime = 1;
         }
+
+
     }
 
     p.mousePressed = function(){
+
+        
+
         let distx = (mhp.pos.x-p.mouseX);
         let disty = (mhp.pos.y-p.mouseY);
         let dist  = Math.sqrt(distx**2 + disty**2);
-        if (dist <20)
+        if (dist < 20)
         {
+            // restart the canvas if it is sleeping
+            if (isCanvasSleeping)p.loop();
+
             origin_selected = 1;
             mhp.orad = 20;
+
+            // resetting wake up time
+            wakeUpTime = 1;
         }
+
     }
 
     p.mouseDragged = function(){
 
+
         if( p.mouseX < p.width && p.mouseY < p.height && p.mouseX > 0 && p.mouseY > 0){
 
-        if (!origin_selected){
+            if (!origin_selected){
 
-            
-            mhp.update_rot();
-            // mhp.update_margin();
+                
+                mhp.update_rot();
+                // mhp.update_margin();
 
-            // console.log("classify from blue",classify(mhp.rotation,mhp.pos.y,ptsArray[1].pos.x,ptsArray[1].pos.y));
-        }
-        else{
-            mhp.pos.y = p.mouseY;
-
-        }
+                // console.log("classify from blue",classify(mhp.rotation,mhp.pos.y,ptsArray[1].pos.x,ptsArray[1].pos.y));
             }
+            else{
+                mhp.pos.y = p.mouseY;
+
+            }
+
+            // restart the canvas if it is sleeping
+            if (isCanvasSleeping)p.loop();
+
+            // resetting wake up time
+            wakeUpTime = 1;
+
+        }
 
             // accuracy = classifyArray(p,mhp.rotation, mhp.pos.y,ptsArray)
         accuracy =  (1-classifyArray(p,mhp.rotation,mhp.pos.y,ptsArray2) + classifyArray(p,mhp.rotation,mhp.pos.y,ptsArray,1))/2;

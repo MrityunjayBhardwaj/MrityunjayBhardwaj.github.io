@@ -8,7 +8,7 @@ permalink: /:categories/:title.html
 mathjax: true
 p5js: true   
 comments: true
-img: /posts_imgs/svm-with-smo/teaser/svm_db.png
+img: /posts_imgs/svm-with-smo/teaser/alex-unsplash.jpg
 ---
 
 <!-- if you are unfimilier with those concepts or just need to brush up some of them,  Imperial Collage London has a great course on coursera,which you might find useful:
@@ -36,9 +36,6 @@ In order to solidify what we are trying to achieve ...lets play a little game, i
 
 {: .text-center}
 <div id="fit_hyperplane_yourself_0" style="width: inherit"></div>
-
-<script src="{{site.baseurl}}/assets/js/dependency/p5/p5.min.js"></script>
-<script src="{{site.baseurl}}/assets/js/dependency/p5/addons/p5.dom.min.js"></script>
 
 <script src="{{site.baseurl}}/assets/js/my_js/svm-with-smo/fit_hype.js"></script>
 

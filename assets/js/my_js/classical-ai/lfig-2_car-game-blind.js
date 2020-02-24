@@ -114,4 +114,4 @@ function is_insideCanvas(p){
 
     return false;
 }
-var s2 = new p5(sketch2);
+let s2 = new p5(sketch2);
