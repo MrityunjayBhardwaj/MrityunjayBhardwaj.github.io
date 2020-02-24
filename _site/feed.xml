@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/mrityunjay-blog/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/mrityunjay-blog/" rel="alternate" type="text/html" /><updated>2020-02-24T11:52:16+05:30</updated><id>http://localhost:4000/mrityunjay-blog/feed.xml</id><title type="html">My personal blog - Mrityunjay Bhardwaj</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
-</subtitle><author><name>Mrityunjay Bhardwaj</name></author><entry><title type="html">SVM with SMO</title><link href="http://localhost:4000/mrityunjay-blog/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html" rel="alternate" type="text/html" title="SVM with SMO" /><published>2019-01-23T00:00:00+05:30</published><updated>2019-01-23T00:00:00+05:30</updated><id>http://localhost:4000/mrityunjay-blog/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo</id><content type="html" xml:base="http://localhost:4000/mrityunjay-blog/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html">&lt;!-- if you are unfimilier with those concepts or just need to brush up some of them,  Imperial Collage London has a great course on coursera,which you might find useful:
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2020-02-24T12:03:19+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">My personal blog - Mrityunjay Bhardwaj</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+</subtitle><author><name>Mrityunjay Bhardwaj</name></author><entry><title type="html">SVM with SMO</title><link href="http://localhost:4000/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html" rel="alternate" type="text/html" title="SVM with SMO" /><published>2019-01-23T00:00:00+05:30</published><updated>2019-01-23T00:00:00+05:30</updated><id>http://localhost:4000/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo</id><content type="html" xml:base="http://localhost:4000/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html">&lt;!-- if you are unfimilier with those concepts or just need to brush up some of them,  Imperial Collage London has a great course on coursera,which you might find useful:
 &lt;a target=&quot;_blank&quot; href=&quot;https://www.coursera.org/specializations/mathematics-machine-learning&quot; target=&quot;_blank&quot;&gt;&lt;u&gt;https://www.coursera.org/specializations/mathematics-machine-learning&lt;/u&gt;&lt;/a&gt; --&gt;
 &lt;!-- 
  In this tutorial, we are going to take a deep dive inside support vector machines, we are going to talk about what svm is and how it works (internally/mathematically) by deconstructing every single part that leads to it's final formulation and then, we are going to take a look at how to solve that formulation using an algorithm called SMO.... by the end of this article, you will have a solid understand of one of the most important Algorithm in Machine Learning. --&gt;
@@ -23,11 +23,11 @@
 
 &lt;div id=&quot;fit_hyperplane_yourself_0&quot; style=&quot;width: inherit&quot; class=&quot;text-center&quot;&gt;&lt;/div&gt;
 
-&lt;script src=&quot;/mrityunjay-blog//assets/js/dependency/p5/p5.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/assets/js/dependency/p5/p5.min.js&quot;&gt;&lt;/script&gt;
 
-&lt;script src=&quot;/mrityunjay-blog//assets/js/dependency/p5/addons/p5.dom.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/assets/js/dependency/p5/addons/p5.dom.min.js&quot;&gt;&lt;/script&gt;
 
-&lt;script src=&quot;/mrityunjay-blog//assets/js/my_js/svm-with-smo/fit_hype.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/assets/js/my_js/svm-with-smo/fit_hype.js&quot;&gt;&lt;/script&gt;
 
 &lt;p class=&quot;text-center&quot;&gt;&lt;i style=&quot;font-size:15px&quot;&gt;L-fig 1.1&lt;/i&gt;&lt;br /&gt;
 &lt;i style=&quot;font-size:15px&quot;&gt;fit the classifier by moving the gizmo(black arrow) of your hyperplane, make sure to have as less missclassification points(denoted by “X”) as possible..good luck!!&lt;/i&gt;&lt;/p&gt;
@@ -47,7 +47,7 @@ now, as you might have observed,in order to solve this problem, we want a decisi
 &lt;div id=&quot;fit_hyperplane_yourself_1&quot; style=&quot;width: inherit&quot;&gt;&lt;/div&gt;
 
 
-&lt;script src=&quot;/mrityunjay-blog//assets/js/my_js/svm-with-smo/fit_hype_2.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;/assets/js/my_js/svm-with-smo/fit_hype_2.js&quot;&gt;&lt;/script&gt;
 &lt;i style=&quot;font-size:15px&quot;&gt;L-fig 1.2: fit the classifier&lt;/i&gt;
 &lt;i style=&quot;font-size:15px&quot;&gt; here, the the color of the margin discribe the quality of our decision boundary, greener the better(because its farthest from both the classes)&lt;/i&gt;
 {: .text-center}
@@ -137,7 +137,7 @@ $$ --&gt;
  or you can check its
 &lt;a target=&quot;_blank&quot; href=&quot;https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/least-squares-determinants-and-eigenvalues/projections-onto-subspaces/MIT18_06SCF11_Ses2.2sum.pdf&quot; style=&quot;color:#3399ff&quot;&gt; &lt;i&gt; notes &lt;/i&gt;&lt;/a&gt; as well&lt;/p&gt;
 
-&lt;p class=&quot;text-center&quot;&gt;&lt;img src=&quot;/mrityunjay-blog//assets/img/posts_imgs/svm-with-smo/body/proj.jpg&quot; /&gt;&lt;/p&gt;
+&lt;p class=&quot;text-center&quot;&gt;&lt;img src=&quot;/assets/img/posts_imgs/svm-with-smo/body/proj.jpg&quot; /&gt;&lt;/p&gt;
 
 &lt;p class=&quot;text-center&quot;&gt;&lt;span id=&quot;discription&quot;&gt;fig. 1.3: project onto a hyperplane&lt;/span&gt;&lt;/p&gt;
 
@@ -311,7 +311,7 @@ y_i(\Theta^Tx_i+\Theta_0) &amp;= 1
 
 &lt;p&gt;Although, what we have done untill now in order to find our decision boundary is perfectly reasonable and infact if we apply this same techniques we do get a decision boundary which will linearly separate the 2 classes…but in real life, nothing is smooth or linearly seprable there is always noise just like we see in fig 1.4 , here, we have 3 missclassified points and as you can see there is no linear boundary which can perfectly separate these point… So instead of strictly imposing the constraint ( theta x + theta0 == 1) we ease out a bit by allowing some error in choosing our support vectors and ignore these missclassified points which will be very helpful for us in making of perfectly linear decision boundary but it will not perfectly seprate the 2 classes as we can see, there will be error, which is indeed what we want. This new technique of softning out constraint is called soft margin svm and the stricter counterpart of this method ( the one that we are solving untill now) is called Hard Margin SVM…&lt;/p&gt;
 
-&lt;p class=&quot;text-center text-center&quot;&gt;&lt;img src=&quot;/mrityunjay-blog//assets/img/posts_imgs/svm-with-smo/body/need_for_soft_margin_svm.png&quot; /&gt;
+&lt;p class=&quot;text-center text-center&quot;&gt;&lt;img src=&quot;/assets/img/posts_imgs/svm-with-smo/body/need_for_soft_margin_svm.png&quot; /&gt;
 &lt;i style=&quot;font-size:15px&quot;&gt;fig. 1.4 constraint violation problem&lt;/i&gt;&lt;/p&gt;
 
 &lt;p&gt;Now as you can infer, soft margin SVM is used most of the time in real world scenarios… So on that note, we need to implement the idea of soft margin in our objective function and our constraints… Here, we add another constraint which we call slack variable which act as a tuning params which specify our softness towards our margin constraint.&lt;/p&gt;
@@ -346,7 +346,7 @@ s.t. \quad \left \{ { {\alpha \geq 0};
 
 &lt;p&gt;so, because we are optimizing 2 alphas together (let them be  &lt;script type=&quot;math/tex&quot;&gt;\alpha_1&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\alpha_2&lt;/script&gt;) our constraint in expression (14) will become a box constraint which means that our alpha must reside inside this box of size C x C . which will look something like in fig 1.4:&lt;/p&gt;
 
-&lt;p class=&quot;text-center&quot;&gt;&lt;img src=&quot;/mrityunjay-blog//assets/img/posts_imgs/svm-with-smo/body/smo_constraint_1.jpg&quot; /&gt;&lt;/p&gt;
+&lt;p class=&quot;text-center&quot;&gt;&lt;img src=&quot;/assets/img/posts_imgs/svm-with-smo/body/smo_constraint_1.jpg&quot; /&gt;&lt;/p&gt;
 
 &lt;p class=&quot;text-center&quot;&gt;&lt;i style=&quot;font-size:15px&quot;&gt;fig. 1.4 (box constraint)&lt;/i&gt;&lt;/p&gt;
 
@@ -398,7 +398,7 @@ L &amp;= \min\{C,{ { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}\tag{18}
 \end{array}
 \right. %]]&gt;&lt;/script&gt;
 
-&lt;p class=&quot;text-center text-center&quot;&gt;&lt;img src=&quot;/mrityunjay-blog//assets/img/posts_imgs/svm-with-smo/body/bounds_for_alpha2.png&quot; /&gt;
+&lt;p class=&quot;text-center text-center&quot;&gt;&lt;img src=&quot;/assets/img/posts_imgs/svm-with-smo/body/bounds_for_alpha2.png&quot; /&gt;
 &lt;i style=&quot;font-size:15px&quot;&gt;fig 1.5 (bounds in &lt;script type=&quot;math/tex&quot;&gt;\alpha_2&lt;/script&gt; &lt;/i&gt;&lt;/p&gt;
 
 &lt;p&gt;using equation (16) we can also write &lt;script type=&quot;math/tex&quot;&gt;\alpha_1&lt;/script&gt; as a function of &lt;script type=&quot;math/tex&quot;&gt;\alpha_2&lt;/script&gt;&lt;/p&gt;
@@ -519,7 +519,7 @@ $$
 &lt;br&gt;
 &lt;br&gt;
 {: .text-center}
-&lt;img src=&quot;/mrityunjay-blog//assets/img/posts_imgs/svm-with-smo/body/smo_constraint_2.jpg&quot;&gt;
+&lt;img src=&quot;/assets/img/posts_imgs/svm-with-smo/body/smo_constraint_2.jpg&quot;&gt;
 &lt;i style=&quot;font-size:15px&quot;&gt;image source: fig. 1.1 (box constraint)&lt;/i&gt;
 {: .text-center}
 
@@ -547,7 +547,7 @@ https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-ma
 
 &lt;p&gt;&lt;a target=&quot;_blank&quot; href=&quot;https://cosmolearning.org/video-lectures/support-vector-machines-kernels-soft-margin-smo-algorithm/&quot; style=&quot;color:#3399ff&quot;&gt;
 https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/smo-book.pdf
-&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Mrityunjay Bhardwaj</name></author><category term="ML" /><category term="AI" /><category term="SVM" /><category term="non-convex" /><category term="online-learning" /><category term="research-paper" /><summary type="html"></summary></entry><entry><title type="html">Understanding Recurrent Neural Nets</title><link href="http://localhost:4000/mrityunjay-blog/blog/artificial-intelligence/machinelearning/rnns.html" rel="alternate" type="text/html" title="Understanding Recurrent Neural Nets" /><published>2019-01-13T00:00:00+05:30</published><updated>2019-01-13T00:00:00+05:30</updated><id>http://localhost:4000/mrityunjay-blog/blog/artificial-intelligence/machinelearning/rnns</id><content type="html" xml:base="http://localhost:4000/mrityunjay-blog/blog/artificial-intelligence/machinelearning/rnns.html">&lt;p&gt;Recurrent Neural Nets are one of the most crucial architecture to understand in the field of deep learning and for good reason, today, when it comes to modeling sequential data, our goto architecture are RNNs, whether it’s predicting what are you going to type next or to have a virtual assistant like Siri or Alexa or even to pridict stock prices.in-short,RNNs are important.&lt;/p&gt;
+&lt;a&gt;&lt;/a&gt;&lt;/a&gt;&lt;/p&gt;</content><author><name>Mrityunjay Bhardwaj</name></author><category term="ML" /><category term="AI" /><category term="SVM" /><category term="non-convex" /><category term="online-learning" /><category term="research-paper" /><summary type="html"></summary></entry><entry><title type="html">Understanding Recurrent Neural Nets</title><link href="http://localhost:4000/blog/artificial-intelligence/machinelearning/rnns.html" rel="alternate" type="text/html" title="Understanding Recurrent Neural Nets" /><published>2019-01-13T00:00:00+05:30</published><updated>2019-01-13T00:00:00+05:30</updated><id>http://localhost:4000/blog/artificial-intelligence/machinelearning/rnns</id><content type="html" xml:base="http://localhost:4000/blog/artificial-intelligence/machinelearning/rnns.html">&lt;p&gt;Recurrent Neural Nets are one of the most crucial architecture to understand in the field of deep learning and for good reason, today, when it comes to modeling sequential data, our goto architecture are RNNs, whether it’s predicting what are you going to type next or to have a virtual assistant like Siri or Alexa or even to pridict stock prices.in-short,RNNs are important.&lt;/p&gt;
 
 &lt;p&gt;Now that you are convinced! we can move forward into really understanding it, don’t worry its not that unfamiliar…. it’s just a simple Neural-net including aspects of a dynamic system that are incorporated into its architecture with a twist in its backpropagation algorithm… so let’s get into it!&lt;/p&gt;
 
@@ -557,7 +557,7 @@ https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/smo-book.pdf
 
 &lt;p&gt;and if we were to represent it in computation graph it looks something like fig 1.1 (a):&lt;/p&gt;
 
-&lt;p class=&quot;text-center text-center&quot;&gt;&lt;img src=&quot;/mrityunjay-blog//assets/img/posts_imgs/rnn_with_math/body/rnn_dsys2unfold.jpg&quot; /&gt;
+&lt;p class=&quot;text-center text-center&quot;&gt;&lt;img src=&quot;/assets/img/posts_imgs/rnn_with_math/body/rnn_dsys2unfold.jpg&quot; /&gt;
 &lt;!-- &lt;i style=&quot;font-size:15px&quot;&gt;image source: WildML&lt;/i&gt; --&gt;
 &lt;i style=&quot;font-size:15px&quot;&gt;fig 1.1&lt;/i&gt;
 &lt;i style=&quot;font-size:15px&quot;&gt;a. Dynamic System (left) b. unfolded RNN graph (right)&lt;/i&gt;&lt;/p&gt;

@@ -4,7 +4,7 @@
       "title"    : "SVM with SMO",
       "category" : "",
       "tags"     : "ML, AI, SVM, non-convex, online-learning, research-paper",
-      "url"      : "/mrityunjay-blog//blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html",
+      "url"      : "/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html",
       "date"     : "2019-01-23 00:00:00 +0530"
     } ,
   
@@ -12,7 +12,7 @@
       "title"    : "Understanding Recurrent Neural Nets",
       "category" : "",
       "tags"     : "ML, DL, AI, RNN, neural-networks",
-      "url"      : "/mrityunjay-blog//blog/artificial-intelligence/machinelearning/rnns.html",
+      "url"      : "/blog/artificial-intelligence/machinelearning/rnns.html",
       "date"     : "2019-01-13 00:00:00 +0530"
     } 
   

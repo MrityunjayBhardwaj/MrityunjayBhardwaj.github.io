@@ -7,10 +7,10 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta property="og:image" content="">
-	<link rel="shortcut icon" href="/mrityunjay-blog//assets/img/favicon/favicon.ico" type="image/x-icon">
-	<link rel="apple-touch-icon" href="/mrityunjay-blog//assets/img/favicon/apple-touch-icon.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="/mrityunjay-blog//assets/img/favicon/apple-touch-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="/mrityunjay-blog//assets/img/favicon/apple-touch-icon-114x114.png">
+	<link rel="shortcut icon" href="/assets/img/favicon/favicon.ico" type="image/x-icon">
+	<link rel="apple-touch-icon" href="/assets/img/favicon/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/assets/img/favicon/apple-touch-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/assets/img/favicon/apple-touch-icon-114x114.png">
 	<!-- Chrome, Firefox OS and Opera -->
 	<meta name="theme-color" content="#311e3e">
 	<!-- Windows Phone -->
@@ -21,9 +21,9 @@
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,700" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="/mrityunjay-blog//assets/fonts/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/assets/fonts/font-awesome/css/font-awesome.min.css">
 	<!-- Styles -->
-	<link rel="stylesheet" href="/mrityunjay-blog//assets/css/main.css">
+	<link rel="stylesheet" href="/assets/css/main.css">
 
 </head>
 
@@ -38,11 +38,11 @@
       <nav class="main-nav">
         <span class="menu-icon-close"><i class="fa fa-times" aria-hidden="true"></i></span>
         <ul>
-          <li><a href="/mrityunjay-blog//">Blog</a></li>
-          <li><a href="/mrityunjay-blog//about">About</a></li>
+          <li><a href="/">Blog</a></li>
+          <li><a href="/about">About</a></li>
         </ul>
       </nav>
-      <p class="logo"><a href="/mrityunjay-blog//">Mrityunjay Bhardwaj</a></p>
+      <p class="logo"><a href="/">Mrityunjay Bhardwaj</a></p>
       <div class="search-icon-container">
         <span class="search-icon"><a><i class="fa fa-search" aria-hidden="true"></i></a></span>
       </div>
@@ -80,7 +80,7 @@
 
   <article class="article-page">
     <div class="page-image">
-      <div class="cover-image" style="background: url(/mrityunjay-blog//assets/img//posts_imgs/svm-with-smo/teaser/svm_db.png) center no-repeat; background-size: cover;"></div>
+      <div class="cover-image" style="background: url(/assets/img//posts_imgs/svm-with-smo/teaser/svm_db.png) center no-repeat; background-size: cover;"></div>
     </div>
     <div class="wrapper">
       <div class="page-content">
@@ -112,11 +112,11 @@
 
 <div id="fit_hyperplane_yourself_0" style="width: inherit" class="text-center"></div>
 
-<script src="/mrityunjay-blog//assets/js/dependency/p5/p5.min.js"></script>
+<script src="/assets/js/dependency/p5/p5.min.js"></script>
 
-<script src="/mrityunjay-blog//assets/js/dependency/p5/addons/p5.dom.min.js"></script>
+<script src="/assets/js/dependency/p5/addons/p5.dom.min.js"></script>
 
-<script src="/mrityunjay-blog//assets/js/my_js/svm-with-smo/fit_hype.js"></script>
+<script src="/assets/js/my_js/svm-with-smo/fit_hype.js"></script>
 
 <p class="text-center"><i style="font-size:15px">L-fig 1.1</i><br />
 <i style="font-size:15px">fit the classifier by moving the gizmo(black arrow) of your hyperplane, make sure to have as less missclassification points(denoted by “X”) as possible..good luck!!</i></p>
@@ -136,7 +136,7 @@ now, as you might have observed,in order to solve this problem, we want a decisi
 <div id="fit_hyperplane_yourself_1" style="width: inherit"></div>
 
 
-<script src="/mrityunjay-blog//assets/js/my_js/svm-with-smo/fit_hype_2.js"></script>
+<script src="/assets/js/my_js/svm-with-smo/fit_hype_2.js"></script>
 <i style="font-size:15px">L-fig 1.2: fit the classifier</i>
 <i style="font-size:15px"> here, the the color of the margin discribe the quality of our decision boundary, greener the better(because its farthest from both the classes)</i>
 {: .text-center}
@@ -226,7 +226,7 @@ $$ -->
  or you can check its
 <a target="_blank" href="https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/least-squares-determinants-and-eigenvalues/projections-onto-subspaces/MIT18_06SCF11_Ses2.2sum.pdf" style="color:#3399ff"> <i> notes </i></a> as well</p>
 
-<p class="text-center"><img src="/mrityunjay-blog//assets/img/posts_imgs/svm-with-smo/body/proj.jpg" /></p>
+<p class="text-center"><img src="/assets/img/posts_imgs/svm-with-smo/body/proj.jpg" /></p>
 
 <p class="text-center"><span id="discription">fig. 1.3: project onto a hyperplane</span></p>
 
@@ -400,7 +400,7 @@ y_i(\Theta^Tx_i+\Theta_0) &= 1
 
 <p>Although, what we have done untill now in order to find our decision boundary is perfectly reasonable and infact if we apply this same techniques we do get a decision boundary which will linearly separate the 2 classes…but in real life, nothing is smooth or linearly seprable there is always noise just like we see in fig 1.4 , here, we have 3 missclassified points and as you can see there is no linear boundary which can perfectly separate these point… So instead of strictly imposing the constraint ( theta x + theta0 == 1) we ease out a bit by allowing some error in choosing our support vectors and ignore these missclassified points which will be very helpful for us in making of perfectly linear decision boundary but it will not perfectly seprate the 2 classes as we can see, there will be error, which is indeed what we want. This new technique of softning out constraint is called soft margin svm and the stricter counterpart of this method ( the one that we are solving untill now) is called Hard Margin SVM…</p>
 
-<p class="text-center text-center"><img src="/mrityunjay-blog//assets/img/posts_imgs/svm-with-smo/body/need_for_soft_margin_svm.png" />
+<p class="text-center text-center"><img src="/assets/img/posts_imgs/svm-with-smo/body/need_for_soft_margin_svm.png" />
 <i style="font-size:15px">fig. 1.4 constraint violation problem</i></p>
 
 <p>Now as you can infer, soft margin SVM is used most of the time in real world scenarios… So on that note, we need to implement the idea of soft margin in our objective function and our constraints… Here, we add another constraint which we call slack variable which act as a tuning params which specify our softness towards our margin constraint.</p>
@@ -435,7 +435,7 @@ s.t. \quad \left \{ { {\alpha \geq 0};
 
 <p>so, because we are optimizing 2 alphas together (let them be  <script type="math/tex">\alpha_1</script> and <script type="math/tex">\alpha_2</script>) our constraint in expression (14) will become a box constraint which means that our alpha must reside inside this box of size C x C . which will look something like in fig 1.4:</p>
 
-<p class="text-center"><img src="/mrityunjay-blog//assets/img/posts_imgs/svm-with-smo/body/smo_constraint_1.jpg" /></p>
+<p class="text-center"><img src="/assets/img/posts_imgs/svm-with-smo/body/smo_constraint_1.jpg" /></p>
 
 <p class="text-center"><i style="font-size:15px">fig. 1.4 (box constraint)</i></p>
 
@@ -487,7 +487,7 @@ L &= \min\{C,{ { \alpha_1^{(old)}}+{\alpha_2^{(old)}} } \}\tag{18}
 \end{array}
 \right. %]]></script>
 
-<p class="text-center text-center"><img src="/mrityunjay-blog//assets/img/posts_imgs/svm-with-smo/body/bounds_for_alpha2.png" />
+<p class="text-center text-center"><img src="/assets/img/posts_imgs/svm-with-smo/body/bounds_for_alpha2.png" />
 <i style="font-size:15px">fig 1.5 (bounds in <script type="math/tex">\alpha_2</script> </i></p>
 
 <p>using equation (16) we can also write <script type="math/tex">\alpha_1</script> as a function of <script type="math/tex">\alpha_2</script></p>
@@ -608,7 +608,7 @@ $$
 <br>
 <br>
 {: .text-center}
-<img src="/mrityunjay-blog//assets/img/posts_imgs/svm-with-smo/body/smo_constraint_2.jpg">
+<img src="/assets/img/posts_imgs/svm-with-smo/body/smo_constraint_2.jpg">
 <i style="font-size:15px">image source: fig. 1.1 (box constraint)</i>
 {: .text-center}
 
@@ -642,17 +642,17 @@ https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/smo-book.pdf
           <div class="page-tag">
             <span>Tags:</span>
             
-            <a href="/mrityunjay-blog//tags#ML" class="tag">| ML</a>
+            <a href="/tags#ML" class="tag">| ML</a>
             
-            <a href="/mrityunjay-blog//tags#AI" class="tag">| AI</a>
+            <a href="/tags#AI" class="tag">| AI</a>
             
-            <a href="/mrityunjay-blog//tags#SVM" class="tag">| SVM</a>
+            <a href="/tags#SVM" class="tag">| SVM</a>
             
-            <a href="/mrityunjay-blog//tags#non-convex" class="tag">| non-convex</a>
+            <a href="/tags#non-convex" class="tag">| non-convex</a>
             
-            <a href="/mrityunjay-blog//tags#online-learning" class="tag">| online-learning</a>
+            <a href="/tags#online-learning" class="tag">| online-learning</a>
             
-            <a href="/mrityunjay-blog//tags#research-paper" class="tag">| research-paper</a>
+            <a href="/tags#research-paper" class="tag">| research-paper</a>
             
           </div><!-- End Tags -->
           <div class="page-share">
@@ -663,7 +663,7 @@ https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/smo-book.pdf
           </div><!-- End Share -->
         </div>
         <section class="author-box">
-  <img src="/mrityunjay-blog//assets/img/myPic.png" alt="Mrityunjay Bhardwaj" class="author-img">
+  <img src="/assets/img/myPic.png" alt="Mrityunjay Bhardwaj" class="author-img">
   <div class="author-desc">
     <h2>Mrityunjay Bhardwaj</h2>
     <p>I love learning New things.</p>
@@ -689,11 +689,11 @@ https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/smo-book.pdf
   <div class="recent-list">
     
       
-        <a href="/mrityunjay-blog//blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html" class="recent-item" style="background: url(/mrityunjay-blog//assets/img//posts_imgs/svm-with-smo/teaser/svm_db.png) center no-repeat; background-size: cover;"><span>SVM with SMO</span></a>
+        <a href="/blog/artificial-intelligence/machinelearning/lasvm-nc-part1-svm_with_smo.html" class="recent-item" style="background: url(/assets/img//posts_imgs/svm-with-smo/teaser/svm_db.png) center no-repeat; background-size: cover;"><span>SVM with SMO</span></a>
       
     
       
-        <a href="/mrityunjay-blog//blog/artificial-intelligence/machinelearning/rnns.html" class="recent-item" style="background: url(/mrityunjay-blog//assets/img//posts_imgs/rnn_with_math/teaser/RNNunfolded.png) center no-repeat; background-size: cover;"><span>Understanding Recurrent Neural Nets</span></a>
+        <a href="/blog/artificial-intelligence/machinelearning/rnns.html" class="recent-item" style="background: url(/assets/img//posts_imgs/rnn_with_math/teaser/RNNunfolded.png) center no-repeat; background-size: cover;"><span>Understanding Recurrent Neural Nets</span></a>
       
     
   </div>
@@ -758,20 +758,20 @@ https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/smo-book.pdf
 </div>
 
   <!-- JS -->
-<script src="/mrityunjay-blog//assets/js/jquery-3.2.1.min.js"></script>
-<script src="/mrityunjay-blog//assets/js/jekyll-search.js"></script>
+<script src="/assets/js/jquery-3.2.1.min.js"></script>
+<script src="/assets/js/jekyll-search.js"></script>
 <script>
   SimpleJekyllSearch({
     searchInput: document.getElementById('search-input'),
     resultsContainer: document.getElementById('results-container'),
-    json: '/mrityunjay-blog//search.json',
+    json: '/search.json',
     searchResultTemplate: '<li><a href="{url}" title="{desc}">{title}</a></li>',
     noResultsText: 'No results found',
     fuzzy: false,
     exclude: ['Welcome']
   });
 </script>
-<script src="/mrityunjay-blog//assets/js/main.js"></script>
+<script src="/assets/js/main.js"></script>
 
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
