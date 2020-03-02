@@ -21,12 +21,12 @@ img: /posts_imgs/svm-with-smo/teaser/alex-unsplash.jpg
 
 
  -->
+In this tutorial, we are going to take a deep dive inside support vector machines, we are first going to acquire an intuitive understanding of what is it that we wanted to do and then we are going to give our intuition a mathematical framework. In the second half of this blog-post, we are going to dive deep into an Algorithm called SMO which is the working horse behind almost all of the SVM implementation that you see in libraries like sklearn, etc… 
+By the end of this article, you will have not only an intuitive understanding of SVM but also know how it works internally/mathematically.
 
-In this tutorial, we are going to take a deep dive inside support vector machines, we are first going to aquire an intuitive understanding of what is it that we wanted to do and then we are going to give our intuition a mathematical framework which will give a structure to our problem.In the second half of this article, we are going to take a dive inside an Algorithm called SMO which is a way of solving the final formulation of our problem... by the end of this article, you will have not only an intutive understanding of SVM but also know how it works internally/mathematically.
+So as you might know, SVM stands for support vector machines. it's one of the most successful hyperplane based classifier. what it means is that in SVM you are classifying 2 classes by constructing a hyperplane(a.k.a decision boundary) which separates both of them as clearly as possible.
 
- So as you might know, SVM stands for support vector machines. its probably the most successful hyperplane based classifier out there. what it means is that, in svm you are classifing 2 classes by constructing a hyperplane(a.k.a decision boundary) which seperate both of them as clearly as possible.
-
-In order to solidify what we are trying to achieve ...lets play a little game, in it, what i want you to do is to construct a hyperplane/decision-boundary which seprate these 2( class "<font style="color: blue">-1;</font>" and class "<font style="color: orange">+1</font>" ) classes as accurately as possible...so go ahead and see if you could figure out the best decision boundary!...
+To solidify what we are trying to achieve, lets play a little game, in it what i want you to do is to construct a hyperplane/decision-boundary which seprate these 2( class “<font style="color: blue">-1;</font>” and class “<font style="color: orange">+1</font>” ) classes as accurately as possible…so go ahead and see if you could figure out the best decision boundary!…
 
 <!-- >**Info**: >
 >  "orange-dot" = class 1
