@@ -10,6 +10,14 @@ p5js: true
 img: /posts_imgs/classical-ai/teaser/mccarthy.jpeg
 
 ---
+<style>
+
+.img2Center{
+      display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
 
 In recent years, Aritificial Intelligence has recieved a lot of attention thanks to the re-birth of Neural Networks, and the advent of technologies like Siri,alex and self-driving cars. but the idea of AI is not new, infact it all started in 1960s, when a guy name <a id="post-link" target="_blank" href="https://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)">Jhon McCarthy</a>  published his first paper on A.I called <a id="post-link" target="_blank" href="https://www.cs.cornell.edu/selman/cs672/readings/mccarthy-upd.pdf">Programs with Common Sense</a>. after him there were sevral people from really diverse backgrounds which influences the methodologies we use today....
 
@@ -61,7 +69,7 @@ state space is what you see i.e, the physical configuration of our problem.(like
 {: .text-center}
 
 <a class="image-popup" href="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/search_space_disc.jpg">
-<img src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/search_space_disc.jpg" />
+<img class="img2Center" src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/search_space_disc.jpg" />
 </a>
 
 <span id="discription">fig 1.4: as mentioned earlier, each node represent a perticular state in the state space, here in this figure, we expand some of these nodes in order to show what state these nodes represents. namely, state(b) represent the goal state of our problem and (a) and (c) represent some other states in our state space</span>
@@ -89,18 +97,19 @@ now that we know what it feels like to blindly searching the space, lets take a 
 
 **Depth First Search**
 
-![image-right](/assets/img/posts_imgs/classical-ai/body/dfs.gif){: .align-right}
+<img class="img2Center"src="/assets/img/posts_imgs/classical-ai/body/dfs.gif"/>
+
 Now, suppose that our search space is a rectangular shaped coloney/street/block and we have to meet all our neighbours ,so instead of first visiting our adjecent-horizontal neighbours (the ones that are on the left and right of us) we first went-a-head and visit the neighbours that are "in-front" of us and we keep doing that untill we reach the end of our street and then we visit the horizontal neigbours(see fig.1.7), in-other words, we are searching depth-wise instead of breadth wise.
 
 
 More-Techinically, in DFS we take the neighbours/childs of the current node and put it inside a stack(LIFO) and then take the last added node inside our stack and make that our current node, we repeat this process untill we reached our goal state or untill we exaust our search space.this method leads to a special behivour of searching depth-wise (which you can see on your right).
 
 
-<img src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/dfs_pc.jpg"/>
+<img class="img2Center" src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/dfs_pc.jpg"/>
 
 for javascript implimentation, click <a id="post-link" target="_blank" href="https://github.com/MrityunjayBhardwaj/Classical_AI/blob/master/Classical_Search/DFS.js" >here</a>.
 
-<img src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/dfs_viz_2.gif" width="300px" />
+<img class="img2Center" src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/dfs_viz_2.gif" width="300px" />
 {: .text-center}
 
 {: .text-center}
@@ -111,21 +120,23 @@ fig 1.6: dfs in action, see how it works <i><a id="post-link" target="blank_" hr
 
 **Breadth First Search**
 
-![image-right](/assets/img/posts_imgs/classical-ai/body/bfs.gif){: .align-right}
+<img class="img2Center" src="/assets/img/posts_imgs/classical-ai/body/bfs.gif"/>
+
 BFS is really similar to DFS but here, instead of using Stack, we use Queue(FIFO) which leads to another special behivour of searching breadth-wise (hence, Breadth-First Search), and just like any algorithm, its better to see it in action(see, right).
 
-<img src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/bfs_pc.jpg"/>
+<img class="img2Center" src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/bfs_pc.jpg"/>
 
 
 for javascript implimentation, click <a id="post-link" target="_blank" href="https://github.com/MrityunjayBhardwaj/Classical_AI/blob/master/Classical_Search/BFS.js" >here</a>.
 
 **IDDFS**
-![image-right](/assets/img/posts_imgs/classical-ai/body/graph_with_simple_dfs.gif){: .align-right}
+<img class="img2Center" src="/assets/img/posts_imgs/classical-ai/body/graph_with_simple_dfs.gif"/>
+
 Here, We limit the depth of our dfs search using a threshold and then iteratively increase this threshold to our liking, the reason why we do this is because, suppose our search space is infinit in which case the depth is infinit as well, which suggest the fact that if our goal state is in the brach horizontally adjecent to the current one then we will never be able to find it(see, right) but by using this iterative-deepning method we don't have to keep searching to the deepest end of the current branch, we can just skip to the next branch once we hit the threshold(see fig.1.8)
 
 {: .text-center}
 <a class="image-popup" href="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/iddfs.gif">
-<img src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/iddfs.gif" />
+<img class="img2Center" src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/iddfs.gif" />
 </a>
 {: .text-center}
 
@@ -133,7 +144,7 @@ Here, We limit the depth of our dfs search using a threshold and then iterativel
 <span id="discription">fig.1.7: visualization of iddfs</span>
 {: .text-center}
 
-<img src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/iddfs_pc.jpg"/>
+<img class="img2Center" src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/iddfs_pc.jpg"/>
 
 
 <!-- ```javascript
@@ -160,7 +171,7 @@ $$f(x) = h(x)$$
 
 {: .text-center}
 <a class="image-popup" href="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/Greedy_bfs_weight_map.jpg">
-<img src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/Greedy_bfs_weight_map.jpg" width="400px"/>
+<img class="img2Center" src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/Greedy_bfs_weight_map.jpg" width="400px"/>
 </a>
 {: .text-center}
 
@@ -177,7 +188,7 @@ $$f(x) = h(x) + e(x)$$
 {: .text-center}
 
 <a class="image-popup" href="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/Astar_weight_map.jpg">
-<img src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/Astar_weight_map.jpg" width="400px"/>
+<img class="img2Center" src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/Astar_weight_map.jpg" width="400px"/>
 </a>
 {: .text-center}
 
@@ -187,14 +198,14 @@ Question: why most of the values are the same??  (Hint: see the formula!!)
 {: .text-center}
 
 <a class="image-popup" href="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/Astar_search.gif">
-<img src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/Astar_search.gif" width="400px" />
+<img class="img2Center" src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/Astar_search.gif" width="400px" />
 </a>
 {: .text-center}
 
 <span id="discription">fig 1.10 : using A* search on our problem</span>
 {: .text-center}
 
-<img src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/A_star_pc.png" />
+<img class="img2Center" src="{{site.baseurl}}/assets/img/posts_imgs/classical-ai/body/A_star_pc.png" />
 {: .text-center}
 
 although there are several other algorithms for finding the shortest paths (like dijkstra,prims etc) but the reason why we choose A* star above all other is because of its speed which is the reason why it is been used heavily in the games industry espicially in creating enemy A.I which can track you down without bumping into the walls... so every time you get trapped by enemies you can curse astar for that ;) .

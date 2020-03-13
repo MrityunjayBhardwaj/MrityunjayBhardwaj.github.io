@@ -42,12 +42,12 @@ function getIntersectionPoints(a,b,c,r){
 
 	const x0 = -a*c/(a*a+b*b), y0 = -b*c/(a*a+b*b);
 
-	if (c*c > r*r*(a*a+b*b)+Number.EPSILON){
+	if (c*c > r*r*(a*a+b*b)+5){
 
 		console.log("no Points");
 		intersectionPts = [[null, null], [null, null]]
 	}
-	else if (Math.abs(c*c - r*r*(a*a+b*b)) < Number.EPSILON) {
+	else if (Math.abs(c*c - r*r*(a*a+b*b)) < 5) {
 		console.log("1 Point")
 		intersectionPts= [[x0,y0], [null, null]];
 	}
@@ -403,8 +403,11 @@ contourSliderElement3.addEventListener('change',() => {
 	}
 	else if (Math.abs(c*c - r*r*(a*a+b*b)) < 5) {
 
+        winningAudioElement.play()
+
 		console.log("1 Point")
 		intersectionPts= [[x0,y0],[null, null]];
+		optViz.select('.constraintPlot').attr('opacity', '1.0')
 
 		optVizNabla.select('.pt1').select('.nablaF').attr('opacity', '1.0')
 		optVizNabla.select('.pt1').select('.nablaC').attr('opacity', '1.0')

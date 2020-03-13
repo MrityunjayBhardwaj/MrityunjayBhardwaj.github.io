@@ -95,6 +95,10 @@ function updateSketch2(sliderValue){
     let contour =   tf.min(y_2).mul(1-(sliderValue/100))
                       .add(tf.max(y_2).mul(sliderValue/100));
 
+    if (Math.abs(contour.flatten().arraySync()[0] - 2.5) < 0.05){
+        winningAudioElement.play();
+    }
+
 	contourValueElement2.innerHTML = contour.flatten().arraySync()[0].toFixed(1);
 
     const contourLine = tf.ones(x_2.shape).mul(contour);

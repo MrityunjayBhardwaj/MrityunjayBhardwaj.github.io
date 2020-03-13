@@ -8,8 +8,13 @@ permalink: /:categories/:title.html
 mathjax: true
 p5js: true   
 comments: true
-img: /posts_imgs/svm-with-smo/teaser/alex-unsplash.jpg
+img: /posts_imgs/lagrange-multipliers/teaser/post-4.jpg
 ---
+
+<audio id="onWinningAudio">
+<source src="{{site.baseurl}}/assets/audio/posts/lagrange-multipliers/henryrichard__sfx-clear.wav">
+NOPE
+</audio>
 
 <style>
     .VizContrainer{
@@ -69,6 +74,9 @@ img: /posts_imgs/svm-with-smo/teaser/alex-unsplash.jpg
     .slider{
          height: inherit;
          padding: 1em;
+        writing-mode: bt-lr; /* IE */
+        -webkit-appearance: slider-vertical; /* WebKit */
+        padding: 0 5px;
     }
     .slidecontainer{
          height: inherit;
@@ -127,6 +135,17 @@ img: /posts_imgs/svm-with-smo/teaser/alex-unsplash.jpg
     color: dodgerblue;
 }
     
+
+
+.contourFeasiblePoints{
+    color: gray;
+}
+.dfx{
+    color: magenta;
+}
+.dgx{
+    color: purple;
+}
 </style>
 
 <!-- <script src="{{site.baseurl}}/assets/js/dependency/plotlyJS/plotly-latest.min.js"></script> -->
@@ -277,8 +296,8 @@ Fig 5: this plot shows our objective function in (blue) and our constraint regio
 </p>
 </div>
 
-again, just like before, we can easily find the best feasible minimum value (instead of finding the maximum value here, we are minimizing) by adjusting our contour line slider but here, along with the objective function,constraint and our contour line...we have also shown the <span>feasible points within our contour line</span> $$f(x'_1,x'_2) = c,$$ where, $$x'_1,x'_2$$ are feasible points represented by those <span>gray dots</span>...\\ 
-In the right-hand side plot, we have also, shown the <span>gradient vector of the function</span> as well as <span>the gradient vector of constraint</span> evalued at each of these gray points..Although, these information may seem overwhelming at first but the observation we get by playing with these plots will help us greatly in constructing our mathematical formulation for automatically detecting our optimal points which we can use to find the optimal value/points of any function with equality constriants in any number dimensions..
+again, just like before, we can easily find the best feasible minimum value (instead of finding the maximum value here, we are minimizing) by adjusting our contour line slider but here, along with the objective function,constraint and our contour line...we have also shown the <span class="contourFeasiblePoints">feasible points within our contour line</span> $$f(x'_1,x'_2) = c,$$ where, $$x'_1,x'_2$$ are feasible points represented by those <span class="contourFeasiblePoints">gray dots</span>...\\ 
+In the right-hand side plot, we have also, shown the <span class="dfx">gradient vector of the function</span> as well as <span class="dgx">the gradient vector of constraint</span> evalued at each of these gray points..Although, these information may seem overwhelming at first but the observation we get by playing with these plots will help us greatly in constructing our mathematical formulation for automatically detecting our optimal points which we can use to find the optimal value/points of any function with equality constriants in any number dimensions..
 
 ASIDE: <button  class="btn info" onclick="toggleDiv1Fn()">What is a gradient Vector?</button>
 <div class="asideSection" id="toggleDiv1" style="display:none;">
@@ -404,10 +423,9 @@ sorry for that dark story (i am listening to heavy metal while writing this blog
 ## Solving using CODE 
 
 Instead of solving the optimization problem by hand we let computer do that work for us... \\
-here, we will use a python library which solves our optimization problem for free... you just have to define your problem and put it inside a function and thats it! it will automatically find optimal point as well as value for you ;D \\
+here, we will use a <a href="https://www.cvxpy.org/">python library</a> which solves our optimization problem for free... you just have to define your problem and put it inside a function and thats it! it will automatically find optimal point as well as value for you ;D \\
 
 ```python
-
 # constructing our optimization problem using cvxpy
 
 def f(x_1,x_2):
@@ -432,6 +450,12 @@ print('status: ', opt_prob.status)
 print('optimal function value', opt_prob.value)
 print('optimal x_1 point', x_1.value)
 print('optimal x_2 point', x_2.value)
+```
+```
+>>  status:  optimal
+>>  optimal function value 30.769230769230766
+>>  optimal x_1 point 4.615384615384615
+>>  optimal x_2 point 3.0769230769230775
 ```
 
 Now, if you had enough math for the day and don't want any more of this weird language with weird symbols you can go ahead and skip the rest of the sections because now you know how to use these concepts to formulate your problem which is what is required in 90% percent of the cases. \\
@@ -602,7 +626,7 @@ Now that we know everything there is to know about Lagrange Multipliers... we ca
 </div>
 
 here, instead of changing our function value  using contour line we are running along the contraint line and moving over each of the feasible points and calculate there gradient vectors (just like in fig 5)... Play with this visualization and see if you could figure out the optimal points of this objective function (hint: there are more then 1 optimal points :D ) you can also find the optimal points using the mathematics like we did in our previous section... \\
-All the information regarding this visualization is in the <a href="https://sketchfab.com/3d-models/lagrange-multiplier-visualization-984091bb0602456088e7af43f5550c13">discription of this visualization</a>
+All the information regarding this visualization is in the <a href="https://sketchfab.com/3d-models/lagrange-multiplier-visualization-984091bb0602456088e7af43f5550c13">description of this visualization</a>
 
 
 

@@ -115,6 +115,8 @@ async function updateSketch3(sliderValue, intersectionPoints){
     
     let contour = tf.tensor(contourRange.min+(sliderValue/100)*contourRange.max)
 
+    // if ((contour.flatten().arraySync()[0] - 30.7692)< 0.1)
+
     // contour = contour.clipByValue(0,5); // its not a generalized solution but its enough for what we want to convay through this visualization
 
     // updated data array
@@ -151,7 +153,7 @@ async function updateSketch3(sliderValue, intersectionPoints){
 contourSliderElement3.addEventListener('change',() => {
 
     const sliderValue = contourSliderElement3.value;
-    const currZValue = (sliderValue/100)*contourRange.max;
+    const currZValue = contourRange.min + (sliderValue/100)*contourRange.max;
 
     const intersectionPoints = getIntersectionPoints(a=3,b=2,c=-20,r=Math.sqrt(currZValue))
 

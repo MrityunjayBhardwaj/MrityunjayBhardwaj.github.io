@@ -1,8 +1,10 @@
 // Creating Visualization 1
 
 const contourSliderElement1 = document.getElementById("contourSlider1");
-const contourValueElement1 = document.getElementById("contourValue1")
+const contourValueElement1 = document.getElementById("contourValue1");
+const winningAudioElement = document.getElementById("onWinningAudio");
 
+let isFound = 0;
 
 console.log("its working viz1");
 // specifying our objective function
@@ -109,6 +111,10 @@ function updateSketch(sliderValue){
                       .add(tf.max(y_1).mul(sliderValue/100));
 
     const contourLine = tf.ones(x_1.shape).mul(contour);
+
+    if (Math.abs(contour.flatten().arraySync()[0] - 11.1) < 0.05){
+        winningAudioElement.play();
+    }
 
     contourValueElement1.innerHTML = contour.flatten().arraySync()[0].toFixed(1);
 
