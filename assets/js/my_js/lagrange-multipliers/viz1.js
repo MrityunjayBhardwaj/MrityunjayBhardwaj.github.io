@@ -3,6 +3,7 @@
 const contourSliderElement1 = document.getElementById("contourSlider1");
 const contourValueElement1 = document.getElementById("contourValue1");
 const winningAudioElement = document.getElementById("onWinningAudio");
+const winningGifDuration = 7000;
 
 let isFound = 0;
 
@@ -34,7 +35,7 @@ let y_1Array = y_1.flatten().arraySync();
 
 x_1 = tf.linspace(0, 21,100);
 
-let data = [
+let data1 = [
     {
         x : x_1Array,
         y : y_1Array,
@@ -97,12 +98,13 @@ let layout1 ={width:800,
             ],
             } 
 
+
 const config = {responsive: true}
 // sizex,y: 1.0 x=80, y=100 width=640 height=620
 // sizex = 1.25,sizey=1.29, x=80,y=-80, width=800,height=800
 // 80 + 0.1*k = 144
 
-Plotly.newPlot('viz1Sketch',data,layout1, config)
+Plotly.newPlot('viz1Sketch',data1,layout1, config)
 
 // updating the sketch everytime our contour line changes
 function updateSketch(sliderValue){
@@ -122,7 +124,7 @@ function updateSketch(sliderValue){
     const contourLineArray = contourLine.flatten().arraySync();
 
     // creating updated data array
-    const data = [
+    const data1 = [
         {
             x : x_1Array,
             y : y_1Array,
@@ -142,7 +144,7 @@ function updateSketch(sliderValue){
         }
     ]
 
-    Plotly.react('viz1Sketch',data,layout1)
+    Plotly.react('viz1Sketch',data1,layout1)
 
 
 }

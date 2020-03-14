@@ -2,6 +2,7 @@
 
 const contourSliderElement2 = document.getElementById("contourSlider2");
 const contourValueElement2 = document.getElementById("contourValue2");
+const winningOverlayElement1 = document.getElementById("winningOverlay1");
 
 // applying objective function for our plot
 // let x_2 = tf.linspace(0, 10,100);
@@ -32,8 +33,6 @@ const data_2 = [
     },
 
 ];
-let layout2 ={width:450, 
-               height: 400};
 
 let x_2FeasibleArray = 0;
 let y_2FeasibleArray = 0;
@@ -97,6 +96,11 @@ function updateSketch2(sliderValue){
 
     if (Math.abs(contour.flatten().arraySync()[0] - 2.5) < 0.05){
         winningAudioElement.play();
+
+        winningOverlayElement1.style.display = "block";
+        setTimeout(() =>{
+            winningOverlayElement1.style.display = "none";
+        }, winningGifDuration)
     }
 
 	contourValueElement2.innerHTML = contour.flatten().arraySync()[0].toFixed(1);

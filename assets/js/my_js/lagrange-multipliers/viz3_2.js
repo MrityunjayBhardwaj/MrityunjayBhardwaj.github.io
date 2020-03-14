@@ -403,7 +403,12 @@ contourSliderElement3.addEventListener('change',() => {
 	}
 	else if (Math.abs(c*c - r*r*(a*a+b*b)) < 5) {
 
-        winningAudioElement.play()
+		winningAudioElement.play()
+
+        winningOverlayElement2.style.display = "block";
+        setTimeout(() =>{
+            winningOverlayElement2.style.display = "none";
+        }, winningGifDuration)
 
 		console.log("1 Point")
 		intersectionPts= [[x0,y0],[null, null]];

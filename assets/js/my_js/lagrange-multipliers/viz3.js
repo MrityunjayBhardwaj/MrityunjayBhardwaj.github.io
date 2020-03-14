@@ -2,6 +2,7 @@
 
 const contourSliderElement3 = document.getElementById("contourSlider3");
 const contourValueElement3 = document.getElementById("contourValue3");
+const winningOverlayElement2 = document.getElementById("winningOverlay2");
 
 function constraint3d(x,y){
 
@@ -24,6 +25,7 @@ let constraintMask2D = constraint3d(x1_3,x2_3).reshape([x_3.shape[0], x_3.shape[
 let x_3Feasible = 0;
 let y_3Feasible = 0;
 
+let data_3A = [];
 
 tf.booleanMaskAsync(x_3, constraintMask2D).then(
     function(v){
@@ -67,7 +69,9 @@ tf.booleanMaskAsync(x_3, constraintMask2D).then(
             }
         );
 
-        Plotly.newPlot('viz4Sketch',data_3,layout_3)
+        data_3A = [data_3[0],data_3[1],data_3[2]];
+
+        Plotly.newPlot('viz4Sketch',data_3A,layout_3)
 
         // resetting the layout_3 dimensions to 400
         layout_3.width=400;
