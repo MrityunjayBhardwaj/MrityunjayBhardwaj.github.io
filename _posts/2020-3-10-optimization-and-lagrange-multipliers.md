@@ -27,6 +27,11 @@ NOPE
         padding: 1em;
         position: relative;
     }
+
+    #viz3{
+        display: flex;
+        flex-direction: row;
+    }
     .winningOverlay{
         width: 50%;
 
@@ -232,11 +237,11 @@ now, if you have infinit budget then you don't even have to look at the price of
     <div class="slidecontainer">
             <input type="range" orient="vertical" min="1" max="100" value="50" class="slider" id="contourSlider1">
     </div>
-<div class="infoBlock" id="infoBlock1">
-$$f(x)$$ = <span id="contourValue1">0</span>
-</div>
 </div>
 <div class="VizSketch" id="viz1Sketch"></div>
+</div>
+<div class="infoBlock" id="infoBlock1">
+$$f(x)$$ = <span id="contourValue1">0</span>
 </div>
 
 <script src="{{site.baseurl}}/assets/js/my_js/lagrange-multipliers/viz1.js"></script>
@@ -277,15 +282,15 @@ now, the <span class="constraintRegion">orange highlighted section</span> of our
         <div class="slidecontainer">
                 <input type="range" orient="vertical" min="1" max="100" value="50" class="slider" id="contourSlider2">
         </div>
-        <div class="infoBlock" id="infoBlock2">
-        $$f(x)$$ = <span id="contourValue2">0</span>
-        </div>
     </div>
     <div class="VizSketch" id="viz2Sketch"></div>
     <div class="winningOverlay" id="winningOverlay1">
         <iframe src="https://giphy.com/embed/xhz40U8Z40gla" width="480*.5" height="270*.5" frameBorder="0" class="giphy-embed" allowFullScreen></iframe> 
     </div>
 
+</div>
+<div class="infoBlock" id="infoBlock2">
+$$f(x)$$ = <span id="contourValue2">0</span>
 </div>
 
 <script src="{{site.baseurl}}/assets/js/my_js/lagrange-multipliers/viz2.js"></script>
@@ -401,7 +406,7 @@ https://www.khanacademy.org/math/differential-calculus
                 <input type="range" orient="vertical" min="1" max="100" value="50" step=".001" class="slider" id="contourSlider3">
         </div>
     </div>
-    <div class="viz3">
+    <div id="viz3">
     <div class="VizSketch" id="viz3Sketch"></div>
     <svg class="VizSketch" id="viz3_2Sketch"></svg>
     </div>

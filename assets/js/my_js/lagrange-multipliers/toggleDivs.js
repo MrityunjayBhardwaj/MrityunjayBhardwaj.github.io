@@ -14,8 +14,8 @@ if (x.matches) { // If media query matches
 
 
     // changing layout1 for mobile devices
-    layout1.width = 500;
-    layout1.height = 500;
+    layout1.width = 400;
+    layout1.height = 400;
     layout1.images = [];
     layout1.font.size = 14;
     layout1.xaxis.title.font.size = 16;
@@ -29,7 +29,23 @@ if (x.matches) { // If media query matches
     winningOverlayElement2.style.margin = "5% 20%";
     winningOverlayElement1.style.margin = "15% 20%";
 
+
+    document.getElementById('viz3Container').style.padding = "0";
+    document.getElementById('viz3Controls').style.margin = "0";
+    document.getElementById('viz3Controls').style.marginRight = "1%";
+    document.getElementById('viz3Controls').style.height = "750px";
+
+    document.getElementById('viz2Controls').style.margin = "0";
+    document.getElementById('viz2Controls').style.marginTop = "10%";
+    document.getElementById('viz2Controls').style.height = "300px";
+
+    document.getElementById('viz1Controls').style.margin = "0";
+    document.getElementById('viz1Controls').style.marginTop = "10%";
+    document.getElementById('viz1Controls').style.height = "300px";
+
+
     // document.getElementById("viz3Container").style.flexDirection = "column-reverse"
+    document.getElementById("viz3").style.flexDirection = "column";
 
       Plotly.newPlot('viz4Sketch',data_3A,layout_3)
 
