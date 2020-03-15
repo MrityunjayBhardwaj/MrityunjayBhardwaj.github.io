@@ -493,6 +493,7 @@ here, we will use a <a href="https://www.cvxpy.org/">python library</a> which so
 
 ```python
 # constructing our optimization problem using cvxpy
+import cvxpy as cp
 
 def f(x_1,x_2):
     return x_1**2 + x_2**2
@@ -662,7 +663,7 @@ $$
 \end{align}
 $$
 
-So, the point which minimize our objective function subjected to our constraint function is: **(4.615384615384615, 3.076923076923077)** and if we put this onto our objective function we get the most optimal value:-
+So, the point which minimize our objective function subjected to our constraint function is: **(4.615, 3.076)** and if we put this onto our objective function we get the most optimal value:-
 
 
 $$
@@ -676,7 +677,7 @@ f(\left (\frac{60}{13} \right ),\left (\frac{40}{13} \right ))&= \left (\frac{60
 $$
 
 
-So, in short, our optimal point is **(4.615384615384615, 3.076923076923077)**, whereas, our optimal value is  **30.769230769230766**... which is exactly what we get if we manually toggle our contour line in fig 5 which means our math align 100% percent with our intuition!!.. which is quite beautiful don't you think? ( please, let me know what you think about it)
+So, in short, our optimal point is **(4.615, 3.076)**, whereas, our optimal value is  **30.769**... which is exactly what we get if we manually toggle our contour line in fig 5 which means our math align 100% percent with our intuition!!.. which is quite beautiful don't you think? ( please, let me know what you think about it)
 
 
 ## Bonus
