@@ -20,7 +20,7 @@ function toggleDiv1Fn() {
 // let viz1ControlsStyle_margin = 0;
 // let viz1ControlsStyle_marginTop = 0;
 // let viz1ControlsStyle_height = 0;
-
+// let slideContainer_width = 0;
 
 const isFirst = 1;
 function myFunction(x) {
@@ -47,6 +47,8 @@ function myFunction(x) {
 //   viz1ControlsStyle_margin = document.getElementById('viz1Controls').style.margin;
 //   viz1ControlsStyle_marginTop = document.getElementById('viz1Controls').style.marginTop;
 //   viz1ControlsStyle_height = document.getElementById('viz1Controls').style.height;
+
+      // slideContainer_width = document.getElementById('slidecontainer').style.width;
 
 //   isFirst = 0;
 // }
@@ -86,13 +88,19 @@ if (x.matches) { // If media query matches
     document.getElementById('viz1Controls').style.marginTop = "10%";
     document.getElementById('viz1Controls').style.height = "300px";
 
+    document.getElementsByClassName('slidecontainer')[0].style.width = "15px";
+    document.getElementsByClassName('slidecontainer')[1].style.width = "15px";
+    document.getElementsByClassName('slidecontainer')[2].style.width = "15px";
 
-    // document.getElementById("viz3Container").style.flexDirection = "column-reverse"
     document.getElementById("viz3").style.flexDirection = "column";
 
-      Plotly.newPlot('viz4Sketch',data_3A,layout_3)
 
+    // Updating all the plots
+    Plotly.newPlot('viz4Sketch',data_3A,layout_3)
     Plotly.react('viz1Sketch',data1,layout1);
+
+    updateSketch2(contourSliderElement2.value);
+    Plotly.newPlot('viz5Sketch',data_2,layout1)
 
     document.getElementById('viz1Controls').style.height = "250px";
     document.getElementById('viz2Controls').style.height = "250px";

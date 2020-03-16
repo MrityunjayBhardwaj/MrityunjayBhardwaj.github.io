@@ -24,7 +24,7 @@ NOPE
         margin-left: auto;
         margin-right: auto;
 
-        padding: 1em;
+        /* padding: 1em; */
         position: relative;
     }
 
@@ -111,9 +111,10 @@ NOPE
 
     .slider{
          height: inherit;
-         padding: 1em;
+         /* padding: 1em; */
         writing-mode: bt-lr; /* IE */
         -webkit-appearance: slider-vertical; /* WebKit */
+        width: 5%;
         padding: 0 5px;
     }
     .slidecontainer{
