@@ -28,6 +28,8 @@ NOPE
         position: relative;
     }
 
+    
+
     #viz3{
         display: flex;
         flex-direction: row;
@@ -90,6 +92,11 @@ NOPE
         border-style: solid;
         padding: 2px 4px;
         margin: 20px 0px;
+
+    }
+
+    .infoBlock .mjx-chtml{
+        display: inline-block;
 
     }
 
