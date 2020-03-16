@@ -6,20 +6,20 @@ function toggleDiv1Fn() {
     x.style.display = "none";
   }
 } 
-let layout1Original = 0;
-let layout3Original = 0;
-let  winningOverlay1_margin = 0;
-let  winningOverlay2_margin = 0;
-let viz3ContainerStyle_padding = 0;
-let viz3ContainerStyle_margin = 0;
-let viz3ContainerStyle_marginRight = 0;
-let viz3ContainerStyle_height = 0;
-let viz2ControlsStyle_margin = 0;
-let viz2ControlsStyle_marginTop = 0;
-let viz2ControlsStyle_height = 0;
-let viz1ControlsStyle_margin = 0;
-let viz1ControlsStyle_marginTop = 0;
-let viz1ControlsStyle_height = 0;
+// let layout1Original = 0;
+// let layout3Original = 0;
+// let  winningOverlay1_margin = 0;
+// let  winningOverlay2_margin = 0;
+// let viz3ContainerStyle_padding = 0;
+// let viz3ContainerStyle_margin = 0;
+// let viz3ContainerStyle_marginRight = 0;
+// let viz3ContainerStyle_height = 0;
+// let viz2ControlsStyle_margin = 0;
+// let viz2ControlsStyle_marginTop = 0;
+// let viz2ControlsStyle_height = 0;
+// let viz1ControlsStyle_margin = 0;
+// let viz1ControlsStyle_marginTop = 0;
+// let viz1ControlsStyle_height = 0;
 
 
 const isFirst = 1;

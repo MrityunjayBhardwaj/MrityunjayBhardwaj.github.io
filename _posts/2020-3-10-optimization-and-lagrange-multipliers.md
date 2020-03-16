@@ -206,8 +206,6 @@ NOPE
 
 <script src="{{site.baseurl}}/assets/js/dependency/d3.js"></script>
 
-<script src="{{site.baseurl}}/assets/js/my_js/lagrange-multipliers/toggleDivs.js"></script>
-
 $$
 \require{cancel}
 $$
