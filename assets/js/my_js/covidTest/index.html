@@ -24,6 +24,7 @@
 	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="css/util.css">
+	
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
 
@@ -35,7 +36,7 @@
 	<div class="container-contact100">
 
 		<div class="wrap-contact100">
-			<form class="contact100-form validate-form" action="finish.html">
+			<form class="contact100-form validate-form" onSubmit="console.log('alsdkfjasdf')">
 				<span class="contact100-form-title">
 					Covid-19 Test
 				</span>
@@ -53,24 +54,23 @@
 				<span class="contact100-form-heading">
 					Are you a smoker?:
 				</span>
-				<section >
+				<section id="sel">
 
 				<div>
-				<input type="radio" class="selectionBtn" name="radio5" id="smoker-no" value="cough-none"><label class="contract100-input-lable" for="smoker-no">None
+				<input type="radio" class="selectionBtn" name="smoker" id="smoker-no" value="0"><label class="contract100-input-lable" for="smoker-no">None
 
 				<p>I never touched it in my life</p>
 
 				</label>
 				</div>
 
-				<div>
-				<input type="radio" class="selectionBtn" name="radio5" id="smoker-left" value="cough-mild" checked><label class="contract100-input-lable" for="smoker-left">Not Currently
+				<!-- <div>
+				<input type="radio" class="selectionBtn" name="smoker" id="smoker-left" value="1" checked><label class="contract100-input-lable" for="smoker-left">Not Currently
 				<p>I left a while ago</p>
-
 				</label>
-				</div>
+				</div> -->
 				<div>
-				<input type="radio" class="selectionBtn" name="radio5" id="smoker-yes" value="cough-severe"><label class="contract100-input-lable" for="smoker-yes">Yes</label>
+				<input type="radio" class="selectionBtn" name="smoker" id="smoker-yes" value="1"><label class="contract100-input-lable" for="smoker-yes">Yes</label>
 				</div>
 				</section>
 
@@ -83,15 +83,15 @@
 				<section >
 
 				<div>
-				<input type="radio" class="selectionBtn" name="radio0" id="cough-none" value="cough-none"><label class="contract100-input-lable" for="cough-none">None</label>
+				<input type="radio" class="selectionBtn" name="cough" id="cough-none" value="0"><label class="contract100-input-lable" for="cough-none">None</label>
 				</div>
 
 				<div>
-				<input type="radio" class="selectionBtn" name="radio0" id="cough-mild" value="cough-mild" checked><label class="contract100-input-lable" for="cough-mild">Mild</label>
+				<input type="radio" class="selectionBtn" name="cough" id="cough-mild" value="1" checked><label class="contract100-input-lable" for="cough-mild">Mild</label>
 				</div>
-				<div>
-				<input type="radio" class="selectionBtn" name="radio0" id="cough-severe" value="cough-severe"><label class="contract100-input-lable" for="cough-severe">Severe</label>
-				</div>
+				<!-- <div>
+				<input type="radio" class="selectionBtn" name="cough" id="cough-severe" value="2"><label class="contract100-input-lable" for="cough-severe">Severe</label>
+				</div> -->
 				</section>
 
 				<span class="contact100-form-heading">
@@ -99,10 +99,10 @@
 				</span>
 				<section >
 					<div>
-						<input type="radio" name="radio1" id="fever-below99" value="below99" checked><label  class="contract100-input-lable" for="fever-below99">below 99&#176;F</label>
+						<input type="radio" name="fever" id="fever-below99" value="0" checked><label  class="contract100-input-lable" for="fever-below99">below 99&#176;F</label>
 					</div>
 					<div>
-						<input type="radio" name="radio1" id="fever-above99" value="above99"><label  class="contract100-input-lable" for="fever-above99">above 99&#176;F</label>
+						<input type="radio" name="fever" id="fever-above99" value="1"><label  class="contract100-input-lable" for="fever-above99">above 99&#176;F</label>
 					</div>
 				</section>
 			
@@ -111,14 +111,14 @@
 				</span>
 				<section >
 					<div>
-						<input type="radio" name="radio2" id="headache-none" value="none" checked><label  class="contract100-input-lable" for="headache-none">None</label>
+						<input type="radio" name="headache" id="headache-none" value="0" checked><label  class="contract100-input-lable" for="headache-none">None</label>
 					</div>
 					<div>
-						<input type="radio" name="radio2" id="headache-mild" value="mild" checked><label  class="contract100-input-lable" for="headache-mild">Mild</label>
+						<input type="radio" name="headache" id="headache-mild" value="1" checked><label  class="contract100-input-lable" for="headache-mild">Yes</label>
 					</div>
-					<div>
-						<input type="radio" name="radio2" id="headache-severe" value="severe"><label  class="contract100-input-lable" for="headache-severe">Severe</label>
-					</div>
+					<!-- <div>
+						<input type="radio" name="headache" id="headache-severe" value="2"><label  class="contract100-input-lable" for="headache-severe">Severe</label>
+					</div> -->
 				</section>
 
 				<span class="contact100-form-heading">
@@ -126,14 +126,14 @@
 				</span>
 				<section >
 					<div>
-						<input type="radio" name="radio3" id="fatigue-none" value="none" checked><label  class="contract100-input-lable" for="fatigue-none">None</label>
+						<input type="radio" name="fatigue" id="fatigue-none" value="0" checked><label  class="contract100-input-lable" for="fatigue-none">None</label>
 					</div>
 					<div>
-						<input type="radio" name="radio3" id="fatigue-mild" value="mild" checked><label  class="contract100-input-lable" for="fatigue-mild">Mild</label>
+						<input type="radio" name="fatigue" id="fatigue-mild" value="1" checked><label  class="contract100-input-lable" for="fatigue-mild">Yes</label>
 					</div>
-					<div>
-						<input type="radio" name="radio3" id="fatigue-severe" value="severe"><label  class="contract100-input-lable" for="fatigue-severe">Severe</label>
-					</div>
+					<!-- <div>
+						<input type="radio" name="fatigue" id="fatigue-severe" value="2"><label  class="contract100-input-lable" for="fatigue-severe">Severe</label>
+					</div> -->
 				</section>
 
 				<span class="contact100-form-heading">
@@ -141,10 +141,10 @@
 				</span>
 				<section >
 					<div>
-						<input type="radio" name="radio4" id="db-no" value="none" checked><label  class="contract100-input-lable" for="db-no">No</label>
+						<input type="radio" name="db" id="db-no" value="0" checked><label  class="contract100-input-lable" for="db-no">No</label>
 					</div>
 					<div>
-						<input type="radio" name="radio4" id="db-yes" value="severe"><label  class="contract100-input-lable" for="db-yes">Yes</label>
+						<input type="radio" name="db" id="db-yes" value="1"><label  class="contract100-input-lable" for="db-yes">Yes</label>
 					</div>
 				</section>
 
@@ -154,6 +154,18 @@
 					<div class="wrap-input100 validate-input" data-validate = "Please enter your message">
 					<textarea class="input100" name="message" placeholder="Your Message"></textarea>
 					<span class="focus-input100"></span>
+				</div>
+
+
+				<div id="success" style="display: none;">
+					<span class="contact100-form-heading">
+						Congratulations!, you don't have to worry about!
+					</span>
+				</div>
+				<div id="fail" style="display:none;">
+					<span class="contact100-form-heading">
+						We believe that you should consult with your doctor or you can call on this helpline number +91-11-23978046
+					</span>
 				</div>
 
 				<div class="container-contact100-form-btn">
@@ -192,6 +204,14 @@
 	<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
 	<script src="js/map-custom.js"></script> -->
 <!--===============================================================================================-->
+	<script src="js/dependency/nd.min.js"></script>
+	<script src="js/dependency/tf.min.js"></script>
+	<script src="js/dependency/lodash.js"></script>
+	<script src="js/dependency/utils.js"></script>
+
+<!--===============================================================================================-->
+
+	<script src="js/sumProd.js"></script>
 	<script src="js/main.js"></script>
 
 
